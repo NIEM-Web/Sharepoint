@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="58892aaf-4e46-4ff2-931a-a5a5341ba541" solutionId="58892aaf-4e46-4ff2-931a-a5a5341ba541" resetWebServer="false" name="Niem.MyNiem" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="a5949371-7a0d-4854-b2d5-cb1d7af0fc21" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="9041dd80-7817-4ca0-b8b7-355422906fe7" />
+    <projectItemReference itemId="9eff5dba-83bb-49f2-a95f-282049d15d6d" />
+    <projectItemReference itemId="18cb08cc-80c3-4c07-ab92-6c39b12c98d3" />
+    <projectItemReference itemId="de2a1b70-57b8-4f7b-9e1b-38f21262b67e" />
+  </projectItems>
+</package>

@@ -1,0 +1,6 @@
+C:\Barney\Solutions\Niem.MyNiem\Niem.MyNiem\bin\Release\Niem.MyNiem.dll
+C:\Barney\Solutions\Niem.MyNiem\Niem.MyNiem\bin\Release\Niem.MyNiem.pdb
+C:\Barney\Solutions\Niem.MyNiem\Niem.MyNiem\bin\Release\Microsoft.Sharepoint.Sandbox.dll
+C:\Barney\Solutions\Niem.MyNiem\Niem.MyNiem\obj\Release\ResolveAssemblyReference.cache
+C:\Barney\Solutions\Niem.MyNiem\Niem.MyNiem\obj\Release\Niem.MyNiem.dll
+C:\Barney\Solutions\Niem.MyNiem\Niem.MyNiem\obj\Release\Niem.MyNiem.pdb

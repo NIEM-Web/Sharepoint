@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.VisualWebPart" DefaultFile="NewsEventsWebpartUserControl.ascx" SupportedTrustLevels="FullTrust" SupportedDeploymentScopes="Site" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+  <Files>
+    <ProjectItemFile Source="Elements.xml" Target="NewsWebpart\" Type="ElementManifest" />
+    <ProjectItemFile Source="NewsEventsWebpart.webpart" Target="NewsWebpart\" Type="ElementFile" />
+    <ProjectItemFile Source="NewsEventsWebpartUserControl.ascx" Target="CONTROLTEMPLATES\Niem.MyNiem.Webparts\NewsEventsWebpart\" Type="TemplateFile" />
+  </Files>
+  <SafeControls>
+    <SafeControl Name="SafeControlEntry1" Assembly="$SharePoint.Project.AssemblyFullName$" Namespace="Niem.MyNiem.Webparts.NewsEventsWebpart" TypeName="*" IsSafe="true" IsSafeAgainstScript="false" />
+  </SafeControls>
+</ProjectItem>

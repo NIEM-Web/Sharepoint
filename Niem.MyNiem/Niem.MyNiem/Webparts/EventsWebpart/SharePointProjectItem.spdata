@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.VisualWebPart" DefaultFile="EventsWebpartUserControl.ascx" SupportedTrustLevels="FullTrust" SupportedDeploymentScopes="Site" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+  <Files>
+    <ProjectItemFile Source="Elements.xml" Target="EventsWebpart\" Type="ElementManifest" />
+    <ProjectItemFile Source="EventsWebpart.webpart" Target="EventsWebpart\" Type="ElementFile" />
+    <ProjectItemFile Source="EventsWebpartUserControl.ascx" Target="CONTROLTEMPLATES\Niem.MyNiem.Webparts\EventsWebpart\" Type="TemplateFile" />
+  </Files>
+  <SafeControls>
+    <SafeControl Name="SafeControlEntry1" Assembly="$SharePoint.Project.AssemblyFullName$" Namespace="Niem.MyNiem.Webparts.EventsWebpart" TypeName="*" IsSafe="true" IsSafeAgainstScript="false" />
+  </SafeControls>
+</ProjectItem>

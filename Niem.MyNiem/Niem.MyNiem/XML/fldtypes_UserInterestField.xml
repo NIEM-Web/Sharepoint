@@ -1,0 +1,12 @@
+﻿<FieldTypes>
+  <FieldType>
+    <Field Name="TypeName">UserInterestField</Field>
+    <Field Name="ParentType">Number</Field>
+    <Field Name="TypeDisplayName">User Interest Field</Field>
+    <Field Name="TypeShortDescription">Users's interest</Field>
+    <Field Name="UserCreatable">TRUE</Field>
+    <Field Name="FieldTypeClass">
+      Niem.MyNiem.CustomFieldTypes.UserInterestField, $SharePoint.Project.AssemblyFullName$
+    </Field>
+  </FieldType>
+</FieldTypes>

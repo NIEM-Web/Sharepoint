@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+    <!-- Do not change the value of the Name attribute below. If it does not match the folder name of the List Definition project item, an error will occur when the project is run. -->
+    <ListTemplate
+        Name="UserInterestListLD"
+        Type="10000"
+        BaseType="0"
+        OnQuickLaunch="TRUE"
+        SecurityBits="11"
+        Sequence="410"
+        DisplayName="MyNiem - User Interest List"
+        Description="MyNiem User interest list - stores the user's interests information."
+        Image="/_layouts/images/itgen.png"/>
+  <Receivers Scope="Site" ListTemplateId="10000" ListTemplateOwner="0482a2cd-b493-4b6b-8ab0-e35a5b56a0f0">
+    <Receiver>
+      <Name>UserInterestsItemAdded</Name>
+      <Assembly>$SharePoint.Project.AssemblyFullName$</Assembly>
+      <Class>Niem.MyNiem.Receivers.UserInterestListEventReceiver</Class>
+      <SequenceNumber>10</SequenceNumber>
+      <Synchronization>Asynchronous</Synchronization>
+      <Type>ItemAdded</Type>
+    </Receiver>
+    <Receiver>
+      <Name>UserInterestsItemUpdated</Name>
+      <Assembly>$SharePoint.Project.AssemblyFullName$</Assembly>
+      <Class>Niem.MyNiem.Receivers.UserInterestListEventReceiver</Class>
+      <SequenceNumber>10</SequenceNumber>
+      <Synchronization>Asynchronous</Synchronization>
+      <Type>ItemUpdated</Type>
+    </Receiver>
+    <Receiver>
+      <Name>UserInterestsItemDeleting</Name>
+      <Assembly>$SharePoint.Project.AssemblyFullName$</Assembly>
+      <Class>Niem.MyNiem.Receivers.UserInterestListEventReceiver</Class>
+      <SequenceNumber>10</SequenceNumber>
+      <Synchronization>Synchronous</Synchronization>
+      <Type>ItemDeleting</Type>
+    </Receiver>
+  </Receivers>
+</Elements>

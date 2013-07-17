@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8C510DDB-5F9A-426E-ADD4-F260BFCEF57C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Niem.MyNiem</RootNamespace>
+    <AssemblyName>Niem.MyNiem</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BB1F664B-9266-4fd6-B973-E1E44974B511};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SandboxedSolution>False</SandboxedSolution>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Server, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Server.UserProfiles, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="microsoft.sharepoint.portal, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="NIEM_Like_Solution, Version=1.0.0.0, Culture=neutral, PublicKeyToken=47d54652db1bd015, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\NIEM_Like_Solution\NIEM_Like_Solution\bin\Debug\NIEM_Like_Solution.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.SharePoint" />
+    <Reference Include="Microsoft.SharePoint.Security" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="And.cs" />
+    <Compile Include="CamlQuery.cs" />
+    <Compile Include="ConditionCriteria.cs" />
+    <Compile Include="CONTROLTEMPLATES\UserInterestFieldControl.ascx.cs">
+      <DependentUpon>UserInterestFieldControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CONTROLTEMPLATES\UserInterestFieldControl.ascx.designer.cs">
+      <DependentUpon>UserInterestFieldControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Criteria.cs" />
+    <Compile Include="CriteriaType.cs" />
+    <Compile Include="CustomFieldTypes\UserInterestField.cs" />
+    <Compile Include="Expression.cs" />
+    <Compile Include="FieldValidationRules\UserInterestFieldValidationRule.cs" />
+    <Compile Include="Operator.cs" />
+    <Compile Include="Or.cs" />
+    <Compile Include="OrderByField.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Receivers\UserInterestListEventReceiver.cs" />
+    <Compile Include="SimpleCriteria.cs" />
+    <Compile Include="Webparts\CrossSiteListWebpart\CrossSiteListWebpart.cs" />
+    <Compile Include="Webparts\DiscussionWebpart\DiscussionWebpart.cs" />
+    <Compile Include="Webparts\DiscussionWebpart\DiscussionWebpartUserControl.ascx.cs">
+      <DependentUpon>DiscussionWebpartUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Webparts\DiscussionWebpart\DiscussionWebpartUserControl.ascx.designer.cs">
+      <DependentUpon>DiscussionWebpartUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Webparts\EventsWebpart\EventsWebpart.cs" />
+    <Compile Include="Webparts\EventsWebpart\EventsWebpartUserControl.ascx.cs">
+      <DependentUpon>EventsWebpartUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Webparts\EventsWebpart\EventsWebpartUserControl.ascx.designer.cs">
+      <DependentUpon>EventsWebpartUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Webparts\NewsWebpart\NewsEventsWebpart.cs" />
+    <Compile Include="Webparts\NewsWebpart\NewsEventsWebpartUserControl.ascx.cs">
+      <DependentUpon>NewsEventsWebpartUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Webparts\NewsWebpart\NewsEventsWebpartUserControl.ascx.designer.cs">
+      <DependentUpon>NewsEventsWebpartUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Webparts\ProfileWebpart\ProfileWebpart.cs" />
+    <Compile Include="Webparts\ProfileWebpart\ProfileWebpartUserControl.ascx.cs">
+      <DependentUpon>ProfileWebpartUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Webparts\ProfileWebpart\ProfileWebpartUserControl.ascx.designer.cs">
+      <DependentUpon>ProfileWebpartUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Webparts\ResourcesWebpart\ResourcesWebpart.cs" />
+    <Compile Include="Webparts\ResourcesWebpart\ResourcesWebpartUserControl.ascx.cs">
+      <DependentUpon>ResourcesWebpartUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Webparts\ResourcesWebpart\ResourcesWebpartUserControl.ascx.designer.cs">
+      <DependentUpon>ResourcesWebpartUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Webparts\SavedSearches\SavedSearches.cs" />
+    <Compile Include="Webparts\SavedSearches\SavedSearchesUserControl.ascx.cs">
+      <DependentUpon>SavedSearchesUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Webparts\SavedSearches\SavedSearchesUserControl.ascx.designer.cs">
+      <DependentUpon>SavedSearchesUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Webparts\SaveSearch\SaveSearch.cs" />
+    <Compile Include="Webparts\SaveSearch\SaveSearchUserControl.ascx.cs">
+      <DependentUpon>SaveSearchUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Webparts\SaveSearch\SaveSearchUserControl.ascx.designer.cs">
+      <DependentUpon>SaveSearchUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Webparts\ToolsWebpart\ToolsWebpart.cs" />
+    <Compile Include="Webparts\ToolsWebpart\ToolsWebpartUserControl.ascx.cs">
+      <DependentUpon>ToolsWebpartUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Webparts\ToolsWebpart\ToolsWebpartUserControl.ascx.designer.cs">
+      <DependentUpon>ToolsWebpartUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WelcomeCU.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CONTROLTEMPLATES\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{9041dd80-7817-4ca0-b8b7-355422906fe7}</SharePointProjectItemId>
+    </None>
+    <None Include="Features\MyNiem-Like\MyNiem-Like.feature">
+      <FeatureId>{f4214ac1-fe0f-45f9-bfdc-5db61fbda8e9}</FeatureId>
+    </None>
+    <None Include="Features\MyNiem\MyNiem.feature">
+      <FeatureId>{a5949371-7a0d-4854-b2d5-cb1d7af0fc21}</FeatureId>
+    </None>
+    <None Include="JS\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{de2a1b70-57b8-4f7b-9e1b-38f21262b67e}</SharePointProjectItemId>
+    </None>
+    <None Include="key.snk" />
+    <None Include="Package\Package.package">
+      <PackageId>{58892aaf-4e46-4ff2-931a-a5a5341ba541}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+    </None>
+    <None Include="UserInterestListLD\UserInterestListLI\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{848d8afa-119f-4664-b1be-58efe1b72fe8}</SharePointProjectItemId>
+    </None>
+    <None Include="UserInterestListLD\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{227562bb-c079-43bc-839d-1eb5ade9283e}</SharePointProjectItemId>
+    </None>
+    <None Include="Webparts\CrossSiteListWebpart\CrossSiteListWebpart.webpart" />
+    <None Include="Webparts\CrossSiteListWebpart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{7aaa30ac-a480-41a6-a7f9-b183ebe2e229}</SharePointProjectItemId>
+    </None>
+    <None Include="Webparts\DiscussionWebpart\DiscussionWebpart.webpart" />
+    <None Include="Webparts\DiscussionWebpart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{600118c6-083f-48bf-9396-5179cd5ed97c}</SharePointProjectItemId>
+    </None>
+    <None Include="Webparts\EventsWebpart\EventsWebpart.webpart">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Webparts\EventsWebpart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{389450e5-7a47-40b9-95c6-c8c08bb4a51f}</SharePointProjectItemId>
+    </None>
+    <None Include="Webparts\NewsWebpart\NewsEventsWebpart.webpart" />
+    <None Include="Webparts\NewsWebpart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{63a5bd86-7ae9-4c1b-ba40-b6e5c708e2f6}</SharePointProjectItemId>
+    </None>
+    <None Include="Webparts\ProfileWebpart\ProfileWebpart.webpart" />
+    <None Include="Webparts\ProfileWebpart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{8710223e-69e2-4525-9fd9-ff8f6c629d79}</SharePointProjectItemId>
+    </None>
+    <None Include="Webparts\ResourcesWebpart\ResourcesWebpart.webpart">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Webparts\ResourcesWebpart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{275c7f8e-f5f2-40b9-bb79-3ac7be69aeb3}</SharePointProjectItemId>
+    </None>
+    <None Include="Webparts\SavedSearches\SavedSearches.webpart" />
+    <None Include="Webparts\SavedSearches\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{342870f6-c6f5-4b2c-94c8-76ce7a6adb7e}</SharePointProjectItemId>
+    </None>
+    <None Include="Webparts\SaveSearch\SaveSearch.webpart" />
+    <None Include="Webparts\SaveSearch\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{2b673a76-4211-4b6d-9f92-aa475ef44e01}</SharePointProjectItemId>
+    </None>
+    <None Include="Webparts\ToolsWebpart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{70f49fd3-15b5-4de6-976f-33a19120ee10}</SharePointProjectItemId>
+    </None>
+    <None Include="Webparts\ToolsWebpart\ToolsWebpart.webpart" />
+    <None Include="XML\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{9eff5dba-83bb-49f2-a95f-282049d15d6d}</SharePointProjectItemId>
+    </None>
+    <None Include="XSL\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{18cb08cc-80c3-4c07-ab92-6c39b12c98d3}</SharePointProjectItemId>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="CONTROLTEMPLATES\UserInterestFieldControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Features\MyNiem-Like\MyNiem-Like.Template.xml">
+      <DependentUpon>MyNiem-Like.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\MyNiem\MyNiem.Template.xml">
+      <DependentUpon>MyNiem.feature</DependentUpon>
+    </Content>
+    <Content Include="JS\fldtypes_UserInterestField.js" />
+    <Content Include="JS\pagination.js" />
+    <Content Include="UserInterestListLD\Elements.xml" />
+    <Content Include="UserInterestListLD\UserInterestListLI\Elements.xml" />
+    <Content Include="UserInterestListLD\Schema.xml" />
+    <Content Include="Webparts\CrossSiteListWebpart\Elements.xml" />
+    <Content Include="Webparts\DiscussionWebpart\DiscussionWebpartUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Webparts\DiscussionWebpart\Elements.xml" />
+    <Content Include="Webparts\EventsWebpart\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Webparts\EventsWebpart\EventsWebpartUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Webparts\NewsWebpart\Elements.xml" />
+    <Content Include="Webparts\NewsWebpart\NewsEventsWebpartUserControl.ascx" />
+    <Content Include="Webparts\ProfileWebpart\Elements.xml" />
+    <Content Include="Webparts\ProfileWebpart\ProfileWebpartUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Webparts\ResourcesWebpart\Elements.xml" />
+    <Content Include="Webparts\ResourcesWebpart\ResourcesWebpartUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Webparts\SavedSearches\Elements.xml" />
+    <Content Include="Webparts\SavedSearches\SavedSearchesUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Webparts\SaveSearch\Elements.xml" />
+    <Content Include="Webparts\SaveSearch\SaveSearchUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Webparts\ToolsWebpart\Elements.xml" />
+    <Content Include="Webparts\ToolsWebpart\ToolsWebpartUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" />
+</Project>
