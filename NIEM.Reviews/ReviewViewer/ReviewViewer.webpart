@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="NIEM.Reviews.ReviewViewer.ReviewViewer, $SharePoint.Project.AssemblyFullName$" />
+      <importErrorMessage>$Resources:core,ImportErrorMessage;</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="Title" type="string">Review viewer</property>
+        <property name="Description" type="string">Searches the site for a "Reviews" list in the root site collection given an article URL.</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>

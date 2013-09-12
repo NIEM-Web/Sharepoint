@@ -17,6 +17,11 @@
         SP.UI.ModalDialog.showModalDialog(options);
     }
 
+    function OpenDialog(url, title)
+    {
+        top.location = '/Pages/ReviewList.aspx?url=' + url + '&amp;title=' + title;
+    }
+
 function isconfirm()
 {
 var ck=confirm("Do you want to delete this item?");
@@ -95,18 +100,12 @@ return false;
    </div>
    <div class="tolWrpRight">
    <div class="toolrate">
-   
-   <!--div class="ratelink">
-        <a href='javascript:OpenRatingDialog(<%#Eval("ID")%>);'>Rate Tool</a>
-   </div-->
   
-    <%# getRating(System.Convert.ToDouble(string.IsNullOrEmpty(Eval("AverageRating").ToString()) ? "0" : Eval("AverageRating").ToString()))%>
-   
    <asp:PlaceHolder ID="ratingsPlaceHolder" runat="server" />
-    
-   <!--<asp:LinkButton ID="btnRemove" Text="Remove" runat="server" CommandArgument='<%#Eval("ListId")+":"+Eval("ID") %>' CommandName="Delete" OnClientClick="return isconfirm()"/><br />-->
-   
-   <NiemLike:NiemLikeLink ID="NiemLikeLink1" runat="server" URL='<%#Eval("FileRef") %>'  CType="Tools" />
+    <br />
+    <a href="javascript:OpenDialog('<%#Eval("FileRef") %>','<%#Eval("Title") %>');">See Reviews</a>
+    <br/><br />  
+    <NiemLike:NiemLikeLink ID="NiemLikeLink1" runat="server" URL='<%#Eval("FileRef") %>'  CType="Tools" />
    </div>
    </div>
 </div>    

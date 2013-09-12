@@ -9,6 +9,8 @@
 <%@ Import Namespace="Microsoft.SharePoint" %>
 <%@ Register TagPrefix="WebPartPages" Namespace="Microsoft.SharePoint.WebPartPages"
     Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
+ <%@ Register Tagprefix="SharePointPortalControls" Namespace="Microsoft.SharePoint.Portal.WebControls" Assembly="Microsoft.SharePoint.Portal, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %>
+
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ResourcesWebpartUserControl.ascx.cs"
     Inherits="Niem.MyNiem.Webparts.ResourcesWebpart.ResourcesWebpartUserControl" %>
 <script type="text/javascript">
@@ -29,6 +31,11 @@
         });
 
     });
+
+    function OpenDialog(url, title)
+    {
+        top.location = '/Pages/ReviewList.aspx?url=' + url + '&amp;title=' + title;
+    }
 </script>
 <table>
     <tr>
@@ -77,7 +84,7 @@
         </td>
     </tr>
 </table>
-<asp:listview runat="server" id="lvResources" groupitemcount="1" OnPagePropertiesChanging="DataPager_PagePropertiesChanging">
+<asp:listview runat="server" id="lvResources" groupitemcount="1" OnItemDataBound="lvResources_ItemDataBound" OnPagePropertiesChanging="DataPager_PagePropertiesChanging">
 <LayoutTemplate>
     <table runat="server" id="table1">
       <tr runat="server" id="groupPlaceholder">
@@ -124,12 +131,12 @@
         </td>
         <td valign="top">
             <div class="div-ms-vb resRat">
-            <%# getRating(System.Convert.ToDouble(string.IsNullOrEmpty(Eval("AverageRating").ToString()) ? "0" : Eval("AverageRating")))%>
-            <br/>
-            <br/>
+            <asp:PlaceHolder ID="ratingsPlaceHolder" runat="server" />
+            <br />
+            <a href="javascript:OpenDialog('<%#Eval("FileRef") %>','<%#Eval("Title") %>');">See Reviews</a>
+            <br/><br />
             <NiemLike:NiemLikeLink ID="NiemLikeLink1" runat="server" URL='<% #Eval("FileRef")%>' CType="Resource" />
-       
-             </div>
+            </div>
         </td>
     </tr>
    </tbody>

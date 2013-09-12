@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="2a1495a1-a363-444a-a5ad-f0c371d82a30" solutionId="2a1495a1-a363-444a-a5ad-f0c371d82a30" resetWebServer="false" name="NiemMapMoveSiteColumnUpdate" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="a7e8b9ee-587f-439d-b634-53d3f3e18b58" />
+  </features>
+</package>

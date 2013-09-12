@@ -18,7 +18,7 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
         {
             get;
             set;
-        } 
+        }
         #endregion
 
         #region PageLoad
@@ -26,6 +26,8 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
         {
             toolsList.ItemCreated += new RepeaterItemEventHandler(toolsList_ItemCreated);
             toolsList.ItemCommand += new RepeaterCommandEventHandler(toolsList_ItemCommand);
+            toolsList.ItemDataBound += new RepeaterItemEventHandler(toolsList_ItemDataBound);
+
             try
             {
                 if (!Page.IsPostBack)
@@ -44,6 +46,33 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
 
         #endregion
 
+        #region Item Databound
+        void toolsList_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            PlaceHolder ratingsPlaceHolder = ((PlaceHolder)e.Item.FindControl("ratingsPlaceHolder"));
+            DataRowView drv = (DataRowView)e.Item.DataItem;
+            int ID = Convert.ToInt32(drv["ID"].ToString());
+            Guid ListGuid = new Guid(drv["ListId"].ToString());
+            Guid WebGuid = new Guid(drv["WebId"].ToString());
+            SPSite Site = SPContext.Current.Site;
+            SPWeb Web = Site.OpenWeb(WebGuid);
+            SPList List = Web.Lists[ListGuid];
+            SPField Field = List.Fields.TryGetFieldByStaticName("AverageRating");
+            if (Field != null)
+            {
+                AverageRatingFieldControl avgRatings = new AverageRatingFieldControl();
+                avgRatings.ItemContext = SPContext.GetContext(HttpContext.Current, ID, ListGuid, Web);
+                avgRatings.ListId = ListGuid;
+                avgRatings.ItemId = ID;
+                avgRatings.ControlMode = SPControlMode.Display;
+                avgRatings.FieldName = "AverageRating";
+                ratingsPlaceHolder.Controls.Add(avgRatings);
+            }
+
+        }
+        #endregion
+
         #region Item Command
         /// <summary>
         /// Item Command event for delete.
@@ -55,12 +84,12 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
             try
             {
                 string[] ListGuidItemID = e.CommandArgument.ToString().Split(':');
-                switch(e.CommandName)
+                switch (e.CommandName)
                 {
                     case "Delete":
                         //code to remove row and save to profile
                         UpdateItemsInProfile(ListGuidItemID[0], ListGuidItemID[1]);
-                       // DataTable dtResults = GetData();
+                        // DataTable dtResults = GetData();
                         toolsList.DataSource = GetData();
                         toolsList.DataBind();
                         break;
@@ -69,7 +98,7 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
             catch (Exception ex)
             {
             }
-        }  
+        }
         #endregion
 
         void ShowNoRecords()
@@ -97,7 +126,7 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
                 Query.Webs = "<Webs Scope=\"Recursive\" />";
                 dtResults = toolsWeb.GetSiteData(Query);
                 dtResults = GetLikedTools(dtResults);
-                LogText("dtResults1:"+ dtResults.Rows.Count.ToString());
+                LogText("dtResults1:" + dtResults.Rows.Count.ToString());
                 dtResults = AddDisplayLinks(dtResults);
                 LogText("dtResults2:" + dtResults.Rows.Count.ToString());
 
@@ -113,7 +142,7 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
 
         void LogText(string message)
         {
-           // System.IO.File.AppendAllText("C:\\temp\\log.txt", message + "\r\n");
+            // System.IO.File.AppendAllText("C:\\temp\\log.txt", message + "\r\n");
         }
         protected string CheckNull(object value)
         {
@@ -126,7 +155,7 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
         }
         DataTable GetLikedTools(DataTable dTable)
         {
-            dTable.Rows.Clear();
+           // dTable.Rows.Clear();
             if (SPContext.Current.Web.CurrentUser == null || string.IsNullOrEmpty(SPContext.Current.Web.CurrentUser.LoginName))
             {
 
@@ -136,7 +165,7 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
             {
                 try
                 {
-                    
+
                     {
                         string siteURL = HttpContext.Current.Request.Url.AbsoluteUri;
                         using (SPSite site = new SPSite(siteURL))
@@ -162,30 +191,45 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
                                         {
                                             SPList itemList = itemWeb.Lists[new Guid(item["ListID"].ToString())];
                                             SPItem toolsItem = itemList.GetItemById(int.Parse(item["ItemID"].ToString()));
-                                            
+
                                             DataRow dRow = dTable.NewRow();
-                                            try{dRow["Title"] = toolsItem["Title"].ToString(); }catch(Exception){}
-                                            try{dRow["ID"] = toolsItem["ID"].ToString();}catch(Exception){}
-                                            try{dRow["_Comments"] = toolsItem["_Comments"].ToString();}catch(Exception){}
-                                            try{dRow["ContentTypeId"] = toolsItem["ContentTypeId"].ToString();}catch(Exception){}
-                                            try{dRow["MPD_x0020_Classes"] = toolsItem["MPD_x0020_Classes"].ToString();}catch(Exception){}
-                                            try{dRow["IEPD_x0020_Lifecycle_x0020_Phase"] = toolsItem["IEPD_x0020_Lifecycle_x0020_Phase"].ToString();}catch(Exception){}
-                                            try{dRow["Artifacts_x0020_Produced"] = toolsItem["Artifacts_x0020_Produced"].ToString();}catch(Exception){}
-                                            try{dRow["EMail"] = toolsItem["EMail"].ToString();}catch(Exception){}
-                                            try{dRow["EncodedAbsUrl"] = toolsItem["EncodedAbsUrl"].ToString();}catch(Exception){}
-                                            try{dRow["FileRef"] = toolsItem["FileRef"].ToString(); }catch(Exception){}
-                                            try{dRow["WebId"] =item["WebID"].ToString();}catch(Exception){}
-                                            try{dRow["ListId"] = item["ListID"].ToString();}catch(Exception){}
-                                            try{dRow["ID"] = item["ItemID"].ToString();}catch(Exception){}
-                                            try{dRow["ContentTypeId"] = toolsItem["ContentTypeId"].ToString();}catch(Exception){}
-                                            try{dRow["Created"] = toolsItem["Created"].ToString();}catch(Exception){}
+                                            try { dRow["Title"] = toolsItem["Title"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["ID"] = toolsItem["ID"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["_Comments"] = toolsItem["_Comments"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["ContentTypeId"] = toolsItem["ContentTypeId"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["MPD_x0020_Classes"] = toolsItem["MPD_x0020_Classes"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["IEPD_x0020_Lifecycle_x0020_Phase"] = toolsItem["IEPD_x0020_Lifecycle_x0020_Phase"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["Artifacts_x0020_Produced"] = toolsItem["Artifacts_x0020_Produced"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["EMail"] = toolsItem["EMail"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["EncodedAbsUrl"] = toolsItem["EncodedAbsUrl"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["FileRef"] = toolsItem["FileRef"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["WebId"] = item["WebID"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["ListId"] = item["ListID"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["ID"] = item["ItemID"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["ContentTypeId"] = toolsItem["ContentTypeId"].ToString(); }
+                                            catch (Exception) { }
+                                            try { dRow["Created"] = toolsItem["Created"].ToString(); }
+                                            catch (Exception) { }
                                             try { dRow["AverageRating"] = toolsItem["AverageRating"]; }
                                             catch (Exception) { }
                                             try { dRow["URL"] = toolsItem["URL"]; }
                                             catch (Exception) { }
                                             try { dRow["Latest_x0020_Verison"] = toolsItem["Latest_x0020_Verison"]; }
                                             catch (Exception) { }
-                                            
+
 
                                             dTable.Rows.Add(dRow);
 
@@ -197,7 +241,7 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
                                     { LogText(ex.Message); }
 
                                 }
-                                
+
 
                             }
                         }
@@ -205,15 +249,15 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
                 }
                 catch (Exception ex)
                 {
-                    
+
                 }
             }
 
-            
+
             dTable.Columns.Add("DateDiff", typeof(int));
             foreach (DataRow dRow in dTable.Rows)
             {
-                
+
                 try
                 {
                     DateTime itemTime = DateTime.Parse(dRow["Created"].ToString());
@@ -255,7 +299,7 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
             //    }
             //}
             return dtResults;
-        } 
+        }
         #endregion
 
         #region AddDisplayLinks
@@ -274,10 +318,10 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
                 SPWeb Web = Site.OpenWeb(WebGuid);
                 Guid ListGuid = new Guid(Row["ListId"].ToString());
                 SPList List = Web.Lists[ListGuid];
-                Row["LinkField"] = Web.Url+"/"+List.RootFolder.Url+"/DispForm.aspx?ID="+Row["ID"].ToString()+"&ContentTypeID="+Row["ContentTypeId"].ToString()+"&IsDlg=1";
+                Row["LinkField"] = Web.Url + "/" + List.RootFolder.Url + "/DispForm.aspx?ID=" + Row["ID"].ToString() + "&ContentTypeID=" + Row["ContentTypeId"].ToString() + "&IsDlg=1";
             }
             return dtResults;
-        } 
+        }
         #endregion
 
         #region UpdateItems in Profile
@@ -314,7 +358,7 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
             {
                 HttpContext.Current = currentContext;
             }
-        } 
+        }
         #endregion
 
         #region ItemCreated
@@ -325,67 +369,70 @@ namespace Niem.MyNiem.Webparts.ToolsWebpart
         /// <param name="e"></param>
         void toolsList_ItemCreated(object sender, RepeaterItemEventArgs e)
         {
-           /* PlaceHolder ratingsPlaceHolder = ((PlaceHolder)e.Item.FindControl("ratingsPlaceHolder"));
-            DataRowView drv = (DataRowView)e.Item.DataItem;
-            int ID = Convert.ToInt32(drv["ID"].ToString());
-            Guid ListGuid = new Guid(drv["ListId"].ToString());
-            Guid WebGuid = new Guid(drv["WebId"].ToString());
-            SPSite Site = SPContext.Current.Site;
-            SPWeb Web = Site.OpenWeb(WebGuid);
-            SPList List = Web.Lists[ListGuid];
-            SPField Field = List.Fields.GetFieldByInternalName("AverageRating");
+            /* PlaceHolder ratingsPlaceHolder = ((PlaceHolder)e.Item.FindControl("ratingsPlaceHolder"));
+             DataRowView drv = (DataRowView)e.Item.DataItem;
+             int ID = Convert.ToInt32(drv["ID"].ToString());
+             Guid ListGuid = new Guid(drv["ListId"].ToString());
+             Guid WebGuid = new Guid(drv["WebId"].ToString());
+             SPSite Site = SPContext.Current.Site;
+             SPWeb Web = Site.OpenWeb(WebGuid);
+             SPList List = Web.Lists[ListGuid];
+             SPField Field = List.Fields.GetFieldByInternalName("AverageRating");
 
-            AverageRatingFieldControl avgRatings = new AverageRatingFieldControl();
-            avgRatings.ItemContext = SPContext.GetContext(HttpContext.Current, ID, ListGuid, Web);
-            avgRatings.ListId = ListGuid;
-            avgRatings.ItemId = ID;
-            avgRatings.ControlMode = SPControlMode.Display;
-            avgRatings.FieldName = "AverageRating";
+             AverageRatingFieldControl avgRatings = new AverageRatingFieldControl();
+             avgRatings.ItemContext = SPContext.GetContext(HttpContext.Current, ID, ListGuid, Web);
+             avgRatings.ListId = ListGuid;
+             avgRatings.ItemId = ID;
+             avgRatings.ControlMode = SPControlMode.Display;
+             avgRatings.FieldName = "AverageRating";
 
-            ratingsPlaceHolder.Controls.Add(avgRatings);*/
-        } 
+             ratingsPlaceHolder.Controls.Add(avgRatings);*/
+        }
         #endregion
 
-        
-public string stripSpecialChar(string longChar)
-{
-	string cleanString = "";
-	string[] allChars = longChar.Split('#');
-    if (allChars.Length>1){
-	for(int i=0; i<allChars.Length; i++)
-           {
-            	cleanString += allChars[i];
-           }
-	}
-    if (cleanString.Length > 2)
-    {
-        return cleanString.Substring(1, cleanString.Length - 2);
-    }
-    else {
-        return cleanString;
-    }
-}
 
-public string getRating(double rating)
-{
-    string html = string.Empty;
+        public string stripSpecialChar(string longChar)
+        {
+            string cleanString = "";
+            string[] allChars = longChar.Split('#');
+            if (allChars.Length > 1)
+            {
+                for (int i = 0; i < allChars.Length; i++)
+                {
+                    cleanString += allChars[i];
+                }
+            }
+            if (cleanString.Length > 2)
+            {
+                return cleanString.Substring(1, cleanString.Length - 2);
+            }
+            else
+            {
+                return cleanString;
+            }
+        }
 
-    if (rating != 0 && !Double.IsNaN(rating))
-    {
-        html = "<div style='width:80px;background-image:url(/_layouts/Images/Ratings.png);background-position:" + ((Math.Floor(rating) * 16) - 240) + "px 0px;height:16px;'></div>";
+        public string getRating(double rating)
+        {
+            string html = string.Empty;
 
-    }
-    if (rating == 0 || Double.IsNaN(rating))
-    {
-        html = "<div style='width:80px;background-image:url(/_layouts/Images/Ratings.png);background-position:-80px 0px;height:16px'></div>";
+            if (rating != 0 && !Double.IsNaN(rating))
+            {
+                html = "<div style='width:80px;background-image:url(/_layouts/Images/Ratings.png);background-position:" + ((Math.Floor(rating) * 16) - 240) + "px 0px;height:16px;'></div>";
 
-    }
-    if (Math.Floor(rating) != Math.Ceiling(rating) && rating != 0 && Double.IsNaN(rating))
-    {
-        html = "<div style='width:80px;background-image:url(/_layouts/Images/Ratings.png);background-position:" + (-(Math.Floor(rating) * 16) - 304) + "px 0px;height:16px'></div>";
+            }
+            if (rating == 0 || Double.IsNaN(rating))
+            {
+                html = "<div style='width:80px;background-image:url(/_layouts/Images/Ratings.png);background-position:-80px 0px;height:16px'></div>";
 
+            }
+            if (Math.Floor(rating) != Math.Ceiling(rating) && rating != 0 && Double.IsNaN(rating))
+            {
+                html = "<div style='width:80px;background-image:url(/_layouts/Images/Ratings.png);background-position:" + (-(Math.Floor(rating) * 16) - 304) + "px 0px;height:16px'></div>";
+
+            }
+            return html;
+        }
     }
-    return html;
-}
-    }
+       
 }

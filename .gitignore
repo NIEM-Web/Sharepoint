@@ -7,6 +7,9 @@
 .metadata
 bin/
 tmp/
+obj/
+pkg/
+pkgobj/
 *.tmp
 *.bak
 *.swp
@@ -49,6 +52,8 @@ x64/
 build/
 [Bb]in/
 [Oo]bj/
+pkg/
+pkgobj/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

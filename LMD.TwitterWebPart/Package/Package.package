@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="6a23bf8c-c53a-4a6e-a73d-3dac4172dc38" solutionId="6a23bf8c-c53a-4a6e-a73d-3dac4172dc38" resetWebServer="false" name="LMD.TwitterWebPart" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="0ade4108-4893-4018-8d8d-f8663e3d4b43" />
+  </features>
+</package>

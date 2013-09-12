@@ -102,12 +102,9 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
 
         DataView GetLikedNews(DataView dTable)
         {
-            if (SPContext.Current.Web.CurrentUser == null || string.IsNullOrEmpty(SPContext.Current.Web.CurrentUser.LoginName))
-            {
-
-
-            }
-            else
+           
+            if (SPContext.Current.Web.CurrentUser != null || !string.IsNullOrEmpty(SPContext.Current.Web.CurrentUser.LoginName))
+           
             {
                 try
                 {
@@ -223,7 +220,7 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
         /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            btnSearch.Click += new EventHandler(btnSearch_Click);
+           // btnSearch.Click += new EventHandler(handleSearch);
             try
             {
 
@@ -262,30 +259,6 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
             lvResources.DataBind();
         }
 
-        #region Button Click
-        /// <summary>
-        /// Filter even to search data.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void btnSearch_Click(object sender, EventArgs e)
-        {
-            //try
-            //{
-            //    DataView dvResults = GetData();
-
-            //    //check freetext & check drop downs
-            //    lvResources.DataSource = dvResults;// FilterSearchData(dvResults);
-            //    lvResources.DataBind();
-
-            //    if (lvResources.Items.Count == 0)
-            //        ShowNoRecords();
-            //}
-            //catch (Exception ex)
-            //{
-            //}
-        }
-        #endregion
 
         #region FilterSearchData
         /// <summary>
@@ -304,12 +277,12 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
            // Response.Write(text + "<br/>");
         }
 
-        //New version of get Data LCG
+        //New version of GetData that relies on CAML to query results from the SharePointList
         protected DataView GetData()
         {   
             DataTable dtResults = null;
             DataView dvResults = null;
-            //List<CamlQueryElements> query = new System.Collections.Generic.List<CamlQueryElements>();
+           
            
             using (SPWeb Web = SPContext.Current.Site.OpenWeb("/news"))
             {
@@ -321,6 +294,10 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
             }
 
             dvResults = dtResults.DefaultView;
+            
+            //GetLiked items
+            dvResults = GetLikedNews(new DataView(dvResults.ToTable()));
+            
             dvResults.Sort = "ArticleStartDate desc";
             dvResults.Table.Columns.Add("DateDiff", typeof(int));
             
@@ -343,7 +320,7 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
                 catch {}
             }
 
-
+            
             return dvResults;
         }
         
@@ -356,6 +333,7 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
         {
 
             Criteria contentTypeCriteria = Criteria.Eq("Content Type", "Computed", NewsContentType);
+            Criteria dateCriteria = Criteria.Geq("Modified", "DateTime", "<Today Offset='-7'/>");
             List<Expression> criteria = new List<Expression>();
 
             if (ddlCommunities.SelectedItem.Text != "All")
@@ -366,6 +344,7 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
             {
                 CreateCriteria(EstablishedCommunities, CategoryDomains, ref criteria);
             }
+            
             if (ddlAudience.SelectedItem.Text != "All")
             {
                 criteria.Add(Criteria.Eq(CategoryAudience, "LookupMulti", ddlAudience.SelectedItem.Text));
@@ -395,98 +374,43 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
                     expression = criteriaJoin;
                     break;
                 case 0:
-                    expression = contentTypeCriteria;//Operator.And(contentTypeCriteria);
+                    expression = contentTypeCriteria;
                     break;
                 case 1 :
-                    expression = criteria[0];//Operator.And(contentTypeCriteria, criteria[0]);
+                    expression = criteria[0];
                     break;
             }
 
             if (freeTextCriteria != null)
             {
-                expression = expression * (freeTextCriteria);
+                expression = expression * freeTextCriteria;
             }
+
+            if ((ddlCommunities.SelectedItem.Text == "All") && (ddlAudience.SelectedItem.Text == "All") && freeTextCriteria == null)
+            {
+                expression = expression * dateCriteria;
+            }
+
             string result = String.Format("<Where>{0}</Where>", expression.GetCAML());
             return(result);
         }
 
-        private string BuildNewsQuery(List<CamlQueryElements> query)
-        {
-            string result = string.Empty;
-            List<CamlQueryElements> newQuery = new List<CamlQueryElements>();
-
-            if (ddlCommunities.SelectedItem.Text != "All")
-            {
-                query.Add(new CamlQueryElements
-                {
-                    ComparisonOperators = "Eq",
-                    FieldName = "Category_x0020_Domains",
-                    FieldValue = ddlCommunities.SelectedItem.Text,
-                    FieldType = "LookupMulti",
-                    LogicalJoin = "Or"
-                });
-            }
-            else
-            {
-                CreateFilter("EstablishedCommunities_x003a_Tit", "Category_x0020_Domains", ref query);
-            }
-
-            if (ddlAudience.SelectedItem.Text != "All")
-            {
-                query.Add(new CamlQueryElements
-                {
-                    ComparisonOperators = "Eq",
-                    FieldName = "Category_x0020_Subject_x0020_Area_x002F_Audience",
-                    FieldValue = ddlAudience.SelectedItem.Text,
-                    FieldType = "LookupMulti",
-                    LogicalJoin = "Or"
-                });
-            }
-            else
-            {
-                CreateFilter("YourAudienceList_x003a_Title", "Category_x0020_Subject_x0020_Area_x002F_Audience", ref query);
-            }
-
-            //add in free text search
-            if (!string.IsNullOrEmpty(txtSearch.Text))
-            {
-                query.Add(new CamlQueryElements
-                {
-                    FieldName = "PublishingPageContent",
-                    FieldType = "Note",
-                    FieldValue = txtSearch.Text,
-                    ComparisonOperators = "Contains",
-                    LogicalJoin = "And"
-                });
-            }
-
-            query.Add(new CamlQueryElements
-            {
-                ComparisonOperators = "Eq",
-                FieldName = "ContentType",
-                FieldValue = "News Article",
-                LogicalJoin = "And"
-            });
-
-            result = CamlQuery.GenerateQuery(query);
-            return (result);
-        }
-
+        //Create criteria based on the current user's audience or communities of interest.
         private void CreateCriteria(string userFilter, string fieldName, ref List<Expression> criteria)
         {
-            //List<Expression> criteria = new List<Expression>();
             string[] filters = new string[] { "" };
 
             if (!string.IsNullOrEmpty(userFilter))
             {
 
-                SPFieldLookupValue domains = new SPFieldLookupValue(CurrentUser[userFilter].ToString());
-                string lookupValue = domains.LookupValue;
+                SPFieldLookupValue lookup = new SPFieldLookupValue(CurrentUser[userFilter].ToString());
+                string lookupValue = lookup.LookupValue;
                 if (string.IsNullOrEmpty(lookupValue))
                 {
                     return;
                 }
 
+                //parse out filter values... we need to get rid of the # and skip item IDs.
                 filters = lookupValue.Replace("#", string.Empty).Split(';');
 
                 foreach (string filter in filters)
@@ -504,42 +428,7 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
             }
         }
 
-        private void CreateFilter(string userFilter, string fieldName, ref List<CamlQueryElements> query)
-        {
-            string[] filters = new string[] { "" };
-            
-            if (!string.IsNullOrEmpty(userFilter))
-            {
-               
-                SPFieldLookupValue domains = new SPFieldLookupValue(CurrentUser[userFilter].ToString());
-                string lookupValue = domains.LookupValue;
-                if (string.IsNullOrEmpty(lookupValue))
-                {
-                    return;
-                }
-
-                filters = lookupValue.Replace("#",string.Empty).Split(';');
-
-                foreach(string filter in filters)
-                {
-                    //test ids. the look up values sometimes have their numeric id associated
-                    //we don't want to add those values to our query.
-                    if (System.Text.RegularExpressions.Regex.IsMatch(filter, @"^\d+$"))
-                    {
-                        continue;
-                    }
-                    query.Add(new CamlQueryElements
-                    {
-                        ComparisonOperators = "Eq",
-                        FieldName = fieldName,
-                        FieldValue = filter,
-                        FieldType = "LookupMulti",
-                        LogicalJoin = "Or"
-                    });
-                }
-            }
-        }
-
+    
 
         #region GetData (original)
         /// <summary>
@@ -685,10 +574,7 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
                             }
                             else
                             {
-
                                 sbQuery.Append("Category_x0020_Domains='" + value.Replace('#', ' ').Trim() + "'");
-//DW Remove extra filter        sbQuery.Append(" OR Category_x0020_Subject_x0020_Area_x002F_Audience='" + value.Replace('#', ' ').Trim() + "'");
-
                             }
                         }
                         else
@@ -700,7 +586,6 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
                             else
                             {
                                 sbQuery.Append(" OR Category_x0020_Domains'" + value.Replace('#', ' ').Trim() + "'");
-                                //sbQuery.Append(" OR Category_x0020_Subject_x0020_Area_x002F_Audience='" + value.Replace('#', ' ').Trim() + "'");
                             }
                         }
                     }
@@ -721,7 +606,6 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
                             else
                             {
                                 sbQuery.Append("Category_x0020_Subject_x0020_Area_x002F_Audience='" + value.Replace('#', ' ').Trim() + "'");
-//Remove extra filter           sbQuery.Append(" OR Category_x0020_Domains='" + value.Replace('#', ' ').Trim() + "'");
                             }
                         }
                         else
@@ -733,11 +617,9 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
                             else
                             {
                                 sbQuery.Append(" OR Category_x0020_Subject_x0020_Area_x002F_Audience='" + value.Replace('#', ' ').Trim() + "'");
-//Remove extra filter           sbQuery.Append(" OR Category_x0020_Domains='" + value.Replace('#', ' ').Trim() + "'");
                             }
                         }
                     }
-                    
                 }
 
                 if (sbQuery.Length == 0)
@@ -907,5 +789,7 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
             return ListItems;
         }
         #endregion
+
+        public EventHandler btnSearch_Click { get; set; }
     }
 }

@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Feature xmlns="http://schemas.microsoft.com/sharepoint/" Description="Installs the MyNiem like functionality" Id="0482a2cd-b493-4b6b-8ab0-e35a5b56a0f0" Scope="Site" Title="MyNiem - Like Functionality">
-  <ElementManifests>
-    <ElementManifest Location="UserInterestListLD\Elements.xml" />
-    <ElementFile Location="UserInterestListLD\Schema.xml" />
-    <ElementManifest Location="UserInterestListLI\Elements.xml" />
-  </ElementManifests>
-</Feature>

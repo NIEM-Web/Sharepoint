@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.Module" DefaultFile="Elements.xml" SupportedTrustLevels="All" SupportedDeploymentScopes="Web, Site" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+  <Files>
+    <ProjectItemFile Source="Elements.xml" Target="Style Library\" Type="ElementManifest" />
+    <ProjectItemFile Source="NIEM3\js\Review-Helper.html" Target="Style Library\NIEM3\js\" Type="ElementFile" />
+    <ProjectItemFile Source="NIEM3\js\Review-Helper.js" Target="Style Library\NIEM3\js\" Type="ElementFile" />
+    <ProjectItemFile Source="NIEM3\Resources.xslt" Target="Style Library\NIEM3\" Type="ElementFile" />
+    <ProjectItemFile Source="NIEM3\Tools.xslt" Target="Style Library\NIEM3\" Type="ElementFile" />
+  </Files>
+</ProjectItem>

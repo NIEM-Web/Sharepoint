@@ -1,0 +1,28 @@
+<WorkflowConfig Version="14.0.0.6137">
+	<Template BaseID="{B17BEF66-653C-4405-ACE8-F4DEB113005E}" DocLibID="{A075D58D-793D-4415-A5C5-194F85D3E35A}" XomlHref="Workflows/NIEM_Project_Info_Approval_Initiation/NIEM_Project_Info_Approval_Initiation.xoml" XomlVersion="V2.0" TaskContentType="0x01080100C9C9515DE4E24001905074F980F93160" Category="List" Name="NIEM_Project_Info_Approval_Initiation" Description=""/>
+	<Association ListID="{9A77ADB6-DAD3-4B5D-BEAE-59DEC20C9E65}" StartManually="true" TaskListID="{19F682F6-DF29-460E-9818-E5D11D11D8EE}"/>
+	<ContentTypes/>
+	<Initiation URL="_layouts/IniWrkflIP.aspx">
+		<Fields/>
+		<Parameters/>
+		<DefaultData>
+			<dfs:myFields xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dms="http://schemas.microsoft.com/office/2009/documentManagement/types" xmlns:dfs="http://schemas.microsoft.com/office/infopath/2003/dataFormSolution" xmlns:q="http://schemas.microsoft.com/office/infopath/2009/WSSList/queryFields" xmlns:d="http://schemas.microsoft.com/office/infopath/2009/WSSList/dataFields" xmlns:ma="http://schemas.microsoft.com/office/2009/metadata/properties/metaAttributes" xmlns:pc="http://schemas.microsoft.com/office/infopath/2007/PartnerControls" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<dfs:queryFields/>
+				<dfs:dataFields>
+					<d:SharePointListItem_RW/>
+				</dfs:dataFields>
+			</dfs:myFields>
+		</DefaultData>
+	</Initiation>
+	<Extended>
+		<Fields/>
+	</Extended>
+	<MetaData>
+		<ExtendedStatusColumnValues>
+			<StatusColumnValue>Canceled</StatusColumnValue>
+			<StatusColumnValue>Approved</StatusColumnValue>
+			<StatusColumnValue>Rejected</StatusColumnValue>
+		</ExtendedStatusColumnValues>
+		<Instantiation_FormURI Version="V2.0">Workflows/NIEM_Project_Info_Approval_Initiation/NIEM_Project_Info_Approval_Initiation.xsn</Instantiation_FormURI>
+	</MetaData>
+</WorkflowConfig>

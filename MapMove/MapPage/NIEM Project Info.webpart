@@ -1,0 +1,371 @@
+﻿<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="Microsoft.SharePoint.WebPartPages.DataFormWebPart, Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+      <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="InitialAsyncDataFetch" type="bool">False</property>
+        <property name="ChromeType" type="chrometype">None</property>
+        <property name="Title" type="string">NIEM Project Info V7</property>
+        <property name="Height" type="string" />
+        <property name="CacheXslStorage" type="bool">True</property>
+        <property name="XslLink" type="string" null="true" />
+        <property name="AllowZoneChange" type="bool">True</property>
+        <property name="AllowEdit" type="bool">True</property>
+        <property name="XmlDefinitionLink" type="string" />
+        <property name="DataFields" type="string">@Title,Organization Name;@_ModerationComments,Approver Comments;@FirstName,First Name;@FullName,Full Name;@Email,E-mail Address;@Company,Company;@JobTitle,Job Title;@WorkPhone,Business Phone;@HomePhone,Home Phone;@CellPhone,Mobile Number;@WorkFax,Fax Number;@WorkAddress,Address;@WorkCity,City;@WorkState,State/Province;@WorkZip,ZIP/Postal Code;@WorkCountry,Country/Region;@WebPage,Web Page;@Comments,Notes;@ProjectTitle,Project Title;@ContactName,Point of Contact Name;@ProjectDescription,Project Description;@IntlAddress,Is this an United States Address?;@Latitude,Latitude;@Longitude,Longitude;@CaseStudy,Do you have a case study for your project?;@HelpWithCaseStudy,Can a NIEM PMO contact you to assist in developing a case study for your project?;@MentorNIEMUsers,Are you interested in mentoring other NIEM users in your area?;@BestOfNIEM,BestOfNIEM;@Category_x0020_Domains,Category Domains;@NIEMProj,NIEM_Project_Info_Approval_Initiation;@_ModerationStatus,Approval Status;@CaseStudy1,Case Study Link;@CaseStudyId,CaseStudyId;@WebServiceUpdate,WebServiceUpdate;@ID,ID;@ContentType,Content Type;@Modified,Modified;@Created,Created;@Author,Created By;@Editor,Modified By;@_UIVersionString,Version;@Attachments,Attachments;@File_x0020_Type,File Type;@FileLeafRef,Name (for use in forms);@FileDirRef,Path;@FSObjType,Item Type;@_HasCopyDestinations,Has Copy Destinations;@_CopySource,Copy Source;@ContentTypeId,Content Type ID;@_UIVersion,UI Version;@Created_x0020_Date,Created;@FileRef,URL Path;@ItemChildCount,Item Child Count;@FolderChildCount,Folder Child Count;</property>
+        <property name="AutoRefreshInterval" type="int">60</property>
+        <property name="NoDefaultStyle" type="string">TRUE</property>
+        <property name="ListDisplayName" type="string" null="true" />
+        <property name="AutoRefresh" type="bool">False</property>
+        <property name="ViewFlag" type="string">8</property>
+        <property name="ListUrl" type="string" null="true" />
+        <property name="AllowConnect" type="bool">True</property>
+        <property name="Description" type="string" />
+        <property name="AllowClose" type="bool">True</property>
+        <property name="ShowWithSampleData" type="bool">False</property>
+        <property name="ParameterBindings" type="string">
+	&lt;ParameterBinding Name="dvt_apos" Location="Postback;Connection"/&gt;
+	&lt;ParameterBinding Name="ManualRefresh" Location="WPProperty[ManualRefresh]"/&gt;
+	&lt;ParameterBinding Name="UserID" Location="CAMLVariable" DefaultValue="CurrentUserName"/&gt;
+	&lt;ParameterBinding Name="Today" Location="CAMLVariable" DefaultValue="CurrentDate"/&gt;
+	&lt;ParameterBinding Name="ListID" Location="None" DefaultValue="{7af8549f-607d-4b0b-bd8d-75fa7c3f4758}"/&gt;
+	&lt;ParameterBinding Name="WebURL" Location="None" DefaultValue="/documentsdb/"/&gt;
+	&lt;ParameterBinding Name="search" Location="QueryString(search)" DefaultValue=""/&gt;
+	&lt;ParameterBinding Name="dvt_firstrow" Location="Postback;Connection"/&gt;
+	&lt;ParameterBinding Name="dvt_nextpagedata" Location="Postback;Connection"/&gt;
+</property>
+        <property name="Xsl" type="string">
+	&lt;xsl:stylesheet xmlns:x="http://www.w3.org/2001/XMLSchema" xmlns:d="http://schemas.microsoft.com/sharepoint/dsp" version="1.0" exclude-result-prefixes="xsl msxsl ddwrt" xmlns:ddwrt="http://schemas.microsoft.com/WebParts/v2/DataView/runtime" xmlns:asp="http://schemas.microsoft.com/ASPNET/20" xmlns:__designer="http://schemas.microsoft.com/WebParts/v2/DataView/designer" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:SharePoint="Microsoft.SharePoint.WebControls" xmlns:ddwrt2="urn:frontpage:internal"&gt;
+	&lt;xsl:output method="html" indent="no"/&gt;
+	&lt;xsl:decimal-format NaN=""/&gt;
+	&lt;xsl:param name="dvt_apos"&gt;&amp;apos;&lt;/xsl:param&gt;
+	&lt;xsl:param name="ManualRefresh"/&gt;
+	&lt;xsl:param name="ListID"&gt;{7af8549f-607d-4b0b-bd8d-75fa7c3f4758}&lt;/xsl:param&gt;
+	&lt;xsl:param name="WebURL"&gt;/documentsdb/&lt;/xsl:param&gt;
+	&lt;xsl:param name="search" /&gt;
+	&lt;xsl:param name="dvt_firstrow"&gt;1&lt;/xsl:param&gt;
+	&lt;xsl:param name="dvt_nextpagedata" /&gt;
+	&lt;xsl:variable name="dvt_1_automode"&gt;0&lt;/xsl:variable&gt;
+
+	
+
+	&lt;xsl:template match="/" xmlns:x="http://www.w3.org/2001/XMLSchema" xmlns:d="http://schemas.microsoft.com/sharepoint/dsp" xmlns:asp="http://schemas.microsoft.com/ASPNET/20" xmlns:__designer="http://schemas.microsoft.com/WebParts/v2/DataView/designer" xmlns:SharePoint="Microsoft.SharePoint.WebControls"&gt;
+		&lt;xsl:choose&gt;
+			&lt;xsl:when test="($ManualRefresh = 'True')"&gt;
+				&lt;table width="100%" border="0" cellpadding="0" cellspacing="0"&gt;
+					&lt;tr&gt;
+						&lt;td valign="top"&gt;
+							&lt;xsl:call-template name="dvt_1"/&gt;
+						&lt;/td&gt;
+						&lt;td width="1%" class="ms-vb" valign="top"&gt;
+							&lt;img src="/_layouts/images/staticrefresh.gif" id="ManualRefresh" border="0" onclick="javascript: {ddwrt:GenFireServerEvent('__cancel')}" alt="Click here to refresh the dataview."/&gt;
+						&lt;/td&gt;
+					&lt;/tr&gt;
+				&lt;/table&gt;
+			&lt;/xsl:when&gt;
+			&lt;xsl:otherwise&gt;
+				&lt;xsl:call-template name="dvt_1"/&gt;
+			&lt;/xsl:otherwise&gt;
+		&lt;/xsl:choose&gt;
+	&lt;/xsl:template&gt;
+
+	&lt;xsl:template name="dvt_1"&gt;
+		&lt;xsl:variable name="dvt_StyleName"&gt;RepForm1&lt;/xsl:variable&gt;
+		&lt;xsl:variable name="Rows" select="/dsQueryResponse/Rows/Row[($search !='' and contains(translate(@ProjectTitle,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'),translate($search,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ'))) or ($search='')]" /&gt;		
+
+		&lt;xsl:variable name="dvt_RowCount" select="count($Rows)" /&gt;
+		&lt;xsl:variable name="RowLimit" select="5" /&gt;
+		&lt;xsl:variable name="FirstRow" select="$dvt_firstrow" /&gt;
+		&lt;xsl:variable name="LastRow"&gt;
+			&lt;xsl:choose&gt;
+				&lt;xsl:when test="($FirstRow + $RowLimit - 1) &amp;gt; $dvt_RowCount"&gt;&lt;xsl:value-of select="$dvt_RowCount" /&gt;&lt;/xsl:when&gt;
+				&lt;xsl:otherwise&gt;&lt;xsl:value-of select="$FirstRow + $RowLimit - 1" /&gt;&lt;/xsl:otherwise&gt;
+			&lt;/xsl:choose&gt;
+		&lt;/xsl:variable&gt;
+		
+		&lt;xsl:variable name="IsEmpty" select="$dvt_RowCount = 0 or $RowLimit = 0" /&gt;
+		
+		
+		
+		&lt;xsl:variable name="dvt_IsEmpty" select="$dvt_RowCount = 0" /&gt;
+				&lt;style type="text/css"&gt;
+					#pl-search-criteria {
+						width: 250px;
+						height:35px;
+						line-height:35px;
+						padding-left:30px;
+						font-size: 11px;
+						font-style:normal;
+						border-color: #e3e3e3;
+						border-width: 0px;
+						border-style: solid;
+						border-right:none;
+						background-image:url(&amp;quot;/Style%20Library/NIEM3/images/NIEM-sprite.png&amp;quot;);
+						background-attachment:scroll;
+						background-repeat:no-repeat;
+						background-position: -520px -100px;
+						background-color: transparent;
+						vertical-align:top;
+					}
+					#pl-search-button {
+						vertical-align:top;
+					}	
+					#pl-search-button &amp;gt; img {
+						border:none;
+					}
+					#pl-new-project {
+						padding-left:80px;
+						vertical-align:top;
+					}
+					#pl-new-project &amp;gt; img {
+						border:none;
+					}
+				&lt;/style&gt;   
+
+		&lt;xsl:choose&gt;
+			&lt;xsl:when test="$dvt_IsEmpty"&gt;
+				&lt;xsl:call-template name="dvt_1.empty" /&gt;
+			&lt;/xsl:when&gt;
+			&lt;xsl:otherwise&gt;
+				&lt;div&gt;
+					&lt;input id="pl-search-criteria" /&gt;	
+					&lt;a id="pl-search-button" href="javascript:void(0);"&gt;&lt;img alt="Search Projects" src="/Style Library/niem/js/planet/images/searchProjects.png" /&gt;&lt;/a&gt;
+					&lt;a id="pl-new-project" href="javascript:void(0);"&gt;&lt;img alt="Submit New Project" src="/Style Library/niem/js/planet/images/submitProject.png" /&gt;&lt;/a&gt;		
+				&lt;/div&gt;
+				
+				&lt;table border="0" width="100%"&gt;
+					&lt;xsl:call-template name="dvt_1.body"&gt;
+						&lt;xsl:with-param name="Rows" select="$Rows[position() &amp;gt;= $FirstRow and position() &amp;lt;= $LastRow]" /&gt;
+						
+						
+						
+						&lt;xsl:with-param name="FirstRow" select="1" /&gt;
+						&lt;xsl:with-param name="LastRow" select="$dvt_RowCount" /&gt;
+
+						
+
+						
+
+						
+
+					&lt;/xsl:call-template&gt;
+				&lt;/table&gt;
+			&lt;/xsl:otherwise&gt;
+		&lt;/xsl:choose&gt;
+		&lt;xsl:call-template name="dvt_1.commandfooter"&gt;
+			&lt;xsl:with-param name="FirstRow" select="$FirstRow" /&gt;
+			&lt;xsl:with-param name="LastRow" select="$LastRow" /&gt;
+			&lt;xsl:with-param name="RowLimit" select="$RowLimit" /&gt;
+			&lt;xsl:with-param name="dvt_RowCount" select="$dvt_RowCount" /&gt;
+			&lt;xsl:with-param name="RealLastRow" select="number(ddwrt:NameChanged('',-100))" /&gt;
+		&lt;/xsl:call-template&gt;
+	&lt;/xsl:template&gt;
+	&lt;xsl:template name="dvt_1.body"&gt;
+		&lt;xsl:param name="Rows" /&gt;
+		&lt;xsl:param name="FirstRow" /&gt;
+		&lt;xsl:param name="LastRow" /&gt;
+		&lt;xsl:for-each select="$Rows"&gt;
+			&lt;xsl:variable name="dvt_KeepItemsTogether" select="false()" /&gt;
+			&lt;xsl:variable name="dvt_HideGroupDetail" select="false()" /&gt;
+			&lt;xsl:if test="(position() &amp;gt;= $FirstRow and position() &amp;lt;= $LastRow) or $dvt_KeepItemsTogether"&gt;
+				&lt;xsl:if test="not($dvt_HideGroupDetail)" ddwrt:cf_ignore="1"&gt;
+					&lt;xsl:call-template name="dvt_1.rowview" /&gt;
+				&lt;/xsl:if&gt;
+			&lt;/xsl:if&gt;
+		&lt;/xsl:for-each&gt;
+
+		
+
+	&lt;/xsl:template&gt;
+	&lt;xsl:template name="dvt_1.rowview"&gt;
+		&lt;!--
+		&lt;xsl:if test="ddwrt:IfHasRights(16)"&gt;
+			&lt;tr&gt;
+				&lt;td width="100%" colspan="2" class="ms-vb"&gt;
+				
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/xsl:if&gt;
+		--&gt;
+		&lt;tr&gt;
+			&lt;td width="100%" class="ms-vb"&gt;
+				&lt;b&gt;
+					&lt;a href="javascript:void(0);" onclick="javascript:openDisplayForm({@ID});"&gt;
+										
+
+						&lt;xsl:if test="@BestOfNIEM='1' or msxsl:string-compare(string(@BestOfNIEM),'Yes','','i')=0 or msxsl:string-compare(string(@BestOfNIEM),'True','','i')=0"&gt;
+							&lt;img alt="Best of NIEM" src="/Style Library/niem/js/planet/images/BestOfNIEM.png" style="padding-right:10px; padding-left:2px; vertical-align: middle; border:none" /&gt;
+
+						&lt;/xsl:if&gt;
+						&lt;xsl:if test="@CaseStudy='1' or msxsl:string-compare(string(@CaseStudy),'Yes','','i')=0 or msxsl:string-compare(string(@CaseStudy),'True','','i')=0"&gt;
+							&lt;img alt="Case Study" src="/Style Library/niem/js/planet/images/CaseStudy.png" style="padding-right:10px; padding-left:2px; vertical-align: middle; border:none" /&gt;
+						&lt;/xsl:if&gt;
+
+						&lt;xsl:value-of select="@ProjectTitle"/&gt;
+					&lt;/a&gt;
+				&lt;/b&gt;
+				&lt;span style="padding-left:20px"&gt;
+					&lt;xsl:value-of select="@WorkCity" /&gt;, &lt;xsl:value-of select="@WorkState" /&gt;
+				&lt;/span&gt;
+			&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td width="100%" class="ms-vb"&gt;
+				&lt;xsl:value-of select="@ProjectDescription" /&gt;
+				&lt;hr /&gt;
+			&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;xsl:if test="$dvt_1_automode = '1'" ddwrt:cf_ignore="1"&gt;
+			&lt;tr&gt;
+				&lt;td width="100%" colspan="2" class="ms-vb"&gt;
+					&lt;span ddwrt:amkeyfield="ID" ddwrt:amkeyvalue="ddwrt:EscapeDelims(string(@ID))" ddwrt:ammode="view" /&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/xsl:if&gt;
+	&lt;/xsl:template&gt;
+	&lt;xsl:template name="dvt_1.empty"&gt;
+		&lt;xsl:variable name="dvt_ViewEmptyText"&gt;There are no items to show in this view.&lt;/xsl:variable&gt;
+		&lt;table border="0" width="100%"&gt;
+			&lt;tr&gt;
+				&lt;td style="height: 64px; vertical-align:top"&gt;
+
+					&lt;div&gt;
+						&lt;input id="pl-search-criteria" /&gt;	
+						&lt;a id="pl-search-button" href="javascript:void(0);"&gt;&lt;img alt="Search Projects" src="/Style Library/niem/js/planet/images/searchProjects.png" /&gt;&lt;/a&gt;
+						&lt;a id="pl-new-project" href="javascript:void(0);"&gt;&lt;img alt="Submit New Project" src="/Style Library/niem/js/planet/images/submitProject.png" /&gt;&lt;/a&gt;		
+					&lt;/div&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td class="ms-vb"&gt;
+					&lt;xsl:value-of select="$dvt_ViewEmptyText"/&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/table&gt;
+	&lt;/xsl:template&gt;
+	&lt;xsl:template name="dvt_1.commandfooter"&gt;
+		&lt;xsl:param name="FirstRow" /&gt;
+		&lt;xsl:param name="LastRow" /&gt;
+		&lt;xsl:param name="RowLimit" /&gt;
+		&lt;xsl:param name="dvt_RowCount" /&gt;
+		&lt;xsl:param name="RealLastRow" /&gt;
+		&lt;table cellspacing="0" cellpadding="4" border="0" width="100%"&gt;
+			&lt;tr&gt;
+				&lt;xsl:if test="$FirstRow &amp;gt; 1 or $LastRow &amp;lt; $dvt_RowCount"&gt;
+					&lt;xsl:call-template name="dvt_1.navigation"&gt;
+						&lt;xsl:with-param name="FirstRow" select="$FirstRow" /&gt;
+						&lt;xsl:with-param name="LastRow" select="$LastRow" /&gt;
+						&lt;xsl:with-param name="RowLimit" select="$RowLimit" /&gt;
+						&lt;xsl:with-param name="dvt_RowCount" select="$dvt_RowCount" /&gt;
+						&lt;xsl:with-param name="RealLastRow" select="$RealLastRow" /&gt;
+					&lt;/xsl:call-template&gt;
+				&lt;/xsl:if&gt;
+			&lt;/tr&gt;
+		&lt;/table&gt;
+	&lt;/xsl:template&gt;
+	&lt;xsl:template name="dvt_1.navigation"&gt;
+		&lt;xsl:param name="FirstRow" /&gt;
+		&lt;xsl:param name="LastRow" /&gt;
+		&lt;xsl:param name="RowLimit" /&gt;
+		&lt;xsl:param name="dvt_RowCount" /&gt;
+		&lt;xsl:param name="RealLastRow" /&gt;
+		&lt;xsl:variable name="PrevRow"&gt;
+			&lt;xsl:choose&gt;
+				&lt;xsl:when test="$FirstRow - $RowLimit &amp;lt; 1"&gt;1&lt;/xsl:when&gt;
+				&lt;xsl:otherwise&gt;
+					&lt;xsl:value-of select="$FirstRow - $RowLimit" /&gt;
+				&lt;/xsl:otherwise&gt;
+			&lt;/xsl:choose&gt;
+		&lt;/xsl:variable&gt;
+		&lt;xsl:variable name="LastRowValue"&gt;
+			&lt;xsl:choose&gt;
+				&lt;xsl:when test="$LastRow &amp;gt; $RealLastRow"&gt;
+					&lt;xsl:value-of select="$LastRow"&gt;&lt;/xsl:value-of&gt;
+				&lt;/xsl:when&gt;
+				&lt;xsl:otherwise&gt;
+					&lt;xsl:value-of select="$RealLastRow"&gt;&lt;/xsl:value-of&gt;
+				&lt;/xsl:otherwise&gt;
+			&lt;/xsl:choose&gt;
+		&lt;/xsl:variable&gt;
+		&lt;xsl:variable name="NextRow"&gt;
+			&lt;xsl:value-of select="$LastRowValue + 1"&gt;&lt;/xsl:value-of&gt;
+		&lt;/xsl:variable&gt;
+		&lt;td nowrap="nowrap" class="ms-paging" align="right"&gt;
+			&lt;xsl:if test="$dvt_firstrow &amp;gt; 1" ddwrt:cf_ignore="1"&gt;
+				&lt;a&gt;
+				&lt;xsl:attribute name="href"&gt;javascript: &lt;xsl:value-of select="ddwrt:GenFireServerEvent('dvt_firstrow={1};dvt_startposition={}')" /&gt;;&lt;/xsl:attribute&gt;
+				Start&lt;/a&gt;
+				&lt;xsl:text disable-output-escaping="yes" ddwrt:nbsp-preserve="yes"&gt;&amp;amp;nbsp;&lt;/xsl:text&gt;
+				&lt;a&gt;
+				&lt;xsl:attribute name="href"&gt;javascript: history.back();&lt;/xsl:attribute&gt;
+				&lt;img src="/_layouts/images/prev.gif" border="0" alt="Previous" /&gt;
+				&lt;/a&gt;
+				&lt;xsl:text disable-output-escaping="yes" ddwrt:nbsp-preserve="yes"&gt;&amp;amp;nbsp;&lt;/xsl:text&gt;
+			&lt;/xsl:if&gt;
+			&lt;xsl:value-of select="$FirstRow" /&gt;
+			 - &lt;xsl:value-of select="$LastRowValue" /&gt;
+			&lt;xsl:text xmlns:ddwrt="http://schemas.microsoft.com/WebParts/v2/DataView/runtime" ddwrt:nbsp-preserve="yes" disable-output-escaping="yes"&gt;&amp;amp;nbsp;&lt;/xsl:text&gt;
+			&lt;xsl:if test="$LastRowValue &amp;lt; $dvt_RowCount or string-length($dvt_nextpagedata)!=0" ddwrt:cf_ignore="1"&gt;
+				&lt;a&gt;
+				&lt;xsl:attribute name="href"&gt;javascript: &lt;xsl:value-of select="ddwrt:GenFireServerEvent(concat('dvt_firstrow={',$NextRow,'};dvt_startposition={',$dvt_nextpagedata,'}'))" /&gt;;&lt;/xsl:attribute&gt;
+				&lt;img src="/_layouts/images/next.gif" border="0" alt="Next" /&gt;
+				&lt;/a&gt;
+			&lt;/xsl:if&gt;
+		&lt;/td&gt;
+	&lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;</property>
+        <property name="EnableOriginalValue" type="bool">False</property>
+        <property name="CacheXslTimeOut" type="int">86400</property>
+        <property name="Hidden" type="bool">False</property>
+        <property name="ListName" type="string" />
+        <property name="DataSourceID" type="string" />
+        <property name="FireInitialRow" type="bool">True</property>
+        <property name="ManualRefresh" type="bool">False</property>
+        <property name="ViewFlags" type="Microsoft.SharePoint.SPViewFlags, Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">Hidden</property>
+        <property name="ChromeState" type="chromestate">Normal</property>
+        <property name="AllowHide" type="bool">True</property>
+        <property name="PageSize" type="int">5</property>
+        <property name="SampleData" type="string" null="true" />
+        <property name="AsyncRefresh" type="bool">False</property>
+        <property name="HelpMode" type="helpmode">Modeless</property>
+        <property name="ListId" type="System.Guid, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">00000000-0000-0000-0000-000000000000</property>
+        <property name="UseSQLDataSourcePaging" type="bool">True</property>
+        <property name="AllowMinimize" type="bool">True</property>
+        <property name="TitleUrl" type="string" />
+        <property name="CatalogIconImageUrl" type="string" />
+        <property name="DataSourcesString" type="string">&lt;%@ Register TagPrefix="cc1" Namespace="Microsoft.SharePoint.WebControls" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %&gt;&lt;%@ Register TagPrefix="cc2" Namespace="Microsoft.SharePoint.WebPartPages" Assembly="Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" %&gt;&lt;cc1:SPDataSource runat="server" UseInternalName="True" SelectCommand="&amp;lt;View&amp;gt;&amp;lt;Query&amp;gt;&amp;lt;OrderBy&amp;gt;&amp;lt;FieldRef Name=&amp;quot;BestOfNIEM&amp;quot; Ascending=&amp;quot;FALSE&amp;quot;/&amp;gt;&amp;lt;FieldRef Name=&amp;quot;ProjectTitle&amp;quot; Ascending=&amp;quot;TRUE&amp;quot;/&amp;gt;&amp;lt;/OrderBy&amp;gt;&amp;lt;/Query&amp;gt;&amp;lt;/View&amp;gt;" ID="dataformwebpart1" InsertCommand="" UseServerDataFormat="True" DataSourceMode="List" UpdateCommand="" DeleteCommand=""&gt;&lt;UpdateParameters&gt;
+&lt;cc2:DataFormParameter ParameterKey="ListID" PropertyName="ParameterValues" DefaultValue="{7af8549f-607d-4b0b-bd8d-75fa7c3f4758}" Name="ListID"&gt;&lt;/cc2:DataFormParameter&gt;
+&lt;cc2:DataFormParameter ParameterKey="WebURL" PropertyName="ParameterValues" DefaultValue="/documentsdb/" Name="WebURL"&gt;&lt;/cc2:DataFormParameter&gt;
+&lt;/UpdateParameters&gt;
+&lt;InsertParameters&gt;
+&lt;cc2:DataFormParameter ParameterKey="ListID" PropertyName="ParameterValues" DefaultValue="{7af8549f-607d-4b0b-bd8d-75fa7c3f4758}" Name="ListID"&gt;&lt;/cc2:DataFormParameter&gt;
+&lt;cc2:DataFormParameter ParameterKey="WebURL" PropertyName="ParameterValues" DefaultValue="/documentsdb/" Name="WebURL"&gt;&lt;/cc2:DataFormParameter&gt;
+&lt;/InsertParameters&gt;
+&lt;DeleteParameters&gt;
+&lt;cc2:DataFormParameter ParameterKey="ListID" PropertyName="ParameterValues" DefaultValue="{7af8549f-607d-4b0b-bd8d-75fa7c3f4758}" Name="ListID"&gt;&lt;/cc2:DataFormParameter&gt;
+&lt;cc2:DataFormParameter ParameterKey="WebURL" PropertyName="ParameterValues" DefaultValue="/documentsdb/" Name="WebURL"&gt;&lt;/cc2:DataFormParameter&gt;
+&lt;/DeleteParameters&gt;
+&lt;SelectParameters&gt;
+&lt;cc2:DataFormParameter ParameterKey="ListID" PropertyName="ParameterValues" DefaultValue="{7af8549f-607d-4b0b-bd8d-75fa7c3f4758}" Name="ListID"&gt;&lt;/cc2:DataFormParameter&gt;
+&lt;cc2:DataFormParameter ParameterKey="WebURL" PropertyName="ParameterValues" DefaultValue="/documentsdb/" Name="WebURL"&gt;&lt;/cc2:DataFormParameter&gt;
+&lt;/SelectParameters&gt;
+&lt;/cc1:SPDataSource&gt;
+</property>
+        <property name="DisplayName" type="string" />
+        <property name="PageType" type="Microsoft.SharePoint.PAGETYPE, Microsoft.SharePoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">PAGE_NORMALVIEW</property>
+        <property name="Width" type="string" />
+        <property name="ExportMode" type="exportmode">All</property>
+        <property name="Direction" type="direction">NotSet</property>
+        <property name="ViewContentTypeId" type="string" />
+        <property name="HelpUrl" type="string" />
+        <property name="XmlDefinition" type="string" />
+        <property name="Default" type="string" />
+        <property name="TitleIconImageUrl" type="string" />
+        <property name="MissingAssembly" type="string">Cannot import this Web Part.</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>

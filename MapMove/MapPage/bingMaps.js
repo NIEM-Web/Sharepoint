@@ -1,0 +1,522 @@
+﻿var niemApp = {
+	map : undefined,
+	webUrl : 'https://www.niem.gov/documentsdb',
+	imagesURL : "/Style Library/niem/js/planet/images",
+//Implemented in getMap()
+//   pinInfoBox : new Microsoft.Maps.Infobox(
+//		new Microsoft.Maps.Location( 0, 0 ), { visible: false }
+//	),
+//    infoboxLayer : new Microsoft.Maps.EntityCollection(),
+//    pinLayer : new Microsoft.Maps.EntityCollection(),
+	itemLookupCounter : 0,
+	addressQuery : [], //array of objects
+	contactListInfo : {
+		listName : "NIEM Project Info",
+		viewFields : roboCAML.ViewFields( [ "WorkAddress", "WorkCity", "WorkState", "WorkZip", "Latitude", "Longitude", "ProjectTitle", "ProjectDescription", "WebPage", "BestOfNIEM", "CaseStudy", "CaseStudy1", "CaseStudyId", "ID" ] ),
+		allItemsQuery : roboCAML.Query({
+			listName: "NIEM Project Info",
+			closeCaml: "SPServices",
+			OrderBy : {
+				ID: false
+			},
+			config: [
+				{
+					op: "!=",
+					staticName: "ID",
+					value: 0
+				}
+			]
+		}),
+		//Changed the site completely, have no time to debug and find out why this version isn't working with webURL...
+		notNullQuery : roboCAML.Query({
+			listName: "NIEM Project Info",
+			closeCaml: "SPServices",
+			config: [
+				{
+					filter: "&&",
+					op: "isnotnull",
+					staticName: "Latitude"
+				},
+				{
+					filter: "&&",
+					op: "isnotnull",
+					staticName: "Longitude"
+				}
+//  RKS - This stopped working after the move.  Chris' commented said it was needed so I am leaving it off.
+//				,
+//				{
+//					//Trim out non-approved results. Not really needed, but good for testing nonetheless.
+//					op: "=",
+//					staticName: "_ModerationStatus",
+//					value: 0
+//				}
+			]
+		}),
+		isNullQuery : roboCAML.Query({
+			listName: "NIEM Project Info",
+			closeCaml: "SPServices",
+			config: [
+				{
+					filter: "||",
+					op: "isNull",
+					staticName: "Latitude"
+				},
+				{
+					op: "isnull",
+					staticName: "Longitude"
+				}
+			]
+		})
+	}
+};
+
+//Start Processing
+$(document).ready(function() {
+//debugger;
+	getMap();
+	getItems();
+
+	niemApp.map.setView({
+		zoom: 2,
+		bounds: niemApp.map.getCenter()
+	});
+	
+	//click handlers to the NIEM Project Info web part on that same page.
+	$("#pl-new-project").click(function(e) {
+		e.preventDefault();
+
+		OpenModalForm({
+			staticListName: "NIEMProjectInfo",
+			L_Menu_BaseUrl: niemApp.webUrl,
+			formType: "New",
+			width: 1000,
+			showMaximized: true,
+			callback: function( dialogResult ) {
+				var feedback = ( dialogResult ) ?
+					"This item has been saved..." :
+					"The modal window has been closed. Nothing has been modified..."
+				;
+				
+				//alert( dialogResult );
+				
+				//debugger;
+				
+				//SP.UI.ModalDialog.commonModalDialogClose( dialogResult );
+				SP.UI.Notify.addNotification( feedback, false );
+				if ( dialogResult ) {
+					window.location = window.location.href.replace("#", "");
+				}
+			}
+		});
+	});
+	
+	$("#pl-search-button").click(function( e ) {
+		e.preventDefault();
+		
+		var searchValue = $("#pl-search-criteria").val(),
+			url = window.location
+		; //local vars
+		
+		
+		window.location = url.href.split("?")[0].replace( url.hash, "" ).replace("#", "") + "?search=" + searchValue;
+		
+	});
+
+	
+	
+	
+	
+});
+
+//Helper functions
+function undefinedCheck( v ) {
+	return ( v ) ? v : "";
+}
+
+function showProjectInfo( project ) {
+	var $this = $( project );
+
+	$this.preventDefault();
+
+}
+
+function openDisplayForm( id ) {
+	OpenModalForm({
+		ID: id,
+		staticListName: "NIEMProjectInfo",
+		title: "Project Details",
+		L_Menu_BaseUrl: niemApp.webUrl
+	});
+}
+
+function OpenModalForm( options ) {
+	/**************************************************************************************************************
+	// Why so many options M$? /smh
+	// http://msdn.microsoft.com/en-us/library/ff410259
+	//
+	// Valid options listed here: //http://blogs.msdn.com/b/sharepointdev/archive/2011/01/13/using-the-dialog-platform.aspx
+	*************************
+	// These options are the bare minimum needed to open a modal dialog.
+	// staticListName
+	// ID
+	*************************
+	// formType ~ Default: DispForm
+	// title
+	// url
+	// html
+	// x ~ Default to center of axis
+	// y ~ Default to center of axis
+	// width: 800 ~ Default
+	// height: 600 ~ Default.
+	// allowMaximize: true ~ Default.
+	// showMaximized: false ~ Default.
+	// showClose: true ~ Default.
+	// autoSize: false ~ Default.
+	// callback: onDialogClose ~ Default.
+
+	********************************************************************
+	Use args to pass data to the modal.  Access using: window.frameElement.dialogArgs
+	*********************************************************************
+	// args: {} ~ Default.
+	***************************************************************************************************************/
+
+	// Safeguard the options param
+	options = options || {};
+	//options.formType = options.formType || "display";
+	//url will find current site for each scenario
+	var url,
+		formType
+	; //local vars
+	//L_Menu_BaseUrl --- //http://community.zevenseas.com/Blogs/Vardhaman/Lists/Posts/Post.aspx?ID=9
+
+	if ( options.hasOwnProperty("L_Menu_BaseUrl") ) {
+		L_Menu_BaseUrl = options.L_Menu_BaseUrl
+	}
+	
+	if ( options.hasOwnProperty("url") ) {
+		//Locates full path URL's or relative URL's
+		if ( options.url.substring( 0,1 ) === "." || options.url.substring( 0,4 ) === "http" ) {
+			url = options.url;
+		} else {
+			url = L_Menu_BaseUrl + options.url;
+		}
+		//deletes property to prevent overwriting when extending options
+		delete options.url;
+	} else {
+		try {
+			switch ( options.formType.toLowerCase() ) {
+				case "display":
+					formType = "DispForm";
+					break;
+				case "edit":
+					formType = "EditForm";
+					break;
+				case "new":
+					formType = "NewForm";
+					break;
+				default:
+					formType = "DispForm";
+					break;
+			}		
+		} catch( e ) {
+			formType = "CustomDispForm";
+		}
+
+		//Default the base URL to the url variable
+		if ( L_Menu_BaseUrl === "" ) {
+			url = "/Lists/" + options.staticListName + "/" + formType + ".aspx?ID=" + options.ID;
+		} else {
+			url = L_Menu_BaseUrl + "/Lists/" + options.staticListName + "/" + formType + ".aspx?ID=" + options.ID;
+		}
+	}
+
+	//Rid jQuery dependency on this method...
+	var opt = {
+		title: options.title || "",
+		url: url,
+		html: options.html || undefined,
+		height: options.height || 600,
+		width: options.width || 800,
+		allowMaximize: options.allowMaximize || true,
+		showMaximized: options.showMaximized || false,
+		showClose: options.showClose || true,
+		autoSize: options.autoSize || false,
+		dialogReturnValueCallback: options.callback || function() {},
+		//Use args to pass data to the modal.  Access using: window.frameElement.dialogArgs
+		args: options.args || {}
+	};
+
+	//debugger;
+	//Create modal
+	ExecuteOrDelayUntilScriptLoaded(
+		function() {
+			SP.UI.ModalDialog.showModalDialog( opt );
+		},
+		'sp.js'
+	);
+}
+
+//End Helper functions
+
+
+/*******************************
+~~~~~~~~~~~~~~~~~~~~~
+//MAP FUNCS
+~~~~~~~~~~~~~~~~~~~~~
+*******************************/
+function getMap() {
+	niemApp.map = new Microsoft.Maps.Map(
+		document.getElementById('pl-bing-map'),
+		{
+			credentials: "AnnArQwNIgUpJT2pwG-r8eNlG9bD1s80u6l4vk-Ar24jRnh_bQO25Mv_5gSb8t3v",
+			enableSearchLogo: false,
+			enableClickableLogo: false,
+			//showDashboard: false,
+			//zoom: 3,
+			inertiaIntensity: 0.85
+		}
+	);
+
+	// Create the info box for the pushpin
+    niemApp.pinInfoBox = new Microsoft.Maps.Infobox(
+		new Microsoft.Maps.Location( 0, 0 ),
+		{
+			visible: false
+		}
+	),
+    niemApp.infoboxLayer = new Microsoft.Maps.EntityCollection(),
+    niemApp.pinLayer = new Microsoft.Maps.EntityCollection(),
+
+	niemApp.infoboxLayer.push( niemApp.pinInfoBox );
+}
+
+
+/********************
+	PushPin funcs
+********************/
+//PushPin Infobox handlers
+function displayInfobox( e ) {
+	hideInfobox( e );
+
+	//console.log( e.originalEvent.srcElement.nameProp );
+	//debugger;
+	var coordinates = e.target.getLocation(),
+		offset = 43
+		//arrImgName = e.originalEvent.srcElement.outerHTML.split("/")
+	; //local vars
+
+	niemApp.map.setView({
+		center: new Microsoft.Maps.Location( coordinates.latitude, coordinates.longitude ),
+		animate: true
+	});	
+
+/*
+	switch ( arrImgName[ arrImgName.length -1 ].split("\"")[0].toLowerCase() ) {
+		case "bestofniem.png" :
+			offset = 45;
+			break;
+
+		case "CaseStudy.png" :
+			offset = 42;
+			break;
+
+		default :
+			offset = 42;
+			break;
+	};
+*/
+	niemApp.pinInfoBox.setOptions({
+		title: e.target.Title,
+		titleClickHandler: function( e ) {
+			OpenModalForm({
+				staticListName: "NIEMProjectInfo",
+				ID: e.target.id, //e.srcElement.id || e.originalTarget.id
+				L_Menu_BaseUrl: niemApp.webUrl 
+			});
+		},
+		description: e.target.Description,
+		visible:true,
+		offset: new Microsoft.Maps.Point( 0, offset )
+/*
+		actions:[
+			{
+				label: 'Handler1',
+				eventHandler: function() {
+					alert("1");
+				}
+			}
+		]
+*/
+	});
+
+	niemApp.pinInfoBox.setLocation( coordinates );
+}
+
+function hideInfobox( e ) {
+	//debugger;
+	niemApp.pinInfoBox.setOptions({ visible: false });
+}
+//End PushPin Infobox handlers
+
+
+function createPushpin( item, location ) {
+	var pushpinOptions = {
+			icon: niemApp.imagesURL,
+			width: 30,
+			height: 50
+		},
+		pin,
+		description = item.orgName + "<br />"
+	; //local vars
+
+
+	if ( item.bestOfNiem ) {
+		pushpinOptions.icon += '/BestOfNIEM.png';
+		pin = new Microsoft.Maps.Pushpin( location, pushpinOptions );
+	} else if ( item.caseStudy ) {
+		pushpinOptions.icon += '/CaseStudy.png';
+		pin = new Microsoft.Maps.Pushpin( location, pushpinOptions );
+	} else {
+		pushpinOptions.icon += '/NIEM-MapPin.png';
+		//console.log( pushpinOptions.icon );
+		pin = new Microsoft.Maps.Pushpin( location, pushpinOptions );
+	}
+
+	//console.log( item.projectUrl );
+	//description += item.description;
+	
+	if ( item.webPage || item.caseStudy ) {
+		description += "<p>";
+	}
+	
+	if ( item.webPage ) {
+		var webPage =  item.webPage.split(", ");
+		
+		description += "<a href='" + webPage[0] + "'>" + webPage[1] + "</a><br />";
+	}
+	
+	if ( item.caseStudy ) {
+	
+		if (item.caseStudyLink != "")
+		{
+			var caseStudyLink = item.caseStudyLink.split(", ");
+
+			if (caseStudyLink.length == 2)
+			{
+				description += "<a href='" + caseStudyLink[ 0 ] + "'>" + caseStudyLink[ 1 ] + "</a>";
+			}
+			else
+			{
+				description += "<a href='" + caseStudyLink[ 0 ] + "'>" + caseStudyLink[ 0 ] + "</a>";
+			}
+		}
+	}
+	
+	if ( item.webPage || item.caseStudy ) {
+		description += "</p>";
+	}
+
+
+	pin.Title = item.projectUrl;
+	pin.Description = description ? description : "No description provided."; //information you want to display in the infobox
+	pin.id = item.id;
+	//add pushpin to pinLayer
+	niemApp.pinLayer.push( pin );
+	//add click handler to pushpin.
+	Microsoft.Maps.Events.addHandler( pin, 'click', displayInfobox );
+}
+/**************************
+//End PushPin funcs
+**************************/
+
+/*******************************
+~~~~~~~~~~~~~~~~~~~~~
+//END MAP FUNCS
+~~~~~~~~~~~~~~~~~~~~~
+*******************************/
+
+
+function getItems() {
+	//Find all items...
+	
+	$().SPServices({
+		webURL: niemApp.webUrl,
+		operation: "GetListItems",
+		listName: niemApp.contactListInfo.listName,
+		async: false,
+		CAMLViewFields: niemApp.contactListInfo.viewFields,
+		//CAMLQuery: "<Query><Where><And><IsNotNull><FieldRef Name='Latitude' /></IsNotNull><And><IsNotNull><FieldRef Name='Longitude' /></IsNotNull><Eq><FieldRef Name='_ModerationStatus' /><Value Type='ModStat'>0</Value></Eq></And></And></Where></Query>",
+		CAMLQuery: niemApp.contactListInfo.notNullQuery,
+		//CAMLQuery: "<Query></Query>",
+		completefunc: function( xData, Status ) {
+			//console.log( Status );
+			//console.log( xData.responseText );
+
+			//debugger;
+			
+			$( xData.responseXML ).find("[nodeName='z:row']").each(function() {
+				var $node = $(this),
+					item = {
+						address : $node.attr("ows_WorkAddress"),
+						city : $node.attr("ows_WorkCity"),
+						state : $node.attr("ows_WorkState"),
+						zip : $node.attr("ows_WorkZip"),
+						projectTitle : $node.attr("ows_ProjectTitle"),
+						orgName : $node.attr("ows_Title"),
+						description : undefinedCheck( $node.attr("ows_ProjectDescription") ),
+						webPage : $node.attr("ows_WebPage"),
+						id : $node.attr("ows_ID"),
+						coordinates : {
+							latitude : undefinedCheck( $node.attr("ows_Latitude") ),
+							longitude : undefinedCheck( $node.attr("ows_Longitude") )
+						},
+						bestOfNiem : $node.attr("ows_BestOfNIEM") * 1 ? true : false,
+						caseStudy :  $node.attr("ows_CaseStudy") * 1 ? true : false,
+						caseStudyLink : undefinedCheck( $node.attr("ows_CaseStudy1") ),
+						caseStudyId : $node.attr("ows_CaseStudyId")
+					}
+				; //local vars
+
+
+				//'http://portal/SPDev/Lists/NIEMProjectInfo/CustomDispForm.aspx?ID=" + item.id + "
+
+				//item.projectUrl = "<a href='#' id='push-pin-" + item.id + "'>" + item.projectTitle + "</a>";
+				item.projectUrl = "<span id='" + item.id + "'>" + item.projectTitle + "</span>";
+				item.bingAddress = item.address + " " + item.city + " " + item.state + " " + item.zip;
+			//	debugger;
+
+//				if ( item.coordinates.latitude === "" || item.coordinates.longitude === "" ) {
+					//Lat and Long need to be found and cached into SP.
+//					niemApp.addressQuery.push( item );
+//				} else {
+					//Create pushpin b/c Lat and Long are known.
+
+
+					//Modified code to *not* handle query.  Query is done on the form instead.
+					var location = new Microsoft.Maps.Location( item.coordinates.latitude,  item.coordinates.longitude )
+
+					; //local vars
+
+					createPushpin( item, location );
+//				}
+			});
+
+//			var queryLength = niemApp.addressQuery.length;
+			//Loop addressQuery to find any addresses that need to be converted to lat/long
+//			for ( var i = 0; i < queryLength; i++ ) {
+//				updateLocation( niemApp.addressQuery[ i ] );
+//			}
+//			if ( !queryLength ) {
+				//No querying needed, plot the addresses. If querying is needed, the plotting will take place in searchServiceCallback().
+				plotAddressToMap();
+//			}
+
+		}
+	});
+}
+
+
+function plotAddressToMap() {
+	niemApp.map.entities.push( niemApp.pinLayer );
+	niemApp.map.entities.push( niemApp.infoboxLayer );
+}

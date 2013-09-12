@@ -32,6 +32,9 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
             set;
         }
 
+        public Guid ResourceListId { get; set; }
+
+        public Guid WebId { get; set; }
 
         #endregion
 
@@ -122,7 +125,7 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
         /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            resourcesList.ItemDataBound += new RepeaterItemEventHandler(resourcesList_ItemDataBound);
+            //resourcesList.ItemDataBound += new RepeaterItemEventHandler(resourcesList_ItemDataBound);
             btnSearch.Click += new EventHandler(btnSearch_Click);
             try
             {
@@ -147,12 +150,11 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
                     lvResources.DataSource = GetData();
                     lvResources.DataBind();
                     if (lvResources.Items.Count == 0)
+                    {
                         ShowNoRecords();
+                    }
                 }
-               // GetData();
-               // DataView dvResults = _data;
-
-                
+               
 
             }
             catch (Exception ex)
@@ -193,11 +195,8 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
         protected void DataPager_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
         {
             DataPager.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
-            //if (_data == null)
-            //{
-            //    GetData();
-            //}
-            DataView dvResults = GetData();// FilterSearchData(_data);
+       
+            DataView dvResults = GetData();
 
             lvResources.DataSource = dvResults;
             lvResources.DataBind();
@@ -262,17 +261,52 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
             }
             LogText("5");
             dvResults.RowFilter = sbQuery.ToString();
-            //return FilterDataAccordingToUsers(dvResults);
             LogText("6");
             return dvResults;
         }
+        
         void LogText(string message)
         {
-           System.IO.File.AppendAllText("C:\\temp\\Resourceslog.txt", message + "\r\n");
+           //System.IO.File.AppendAllText("C:\\temp\\Resourceslog.txt", message + "\r\n");
         }
         #endregion
 
         #region ItemDataBound
+
+        protected void lvResources_ItemDataBound(object sender, ListViewItemEventArgs e)
+        {
+            if (e.Item.ItemType != ListViewItemType.DataItem)
+            {
+                return;
+            }
+            ListViewDataItem item = e.Item as ListViewDataItem;
+
+            PlaceHolder ratingsPlaceHolder = ((PlaceHolder)e.Item.FindControl("ratingsPlaceHolder"));
+            DataRowView drv = (DataRowView)item.DataItem;
+            int ID = Convert.ToInt32(drv["ID"].ToString());
+            Guid ListGuid = ResourceListId;
+            Guid WebGuid = WebId;
+            SPSite Site = SPContext.Current.Site;
+            using (SPWeb Web = SPContext.Current.Site.OpenWeb("documentsdb"))
+            {
+                //  SPWeb Web = Site.OpenWeb(WebGuid);
+                SPList List = Web.Lists[ListGuid];
+                SPField Field = List.Fields.TryGetFieldByStaticName("AverageRating");
+
+
+                if (Field != null)
+                {
+                    AverageRatingFieldControl avgRatings = new AverageRatingFieldControl();
+                    avgRatings.ItemContext = SPContext.GetContext(HttpContext.Current, ID, ListGuid, Web);
+                    avgRatings.ListId = ListGuid;
+                    avgRatings.ItemId = ID;
+                    avgRatings.ControlMode = SPControlMode.Display;
+                    avgRatings.FieldName = "AverageRating";
+                    ratingsPlaceHolder.Controls.Add(avgRatings);
+                }
+            }
+        }
+
         /// <summary>
         /// Item Created event to add ratings.
         /// </summary>
@@ -304,146 +338,7 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
         }
         #endregion
 
-        //New version of get Data LCG
-        //protected DataView GetDataNew()
-        //{
-        //    DataTable dtResults = null;
-        //    DataView dvResults = null;
-        //    //List<CamlQueryElements> query = new System.Collections.Generic.List<CamlQueryElements>();
-
-        //    using (SPWeb Web = SPContext.Current.Site.OpenWeb("documentsdb"))
-        //    {
-        //        SPQuery Query = new SPQuery();
-        //        Query.ViewFields = "<FieldRef Name='Title' /><FieldRef Name='ID' /><FieldRef Name='ArticleStartDate' /><FieldRef Name='ArticleByLine' /><FieldRef Name='Category_x0020_Domains' /><FieldRef Name='Category_x0020_Committee' /><FieldRef Name='PublishingPageContent' /><FieldRef Name='FileRef' /><FieldRef Name='ContentTypeId' /><FieldRef Name='Category_x0020_Subject_x0020_Area_x002F_Audience' />";
-
-        //        Query.Query = BuildQuery();
-        //        dtResults = Web.Lists["Pages"].GetItems(Query).GetDataTable();
-        //    }
-
-        //    dvResults = dtResults.DefaultView;
-        //    dvResults.Sort = "ArticleStartDate desc";
-        //    dvResults.Table.Columns.Add("DateDiff", typeof(int));
-
-        //    foreach (DataRow dRow in dvResults.Table.Rows)
-        //    {
-        //        try
-        //        {
-        //            DateTime itemTime = DateTime.Parse(dRow["ArticleStartDate"].ToString());
-        //            dRow["DateDiff"] = DateTime.Now.Subtract(itemTime).Days;
-        //        }
-        //        catch (Exception)
-        //        {
-        //            dRow["DateDiff"] = "999";
-        //        }
-
-        //        try
-        //        {
-        //            dRow["PublishingPageContent"] = dRow["PublishingPageContent"].ToString().Substring(0, 150);
-        //        }
-        //        catch { }
-        //    }
-
-
-        //    return dvResults;
-        //}
-
-        //private const string CategoryDomains = "Category_x0020_Domains";
-        //private const string CategoryAudience = "Category_x0020_Subject_x0020_Area_x002F_Audience";
-        //private const string EstablishedCommunities = "EstablishedCommunities_x003a_Tit"; //Column used to fetch personal communities / domains.
-        //private const string EstablilshedAudiences = "YourAudienceList_x003a_Title"; //column used to fetch personal audiences
-
-        //private string BuildQuery()
-        //{
-
-        //    Criteria contentTypeCriteria = Criteria.Eq("Content Type", "Computed", NewsContentType);
-        //    List<Expression> criteria = new List<Expression>();
-
-        //    if (ddlCommunities.SelectedItem.Text != "All")
-        //    {
-        //        criteria.Add(Criteria.Eq(CategoryDomains, "LookupMulti", ddlCommunities.SelectedItem.Text));
-        //    }
-        //    else
-        //    {
-        //        CreateCriteria(EstablishedCommunities, CategoryDomains, ref criteria);
-        //    }
-        //    if (ddlAudience.SelectedItem.Text != "All")
-        //    {
-        //        criteria.Add(Criteria.Eq(CategoryAudience, "LookupMulti", ddlAudience.SelectedItem.Text));
-        //    }
-        //    else
-        //    {
-        //        CreateCriteria(EstablilshedAudiences, CategoryAudience, ref criteria);
-        //    }
-
-        //    Or freeTextCriteria = null;
-        //    //check free text
-        //    if (!string.IsNullOrEmpty(txtSearch.Text))
-        //    {
-        //        freeTextCriteria = Operator.Or(
-        //            Criteria.Contains("Title", "Text", txtSearch.Text),
-        //            Criteria.Contains("PublishingPageContent", "Note", txtSearch.Text)
-        //            );
-        //    }
-
-        //    Expression expression = null;
-
-        //    switch (criteria.Count)
-        //    {
-        //        default:
-        //            Operator criteriaJoin = new Or();
-        //            criteriaJoin.AddRange((IEnumerable<Expression>)criteria);
-        //            expression = criteriaJoin;
-        //            break;
-        //        case 0:
-        //            expression = contentTypeCriteria;//Operator.And(contentTypeCriteria);
-        //            break;
-        //        case 1:
-        //            expression = criteria[0];//Operator.And(contentTypeCriteria, criteria[0]);
-        //            break;
-        //    }
-
-        //    if (freeTextCriteria != null)
-        //    {
-        //        expression = expression * (freeTextCriteria);
-        //    }
-        //    string result = String.Format("<Where>{0}</Where>", expression.GetCAML());
-        //    return (result);
-        //}
-
-        //private void CreateCriteria(string userFilter, string fieldName, ref List<Expression> criteria)
-        //{
-        //    //List<Expression> criteria = new List<Expression>();
-        //    string[] filters = new string[] { "" };
-
-        //    if (!string.IsNullOrEmpty(userFilter))
-        //    {
-
-        //        SPFieldLookupValue domains = new SPFieldLookupValue(CurrentUser[userFilter].ToString());
-        //        string lookupValue = domains.LookupValue;
-        //        if (string.IsNullOrEmpty(lookupValue))
-        //        {
-        //            return;
-        //        }
-
-        //        filters = lookupValue.Replace("#", string.Empty).Split(';');
-
-        //        foreach (string filter in filters)
-        //        {
-        //            //test ids. the look up values sometimes have their numeric id associated
-        //            //we don't want to add those values to our query.
-        //            if (System.Text.RegularExpressions.Regex.IsMatch(filter, @"^\d+$"))
-        //            {
-        //                continue;
-        //            }
-
-        //            criteria.Add(Criteria.Eq(fieldName, "LookupMulti", filter));
-
-        //        }
-        //    }
-        //}
-
-
-
+        
         #region GetData (Original)
         /// <summary>
         /// Gets data using SPSiteDataQuery.
@@ -461,43 +356,19 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
                 query.ViewAttributes = "Scope='RecursiveAll'";
                 SPListItemCollection docs = documents.GetItems(query);
                 dtResults = docs.GetDataTable();
-                //SPSiteDataQuery Query = new SPSiteDataQuery();
-                //Query.Lists = "<Lists ServerTemplate=\"101\" />";
-                ////"<Lists BaseType=\"1\" />";
-                //Query.ViewFields = @"<FieldRef Name='Title' /><FieldRef Name='ID' /><FieldRef Name='_Comments' /><FieldRef Name='FileRef' /><FieldRef Name='Category_x0020_Domains' Nullable='TRUE' /><FieldRef Name='Category_x0020_Subject_x0020_Area_x002F_Audience' Nullable='TRUE'/><FieldRef Name='Flipbook_x0020_Url0' Nullable='TRUE'/><FieldRef Name='Pdf_x0020_Url' Nullable='TRUE'/><FieldRef Name='FileDirRef' Nullable='TRUE'/><FieldRef Name='FileLeafRef' Nullable='TRUE'/><FieldRef Name='PublishingRollupImage' Nullable='TRUE'/><FieldRef Name='AverageRating' Nullable='TRUE'/>";
-                ////<FieldRef Name='Resource_x0020_Category' />";
-                ////content type & property
-                ////Query.Query = "<Where><Neq><FieldRef Name='ID' /><Value Type='Computed'>-1</Value></Neq></Where>";
-                //Query.Query = "<Where><Neq><FieldRef Name='ContentType' /><Value Type='Computed'>Folder</Value></Neq></Where>";
-                //Query.Webs = "<Webs Scope=\"Recursive\" />";
-                //dtResults = Web.GetSiteData(Query);
 
-                //fixes issue with hash in lookups
+                WebId = Web.ID; // Set this for use with ratings
+                ResourceListId = documents.ID; // Set this for use with ratings
+                                
                 foreach (DataRow Row in dtResults.Rows)
                 {
-                    string[] CatDomains = Row["Category_x0020_Domains"].ToString().Split('#');
-                    string[] CatAudiences = Row["Category_x0020_Subject_x0020_Area_x002F_Audience"].ToString().Split('#');
-                    if (CatDomains.Length > 1)
-                    {
-                      //  Row["Category_x0020_Domains"] = CatDomains[1];
-                    }
-                    if (CatAudiences.Length > 1)
-                    {
-                        Row["Category_x0020_Subject_x0020_Area_x002F_Audience"] = CatAudiences[1];
-                    }
-
-
                     //fixes issue with link
-                    //string[] LinkFix = Row["FileRef"].ToString().Split('#');
-                    //Row["FileRef"] = Web.Site.Url + "/" + LinkFix[1];
                     string DirectoryLinkFix = Row["FileDirRef"].ToString();
                     if (DirectoryLinkFix.LastIndexOf('/') > 0)
+                    {
                         DirectoryLinkFix = DirectoryLinkFix.Substring(DirectoryLinkFix.LastIndexOf('/') + 1);
+                    }
                     Row["FileDirRef"] = DirectoryLinkFix;
-                    //if (string.IsNullOrEmpty(Row["Title"].ToString()))
-                    //{
-                    //    Row["Title"] = Row["FileLeafRef"].ToString().Split(new char[] { '#' })[1];
-                    //}
                 }
             }
          
@@ -566,7 +437,7 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
                                                 string[] CatDomains = resourceItem["Category_x0020_Domains"].ToString().Split('#');
                                                 if (CatDomains.Length > 1)
                                                 {
-                                                    dRow["Category_x0020_Domains"] = CatDomains[1];
+                                                   // dRow["Category_x0020_Domains"] = CatDomains[1];
                                                 }
 
                                             }
@@ -576,7 +447,7 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
                                                 string[] CatAudiences = resourceItem["Category_x0020_Subject_x0020_Area_x002F_Audience"].ToString().Split('#');
                                                 if (CatAudiences.Length > 1)
                                                 {
-                                                    dRow["Category_x0020_Subject_x0020_Area_x002F_Audience"] = CatAudiences[1];
+                                                  //  dRow["Category_x0020_Subject_x0020_Area_x002F_Audience"] = CatAudiences[1];
                                                 }
 
                                             }
@@ -668,87 +539,166 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
             }
             catch (Exception) { }
 
+            StringBuilder sbQuery = new StringBuilder();
+            string orString = string.Empty;
+            if (ddlAudience.SelectedItem.Text != "All")
+            {
+                sbQuery.Append("Category_x0020_Subject_x0020_Area_x002F_Audience like'%" + ddlAudience.SelectedItem.Text + "%'");
+            }
+            else
+            {
+                
+                foreach (string value in pvbAudiences)
+                {
 
+                    if (String.IsNullOrEmpty(value))
+                    {
+                        continue;
+                    }
+                    string newValue = value.Replace("#", string.Empty);
+                    //test ids. the look up values sometimes have their numeric id associated
+                    //we don't want to add those values to our query.
+                    if (System.Text.RegularExpressions.Regex.IsMatch(newValue, @"^\d+$"))
+                    {
+                        continue;
+                    }
+                    
+                    orString = (sbQuery.Length > 0 ? " OR " : string.Empty);
+                    sbQuery.Append(orString + "Category_x0020_Subject_x0020_Area_x002F_Audience like'%" + newValue + "%'");
+                }
+            }
+
+
+            if (ddlCommunities.SelectedItem.Text != "All")
+            {
+                orString = (sbQuery.Length > 0 ? " OR " : string.Empty);
+                sbQuery.Append(orString + "Category_x0020_Domains like'%" + ddlCommunities.SelectedItem.Text + "%'");
+            }
+            else
+            {
+
+                foreach (string value in pvbCommunities)
+                {
+                    if (String.IsNullOrEmpty(value))
+                    {
+                        continue;
+                    }
+
+                    string newValue = value.Replace("#", string.Empty);
+                    //test ids. the look up values sometimes have their numeric id associated
+                    //we don't want to add those values to our query.
+                    if (System.Text.RegularExpressions.Regex.IsMatch(newValue, @"^\d+$"))
+                    {
+                        continue;
+                    }
+
+                    orString = (sbQuery.Length > 0 ? " OR " : string.Empty);
+                    sbQuery.Append(orString + "Category_x0020_Domains like'%" + newValue + "%'");
+                }
+            }
+
+            
 
             //grabs established communities and your audiences for filtering
-            StringBuilder sbQuery = new StringBuilder();
-            foreach (string value in pvbAudiences)
-                {
-                    if (!string.IsNullOrEmpty(value.Trim()))
-                    {
+            #region old audience filtering
+//            foreach (string value in pvbAudiences)
+//                {
+//                    if (!string.IsNullOrEmpty(value.Trim()))
+//                    {
 
-                        if (sbQuery.Length == 0)
-                        {
-                            if (ddlCommunities.SelectedItem.Text != "All")
-                            {
-                                //sbQuery.Append("Category_x0020_Domains='" + ddlCommunities.SelectedItem.Text + "'");
-                                sbQuery.Append("Category_x0020_Domains like'%" + ddlCommunities.SelectedItem.Text + "%'");
-                            }
-                            else
-                            {
+//                        if (sbQuery.Length == 0)
+//                        {
+//                            if (ddlCommunities.SelectedItem.Text != "All")
+//                            {
+//                                //sbQuery.Append("Category_x0020_Domains='" + ddlCommunities.SelectedItem.Text + "'");
+//                                sbQuery.Append("Category_x0020_Domains like'%" + ddlCommunities.SelectedItem.Text + "%'");
+//                            }
+//                            else
+//                            {
 
-                                sbQuery.Append("Category_x0020_Domains='" + value.Replace('#', ' ').Trim() + "'");
+////                                sbQuery.Append("Category_x0020_Domains='" + value.Replace('#', ' ').Trim() + "'");
+//                                sbQuery.Append(" OR Category_x0020_Subject_x0020_Area_x002F_Audience='" + value.Replace('#', ' ').Trim() + "'");
 
-                                sbQuery.Append(" OR Category_x0020_Subject_x0020_Area_x002F_Audience='" + value.Replace('#', ' ').Trim() + "'");
+//                            }
+//                        }
+//                        else
+//                        {
+//                            if (ddlCommunities.SelectedItem.Text != "All")
+//                            {
+//                                sbQuery.Append(" AND Category_x0020_Domains like '%" + ddlCommunities.SelectedItem.Text + "%'");
+//                            }
+//                            else
+//                            {
 
-                            }
-                        }
-                        else
-                        {
-                            if (ddlCommunities.SelectedItem.Text != "All")
-                            {
-                                sbQuery.Append(" AND Category_x0020_Domains like '%" + ddlCommunities.SelectedItem.Text + "%'");
-                            }
-                            else
-                            {
+//                                sbQuery.Append(" OR Category_x0020_Domains='" + value.Replace('#', ' ').Trim() + "'");
+//                                sbQuery.Append(" OR Category_x0020_Subject_x0020_Area_x002F_Audience='" + value.Replace('#', ' ').Trim() + "'");
 
-                                sbQuery.Append(" OR Category_x0020_Domains='" + value.Replace('#', ' ').Trim() + "'");
-                                sbQuery.Append(" OR Category_x0020_Subject_x0020_Area_x002F_Audience='" + value.Replace('#', ' ').Trim() + "'");
+//                            }
+//                        }
+//                    }
 
-                            }
-                        }
-                    }
-                    
-                }
+//                }
 
+            #endregion
 
+            #region old communities filtering
+            //foreach (var value in pvbCommunities)
+            //    {
+            //        if (!string.IsNullOrEmpty(value.Trim()))
+            //        {
+            //            if (sbQuery.Length == 0)
+            //            {
+            //                if (ddlAudience.SelectedItem.Text != "All")
+            //                {
+            //                    sbQuery.Append("Category_x0020_Subject_x0020_Area_x002F_Audience='" + ddlAudience.SelectedItem.Text + "'");
+            //                }
+            //                else
+            //                {
 
-                foreach (var value in pvbCommunities)
-                {
-                    if (!string.IsNullOrEmpty(value.Trim()))
-                    {
-                        if (sbQuery.Length == 0)
-                        {
-                            if (ddlAudience.SelectedItem.Text != "All")
-                            {
-                                sbQuery.Append("Category_x0020_Subject_x0020_Area_x002F_Audience='" + ddlAudience.SelectedItem.Text + "'");
-                            }
-                            else
-                            {
+            //                    sbQuery.Append("Category_x0020_Subject_x0020_Area_x002F_Audience='" + value.Replace('#', ' ').Trim() + "'");
+            //                    sbQuery.Append(" OR Category_x0020_Domains='" + value.Replace('#', ' ').Trim() + "'");
 
-                                sbQuery.Append("Category_x0020_Subject_x0020_Area_x002F_Audience='" + value.Replace('#', ' ').Trim() + "'");
-                                sbQuery.Append(" OR Category_x0020_Domains='" + value.Replace('#', ' ').Trim() + "'");
+            //                }
+            //            }
+            //            else
+            //            {
+            //                if (ddlAudience.SelectedItem.Text != "All")
+            //                {
+            //                    sbQuery.Append(" AND Category_x0020_Subject_x0020_Area_x002F_Audience='" + ddlAudience.SelectedItem.Text + "'");
+            //                }
+            //                else
+            //                {
 
-                            }
-                        }
-                        else
-                        {
-                            if (ddlAudience.SelectedItem.Text != "All")
-                            {
-                                sbQuery.Append(" AND Category_x0020_Subject_x0020_Area_x002F_Audience='" + ddlAudience.SelectedItem.Text + "'");
-                            }
-                            else
-                            {
+            //                    sbQuery.Append(" OR Category_x0020_Subject_x0020_Area_x002F_Audience='" + value.Replace('#', ' ').Trim() + "'");
+            //                    sbQuery.Append(" OR Category_x0020_Domains='" + value.Replace('#', ' ').Trim() + "'");
 
-                                sbQuery.Append(" OR Category_x0020_Subject_x0020_Area_x002F_Audience='" + value.Replace('#', ' ').Trim() + "'");
-                                sbQuery.Append(" OR Category_x0020_Domains='" + value.Replace('#', ' ').Trim() + "'");
+            //                }
+            //            }
+            //        }
 
-                            }
-                        }
-                    }
-                    
-                }
-    
+            //    }
+            #endregion
+
+            //categories
+            if (sbQuery.Length == 0 && ddlCategory.SelectedItem.Text != "All")
+            {
+                sbQuery.Append(" FileDirRef='" + ddlCategory.SelectedItem.Text + "'");
+            }
+            else if (sbQuery.Length != 0 && ddlCategory.SelectedItem.Text != "All")
+            {
+                sbQuery.Append(" AND FileDirRef='" + ddlCategory.SelectedItem.Text + "'");
+            }
+
+            //freetext fields
+            if (!string.IsNullOrEmpty(txtSearch.Text) && sbQuery.Length == 0)
+            {
+                sbQuery.Append(" (Title LIKE '%" + txtSearch.Text + "%' OR _Comments LIKE '%" + txtSearch.Text + "%')");
+            }
+            else if (!string.IsNullOrEmpty(txtSearch.Text) && sbQuery.Length != 0)
+            {
+                sbQuery.Append(" AND (Title LIKE '%" + txtSearch.Text + "%' OR _Comments LIKE '%" + txtSearch.Text + "%')");
+            }
+
             LogText("Generated Query: " +sbQuery.ToString());
             if (sbQuery.Length == 0)
             {
@@ -775,25 +725,7 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
                     catch (Exception) { }
                 }
             }
-            //categories
-            if (sbQuery.Length == 0 && ddlCategory.SelectedItem.Text != "All")
-            {
-                sbQuery.Append(" FileDirRef='" + ddlCategory.SelectedItem.Text + "'");
-            }
-            else if (sbQuery.Length != 0 && ddlCategory.SelectedItem.Text != "All")
-            {
-                sbQuery.Append(" AND FileDirRef='" + ddlCategory.SelectedItem.Text + "'");
-            }
-
-            //freetext fields
-            if (!string.IsNullOrEmpty(txtSearch.Text) && sbQuery.Length == 0)
-            {
-                sbQuery.Append(" (Title LIKE '%" + txtSearch.Text + "%' OR _Comments LIKE '%" + txtSearch.Text + "%')");
-            }
-            else if (!string.IsNullOrEmpty(txtSearch.Text) && sbQuery.Length != 0)
-            {
-                sbQuery.Append(" AND (Title LIKE '%" + txtSearch.Text + "%' OR _Comments LIKE '%" + txtSearch.Text + "%')");
-            }
+            
 
             //System.IO.File.WriteAllText("C:\\temp\\log.txt", sbQuery.ToString());
             LogText(sbQuery.ToString());
@@ -801,6 +733,7 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
             
             return dvResults;
         }
+     
         #region GetListData
         /// <summary>
         /// Gets the list data.

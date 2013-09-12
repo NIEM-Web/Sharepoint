@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="LMD.TwitterWebPart.TwitteroAuthWebPart.TwitteroAuthWebPart, $SharePoint.Project.AssemblyFullName$" />
+      <importErrorMessage>$Resources:core,ImportErrorMessage;</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="Title" type="string">Twitter oAuth WebPart</property>
+        <property name="Description" type="string">This is a webpart that reads the last X number of tweets for a user from the new https://api.twitter.com/1.1/statuses/user_timeline.json api</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package dslVersion="1.0.0.0" Id="fa5e1e75-2257-42a6-911c-ffb6d74af688" solutionId="fa5e1e75-2257-42a6-911c-ffb6d74af688" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel" name="NIEM.TermsEventHandler">
+    <features>
+        <featureReference itemId="4c200f7d-d16d-4bfa-b54e-9c3db93bdb30" />
+    </features>
+</package>

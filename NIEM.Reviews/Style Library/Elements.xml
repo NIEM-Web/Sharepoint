@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="Style Library">
+  <File Path="Style Library\NIEM3\js\Review-Helper.html" Url="Style Library/NIEM3/js/Review-Helper.html" />
+<File Path="Style Library\NIEM3\js\Review-Helper.js" Url="Style Library/NIEM3/js/Review-Helper.js" />
+<File Path="Style Library\NIEM3\Resources.xslt" Url="Style Library/NIEM3/Resources.xslt" />
+<File Path="Style Library\NIEM3\Tools.xslt" Url="Style Library/NIEM3/Tools.xslt" />
+</Module>
+</Elements>
