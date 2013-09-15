@@ -18,6 +18,7 @@ namespace NIEM.Reviews.Features.NIEM.Reviews
     {
         // Uncomment the method below to handle the event raised after a feature has been activated.
         private const string JS_FOLDER = "/Style Library/NIEM3/js";
+        private const string NIEM_FOLDER = "/Style Library/NIEM3";
 
         public override void FeatureActivated(SPFeatureReceiverProperties properties)
         {
@@ -27,6 +28,10 @@ namespace NIEM.Reviews.Features.NIEM.Reviews
                 {
                     
                     CheckinFeatureFiles(rootWeb, JS_FOLDER);
+                    CheckinFeatureFiles(rootWeb, NIEM_FOLDER);
+                    SetAccess(rootWeb, NIEM_FOLDER + "/Resources.xslt");
+                    SetAccess(rootWeb, NIEM_FOLDER + "/Tools.xslt");
+
                 }
             }
         }
@@ -37,14 +42,29 @@ namespace NIEM.Reviews.Features.NIEM.Reviews
             SPFolder altStyleFolder = rootWeb.GetFolder(folderPath);
             foreach (SPFile styleFile in altStyleFolder.Files)
             {
-                if (styleFile.CheckOutType != SPFile.SPCheckOutType.None)
-                {
-                    styleFile.CheckIn("Checked in via feature activation.", SPCheckinType.MajorCheckIn);
-                    //styleFile.Approve("Approved via feature activation.");
-                }
+                CheckinFile(styleFile);
             }
         }
 
+        private void SetAccess(SPWeb rootWeb, string filePath)
+        {
+            SPFile file = rootWeb.GetFile(filePath);
+            
+            SPListItem item = file.Item;
+            if (item.HasUniqueRoleAssignments)
+            {
+                item.ResetRoleInheritance();
+            }
+        }
+
+        private void CheckinFile(SPFile file)
+        {
+            if (file.CheckOutType != SPFile.SPCheckOutType.None)
+            {
+                file.CheckIn("Checked in via feature activation.", SPCheckinType.MajorCheckIn);
+                //styleFile.Approve("Approved via feature activation.");
+            }
+        }
 
         // Uncomment the method below to handle the event raised before a feature is deactivated.
 

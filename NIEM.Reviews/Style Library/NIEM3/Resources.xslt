@@ -279,16 +279,31 @@ Download PDF</a></xsl:if></div>
 
 
 </td>
-<td valign="top">			
-			<div class="div-ms-vb resRat">
-				<Portal:AverageRatingFieldControl  runat="Server" itemid="{@ID}"  id="MyRating{generate-id()}" FieldName="AverageRating" ControlMode="Edit" />
-				<xsl:if test="$User!=''">
-				
-					<a href="javascript:OpenDialog('{@FileRef}','{@Title}');">
-					See Reviews
-					</a></xsl:if>
-				
-</div>
+<td valign="top">
+  <div class="div-ms-vb resRat">
+    <xsl:choose>
+      <xsl:when test="$User!=''">
+        <Portal:AverageRatingFieldControl  runat="Server" itemid="{@ID}"  id="MyRating{generate-id()}" FieldName="AverageRating" ControlMode="Edit" />
+        <a href="javascript:OpenDialog('{@FileRef}','{@Title}');">
+          See Reviews
+        </a>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:if test="@AverageRating!=0 and @AverageRating!=''">
+          <div style="width:80px; background-image:url('/_layouts/Images/Ratings.png'); height:16px;background-position:{@AverageRating*16 -240}px 0px;">
+          </div>
+        </xsl:if>
+        <xsl:if test="@AverageRating='' or @AverageRating =0">
+          <div style="width:80px; background-image:url('/_layouts/Images/Ratings.png'); height:16px;background-position:-80px 0px;" />
+        </xsl:if>
+        <xsl:if test="floor(@AverageRating)!=ceiling(@AverageRating) and @AverageRating!=0 and @AverageRating!=''">
+          <div style="width:80px; background-image:url('/_layouts/Images/Ratings.png'); height:16px;background-position:{-floor(@AverageRating)*16 -304}px 0px;">
+          </div>
+        </xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+
+  </div>
 <br/><br/><NIEMLIKE:NIEMLike runat="server" URL="{@FileRef}" CType="Resource" />
 </td></tr></table>			
 					

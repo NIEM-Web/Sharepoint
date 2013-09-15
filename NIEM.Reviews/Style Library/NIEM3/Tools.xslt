@@ -19,10 +19,6 @@
 	
 	
 	
-	
-	
-	
-	
 	<xsl:template match="/" xmlns:x="http://www.w3.org/2001/XMLSchema" xmlns:d="http://schemas.microsoft.com/sharepoint/dsp" xmlns:asp="http://schemas.microsoft.com/ASPNET/20" xmlns:__designer="http://schemas.microsoft.com/WebParts/v2/DataView/designer" xmlns:SharePoint="Microsoft.SharePoint.WebControls" xmlns:NIEMLIKE="NIEM_Like_Solution">
 		
 <script type="text/javascript">
@@ -143,21 +139,47 @@ function OpenDialog(url, title)
 				<div class="toolartifact"><strong>Artifacts Produced : </strong><xsl:value-of select="@Artifacts_x0020_Produced"/></div>
 				<div class="tooladmin"><strong>Administrative Contact : </strong><a href="mailto:{@EMail}"><xsl:value-of select="@EMail"/></a> </div>
 			</div>
-			<div class="tolWrpRight"> 
-				<div class="toolrate">
-							
-							<xsl:if test="$User!=''">
-							<div class="ratelink"><a href="javascript:OpenDialog('{@URL}','{@Title}');">
-								See Reviews
-								</a>
-								</div>	
-							</xsl:if>
-				
-						    <span class="ms-currentRating">
-							<Portal:AverageRatingFieldControl  runat="Server" itemid="{@ID}"  id="MyRating{generate-id()}" FieldName="AverageRating" ControlMode="Edit" />
-				         	</span>
-				         	<br/><br/><NIEMLIKE:NIEMLike runat="server" URL="{@FileRef}" CType="Tools" />
-				</div>
+			<div class="tolWrpRight">
+        <div class="toolrate">
+          <div class="div-ms-vb resRat">
+            <xsl:choose>
+              <xsl:when test="$User!=''">
+                <Portal:AverageRatingFieldControl  runat="Server" itemid="{@ID}"  id="MyRating{generate-id()}" FieldName="AverageRating" ControlMode="Edit" />
+                <a href="javascript:OpenDialog('{@FileRef}','{@Title}');">
+                  See Reviews
+                </a>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:if test="@AverageRating!=0 and @AverageRating!=''">
+                  <div style="width:80px; background-image:url('/_layouts/Images/Ratings.png'); height:16px;background-position:{@AverageRating*16 -240}px 0px;">
+                  </div>
+                </xsl:if>
+                <xsl:if test="@AverageRating='' or @AverageRating =0">
+                  <div style="width:80px; background-image:url('/_layouts/Images/Ratings.png'); height:16px;background-position:-80px 0px;" />
+                </xsl:if>
+                <xsl:if test="floor(@AverageRating)!=ceiling(@AverageRating) and @AverageRating!=0 and @AverageRating!=''">
+                  <div style="width:80px; background-image:url('/_layouts/Images/Ratings.png'); height:16px;background-position:{-floor(@AverageRating)*16 -304}px 0px;">
+                  </div>
+                </xsl:if>
+              </xsl:otherwise>
+            </xsl:choose>
+
+          </div>
+          <!--<xsl:if test="$User!=''">
+            <div class="ratelink">
+              <a href="javascript:OpenDialog('{@URL}','{@Title}');">
+                See Reviews
+              </a>
+            </div>
+          </xsl:if>
+
+          <span class="ms-currentRating">
+            <Portal:AverageRatingFieldControl  runat="Server" itemid="{@ID}"  id="MyRating{generate-id()}" FieldName="AverageRating" ControlMode="Edit" />
+          </span>-->
+          <br/>
+          <br/>
+          <NIEMLIKE:NIEMLike runat="server" URL="{@FileRef}" CType="Tools" />
+        </div>
 			</div>
     </div>			
 			
