@@ -51,7 +51,9 @@ namespace SearchTest
 
                     ConsoleOut(String.Format("Begin operation against site collection: {0}", site.Url));
 
-                    ConsoleOut(FixFor_GettingDistinctWebs(site));
+                    LogMessage("Test", "Test message", site.ID);
+
+                    //ConsoleOut(FixFor_GettingDistinctWebs(site));
                     //ConsoleOut(FixFor_GetQueryForRecentPosts(site));
                     //ConsoleOut(FixFor_GetQueryForCurrentUserReplies(site));
                     //ConsoleOut(EnumerateDicussionListsInSiteCollection(site));
@@ -678,7 +680,34 @@ namespace SearchTest
             }
             return query;
         }
+        
+        private static void LogMessage(string title, string message, Guid siteId)
+        {
+            try
+            {
+                using (SPSite site = new SPSite(siteId))
+                using (SPWeb web = site.RootWeb)
+                {
 
+                    SPList logList = null;
+                    logList = web.Lists.TryGetList("Error Log List");
+
+                    if (logList != null)
+                    {
+                        SPListItem item = logList.AddItem();
+                        item["Title"] = title;
+                        item["Error Code"] = "Info";
+                        item["Error"] = message;
+                        item["Stack Trace"] = "";
+                        item.Update();
+                    }
+
+                }
+            }
+            catch
+            {
+            }
+        }
     }
 }
 

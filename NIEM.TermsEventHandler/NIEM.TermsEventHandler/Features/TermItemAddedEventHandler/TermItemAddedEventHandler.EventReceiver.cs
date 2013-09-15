@@ -25,7 +25,7 @@ namespace NIEM.TermsEventHandler.Features.TermItemAddedEventHandler
 
         public override void FeatureActivated(SPFeatureReceiverProperties properties)
         {
-            /*
+            
             SPWeb web = (SPWeb)properties.Feature.Parent;
 
             string assemblyName = "NIEM.TermsEventHandler, Version=1.0.0.0, Culture=neutral, PublicKeyToken=90d8401002fad21d";
@@ -42,8 +42,8 @@ namespace NIEM.TermsEventHandler.Features.TermItemAddedEventHandler
                     SPEventReceiverDefinition erAdding = spListCustom.EventReceivers.Add();
                     erAdding.Assembly = assemblyName;
                     erAdding.Class = className;
-                    erAdding.Type = SPEventReceiverType.ItemAdding;
-                    erAdding.Name = "TermEventReceiverItemAdding";
+                    erAdding.Type = SPEventReceiverType.ItemAdded;
+                    erAdding.Name = "TermsEventHandlerEventReceiverItemAdded";
                     erAdding.Update();
 
                     spListCustom.Update();
@@ -52,17 +52,53 @@ namespace NIEM.TermsEventHandler.Features.TermItemAddedEventHandler
             }
             catch (Exception ex)
             {
-
+                Common.LogError("TermItemAddedEventHandlerEventReceiver.FeatureActivated", ex, web.Site.ID);
             }
-            */
+            
         }
 
 
         // Uncomment the method below to handle the event raised before a feature is deactivated.
 
-        //public override void FeatureDeactivating(SPFeatureReceiverProperties properties)
-        //{
-        //}
+        public override void FeatureDeactivating(SPFeatureReceiverProperties properties)
+        {
+
+            SPWeb web = (SPWeb)properties.Feature.Parent;
+
+            try
+            {
+
+                // add the event handler to specific lists
+                SPList spListCustom = web.Lists["Terms"];
+
+                if (spListCustom != null)
+                {
+
+                    int eventReceiverId = -1;
+
+                    for (int i = 0; i < spListCustom.EventReceivers.Count; i++)
+                    {
+                        if (spListCustom.EventReceivers[i].Name == "TermsEventHandlerEventReceiverItemAdded")
+                        {
+                            eventReceiverId = i;
+                            break;
+                        }
+                    }
+
+                    if (eventReceiverId != -1)
+                    {
+                        spListCustom.EventReceivers[eventReceiverId].Delete();
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Common.LogError("TermItemAddedEventHandlerEventReceiver.FeatureActivated", ex, web.Site.ID);
+            }
+            
+        }
 
 
         // Uncomment the method below to handle the event raised after a feature has been installed.

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="3c752e1c-fa37-41e0-a3f4-5bd0d38a9829" solutionId="3c752e1c-fa37-41e0-a3f4-5bd0d38a9830" resetWebServer="false" name="Niem.CaseUploadSandBox" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="5d211d08-1b9c-48d3-a39b-18b18e5cef61" />
+  </features>
+</package>

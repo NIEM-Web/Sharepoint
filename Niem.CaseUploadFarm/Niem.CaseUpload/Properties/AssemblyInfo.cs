@@ -6,12 +6,12 @@ using System.Security;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NIEM.TermsEventHandler")]
+[assembly: AssemblyTitle("Niem.CaseUpload")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Cloudshare")]
-[assembly: AssemblyProduct("NIEM.TermsEventHandler")]
-[assembly: AssemblyCopyright("Copyright © Cloudshare 2013")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Niem.CaseUpload")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +21,7 @@ using System.Security;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9e58cd40-4358-4445-9c77-bd59716735f2")]
+[assembly: Guid("57b3469f-fff0-4387-978b-f200877f9290")]
 
 // Version information for an assembly consists of the following four values:
 //

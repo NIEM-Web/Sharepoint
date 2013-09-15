@@ -19,6 +19,7 @@ namespace NIEM.TermsEventHandler.TermsEventHandlerEventReceiver
             {
                 if (properties.ListTitle == "Terms")
                 {
+
                     Guid siteID, webID, listID;
                     int itemID;
                     listID = properties.ListId;
@@ -28,27 +29,36 @@ namespace NIEM.TermsEventHandler.TermsEventHandlerEventReceiver
                         siteID = web.Site.ID;
                         webID = web.ID;
                     }
-                    ////run this block as System Account
-                    //SPSecurity.RunWithElevatedPrivileges(delegate()
-                    //{
+
+                    //run this block as System Account
+                    SPSecurity.RunWithElevatedPrivileges(delegate()
+                    {
                         using (SPSite site = new SPSite(siteID))
                         {
                             using (SPWeb web = site.OpenWeb(webID))
                             {
-                                //web.AllowUnsafeUpdates = true;
+                                web.AllowUnsafeUpdates = true;
                                 SPListItem item = web.Lists[listID].GetItemById(itemID);
                                 if (item != null)
                                 {
-                                    //Impersonate the Author to be System Account
-                                    item["Author"] = web.AllUsers[@"SHAREPOINT\system"];
-                                    item.SystemUpdate();
+
+                                    if (item["Author"].ToString() == "-1;#")
+                                    {
+
+                                        //Impersonate the Author to be System Account
+                                        item["Author"] = web.AllUsers[@"SHAREPOINT\system"];
+                                        item.SystemUpdate();
+
+                                    }
+
                                     //start the by add the item and workflow name
-                                    StartWorkflow(item, "TERMS_Approval");
+                                    StartWorkflow(item, "TERMS_Approval", properties.SiteId);
+
                                 }
-                                //web.AllowUnsafeUpdates = false;
+                                web.AllowUnsafeUpdates = false;
                             }
                         }
-                    //});
+                    });
                 }
                 else
                 {
@@ -57,15 +67,25 @@ namespace NIEM.TermsEventHandler.TermsEventHandlerEventReceiver
             }
             catch(Exception ex)
             {
+                Common.LogError("TermsEventHandlerEventReceiver.ItemAdded", ex, properties.SiteId);
             }
         }
+
         //method to start the workflow
-        private static void StartWorkflow(SPListItem listItem, string workflowName)  
-            {  
-             SPWorkflowAssociation wfAssoc = listItem.ParentList.WorkflowAssociations.GetAssociationByName(workflowName, System.Globalization.CultureInfo.CurrentCulture);  
-             listItem.Web.Site.WorkflowManager.StartWorkflow(listItem, wfAssoc, wfAssoc.AssociationData, true);  
-             listItem.Update();  
-            } 
+        private static void StartWorkflow(SPListItem listItem, string workflowName, Guid siteId)  
+        {  
+            try
+            {
+                SPWorkflowAssociation wfAssoc = listItem.ParentList.WorkflowAssociations.GetAssociationByName(workflowName, System.Globalization.CultureInfo.CurrentCulture);  
+                listItem.Web.Site.WorkflowManager.StartWorkflow(listItem, wfAssoc, wfAssoc.AssociationData, true);  
+                listItem.Update();
+            }
+            catch (Exception ex)
+            {
+                Common.LogError("TermsEventHandlerEventReceiver.StartWorkflow", ex, siteId);
+            }
+        }
+
     }
 
 }

@@ -1,13 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Elements xmlns="http://schemas.microsoft.com/sharepoint/">
-  <Receivers ListTemplateId="100">
+  <Receivers ListTemplateId="101">
       <Receiver>
-        <Name>TermsEventHandlerEventReceiverItemAdded</Name>
-        <Type>ItemAdded</Type>
+        <Name>NiemUploadCaseHandlerItemUpdating</Name>
+        <Type>ItemUpdating</Type>
         <Assembly>$SharePoint.Project.AssemblyFullName$</Assembly>
-        <Class>NIEM.TermsEventHandler.TermsEventHandlerEventReceiver.TermsEventHandlerEventReceiver</Class>
+        <Class>Niem.CaseUploadSandBox.NiemUploadCaseHandler.NiemUploadCaseEventHandler</Class>
         <SequenceNumber>10000</SequenceNumber>
       </Receiver>
-
-  </Receivers>
+</Receivers>
 </Elements>
