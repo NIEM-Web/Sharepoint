@@ -17,11 +17,6 @@
         SP.UI.ModalDialog.showModalDialog(options);
     }
 
-    function OpenDialog(url, title)
-    {
-        top.location = '/Pages/ReviewList.aspx?url=' + url + '&amp;title=' + title;
-    }
-
 function isconfirm()
 {
 var ck=confirm("Do you want to delete this item?");
@@ -103,7 +98,8 @@ return false;
   
    <asp:PlaceHolder ID="ratingsPlaceHolder" runat="server" />
     <br />
-    <a href="javascript:OpenDialog('<%#Eval("FileRef") %>','<%#Eval("Title") %>');">See Reviews</a>
+     <a onclick="GoToLink(this); return false;" href="/Pages/ReviewList.aspx?url=<%#Eval("FileRef") %>&title=<%#Eval("Title") %>">See Reviews</a>
+   
     <br/><br />  
     <NiemLike:NiemLikeLink ID="NiemLikeLink1" runat="server" URL='<%#Eval("FileRef") %>'  CType="Tools" />
    </div>

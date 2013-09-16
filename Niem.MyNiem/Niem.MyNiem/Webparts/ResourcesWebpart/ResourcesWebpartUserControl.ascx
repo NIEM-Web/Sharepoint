@@ -32,10 +32,7 @@
 
     });
 
-    function OpenDialog(url, title)
-    {
-        top.location = '/Pages/ReviewList.aspx?url=' + url + '&amp;title=' + title;
-    }
+    
 </script>
 <table>
     <tr>
@@ -133,7 +130,7 @@
             <div class="div-ms-vb resRat">
             <asp:PlaceHolder ID="ratingsPlaceHolder" runat="server" />
             <br />
-            <a href="javascript:OpenDialog('<%#Eval("FileRef") %>','<%#Eval("Title") %>');">See Reviews</a>
+            <a onclick="GoToLink(this); return false;" href="/Pages/ReviewList.aspx?url=<%#Eval("FileRef") %>&title=<%#Eval("Title") %>">See Reviews</a>
             <br/><br />
             <NiemLike:NiemLikeLink ID="NiemLikeLink1" runat="server" URL='<% #Eval("FileRef")%>' CType="Resource" />
             </div>

@@ -106,9 +106,15 @@ namespace NIEM.Reviews.ReviewViewer {
         
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         private void @__BuildControl__control6(System.Web.UI.Control @__ctrl) {
-            System.Web.UI.IParserAccessor @__parser = ((System.Web.UI.IParserAccessor)(@__ctrl));
-            @__parser.AddParsedSubObject(new System.Web.UI.LiteralControl("\r\n    <div style=\"clear: both\"><a href=\"javascript:history.go(-1)\">Go Back</a></d" +
-                        "iv>\r\n"));
+            @__ctrl.SetRenderMethodDelegate(new System.Web.UI.RenderMethod(this.@__Render__control6));
+        }
+        
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        private void @__Render__control6(System.Web.UI.HtmlTextWriter @__w, System.Web.UI.Control parameterContainer) {
+            @__w.Write("\r\n    <div style=\"clear: both\"><a href=\"");
+                              @__w.Write(returnUrl );
+
+            @__w.Write("\">Go Back</a></div>\r\n");
         }
         
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]

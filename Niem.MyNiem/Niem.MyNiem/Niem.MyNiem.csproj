@@ -263,9 +263,7 @@
     <Content Include="Webparts\NewsWebpart\Elements.xml" />
     <Content Include="Webparts\NewsWebpart\NewsEventsWebpartUserControl.ascx" />
     <Content Include="Webparts\ProfileWebpart\Elements.xml" />
-    <Content Include="Webparts\ProfileWebpart\ProfileWebpartUserControl.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="Webparts\ProfileWebpart\ProfileWebpartUserControl.ascx" />
     <Content Include="Webparts\ResourcesWebpart\Elements.xml" />
     <Content Include="Webparts\ResourcesWebpart\ResourcesWebpartUserControl.ascx" />
     <Content Include="Webparts\SavedSearches\Elements.xml" />

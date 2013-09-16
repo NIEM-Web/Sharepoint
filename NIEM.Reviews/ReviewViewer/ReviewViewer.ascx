@@ -86,7 +86,7 @@
 <hr />
 </SeparatorTemplate>
 <FooterTemplate>
-    <div style="clear: both"><a href="javascript:history.go(-1)">Go Back</a></div>
+    <div style="clear: both"><a href="<%=returnUrl %>">Go Back</a></div>
 </FooterTemplate>
 </asp:Repeater>
 

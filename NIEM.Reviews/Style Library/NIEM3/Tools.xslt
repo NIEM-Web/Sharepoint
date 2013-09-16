@@ -20,16 +20,6 @@
 	
 	
 	<xsl:template match="/" xmlns:x="http://www.w3.org/2001/XMLSchema" xmlns:d="http://schemas.microsoft.com/sharepoint/dsp" xmlns:asp="http://schemas.microsoft.com/ASPNET/20" xmlns:__designer="http://schemas.microsoft.com/WebParts/v2/DataView/designer" xmlns:SharePoint="Microsoft.SharePoint.WebControls" xmlns:NIEMLIKE="NIEM_Like_Solution">
-		
-<script type="text/javascript">
-<xsl:text>
-function OpenDialog(url, title)
-{
-  top.location = '/Pages/ReviewList.aspx?url=' + url + '&amp;title=' + title;
-}
-</xsl:text>
-</script>  
-
 
 		<xsl:choose>
 			<xsl:when test="($ManualRefresh = 'True')">
@@ -145,7 +135,7 @@ function OpenDialog(url, title)
             <xsl:choose>
               <xsl:when test="$User!=''">
                 <Portal:AverageRatingFieldControl  runat="Server" itemid="{@ID}"  id="MyRating{generate-id()}" FieldName="AverageRating" ControlMode="Edit" />
-                <a href="javascript:OpenDialog('{@FileRef}','{@Title}');">
+                <a onclick="GoToLink(this);return false;" href="/Pages/ReviewList.aspx?url={@FileRef}&amp;title='{@Title}">
                   See Reviews
                 </a>
               </xsl:when>
@@ -165,17 +155,7 @@ function OpenDialog(url, title)
             </xsl:choose>
 
           </div>
-          <!--<xsl:if test="$User!=''">
-            <div class="ratelink">
-              <a href="javascript:OpenDialog('{@URL}','{@Title}');">
-                See Reviews
-              </a>
-            </div>
-          </xsl:if>
-
-          <span class="ms-currentRating">
-            <Portal:AverageRatingFieldControl  runat="Server" itemid="{@ID}"  id="MyRating{generate-id()}" FieldName="AverageRating" ControlMode="Edit" />
-          </span>-->
+         
           <br/>
           <br/>
           <NIEMLIKE:NIEMLike runat="server" URL="{@FileRef}" CType="Tools" />

@@ -16,7 +16,7 @@ namespace NIEM.Reviews.ReviewViewer
 
         #region data model
         //Internal data model abastraction for SP List Data
-        private struct ReviewModel
+        public struct ReviewModel
         {
             public int Id { get; set; }
             public string Title { get; set; }
@@ -48,6 +48,7 @@ namespace NIEM.Reviews.ReviewViewer
         private string formHyperlinkText = string.Empty;
         private string formHyperlink = string.Empty;
         private bool linkCreated = false;
+        private string returnUrl = string.Empty;
 
 
         private const string defaultListName = "Reviews";
@@ -85,6 +86,12 @@ namespace NIEM.Reviews.ReviewViewer
             
             articleUrl = HttpContext.Current.Request.QueryString["url"];
             articleTitle = HttpContext.Current.Request.QueryString["title"];
+            returnUrl = HttpContext.Current.Request.QueryString["source"];
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                returnUrl = HttpContext.Current.Request.ServerVariables["HTTP_REFERER"];
+            }
+
             notificationSection.Visible = false;
 
             //Only try and load data if an article is specified.
@@ -123,7 +130,7 @@ namespace NIEM.Reviews.ReviewViewer
             else
             {
                 CreateFormHyperlink(true, string.Empty);
-                ShowNotificationMessage(String.Format("There are no reviews for <strong>{0}</strong>. <a href=\"{1}\"'>Why don't you add one?</a><br/><br/> <a href='javascript:history.go(-1)'>Go back</a>", articleTitle, formHyperlink));
+                ShowNotificationMessage(String.Format("There are no reviews for <strong>{0}</strong>. <a href=\"{1}\"'>Why don't you add one?</a><br/><br/> <a href='{2}'>Go back</a>", articleTitle, formHyperlink,returnUrl));
                 
             }
         }
