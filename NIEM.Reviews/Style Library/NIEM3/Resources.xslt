@@ -276,9 +276,7 @@ Download PDF</a></xsl:if></div>
     <xsl:choose>
       <xsl:when test="$User!=''">
         <Portal:AverageRatingFieldControl  runat="Server" itemid="{@ID}"  id="MyRating{generate-id()}" FieldName="AverageRating" ControlMode="Edit" />
-        <a onclick="GoToLink(this);return false;" href="/Pages/ReviewList.aspx?url={@FileRef}&amp;title='{@Title}">
-          See Reviews
-        </a>
+        
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="@AverageRating!=0 and @AverageRating!=''">
@@ -292,9 +290,10 @@ Download PDF</a></xsl:if></div>
           <div style="width:80px; background-image:url('/_layouts/Images/Ratings.png'); height:16px;background-position:{-floor(@AverageRating)*16 -304}px 0px;">
           </div>
         </xsl:if>
+        
       </xsl:otherwise>
     </xsl:choose>
-
+    <a onclick="GoToLink(this);return false;" href="/Pages/ReviewList.aspx?url={@FileRef}&amp;title='{@Title}">See Reviews</a>
   </div>
 <br/><br/><NIEMLIKE:NIEMLike runat="server" URL="{@FileRef}" CType="Resource" />
 </td></tr></table>			

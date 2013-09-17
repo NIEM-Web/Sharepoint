@@ -130,7 +130,13 @@ namespace NIEM.Reviews.ReviewViewer
             else
             {
                 CreateFormHyperlink(true, string.Empty);
-                ShowNotificationMessage(String.Format("There are no reviews for <strong>{0}</strong>. <a href=\"{1}\"'>Why don't you add one?</a><br/><br/> <a href='{2}'>Go back</a>", articleTitle, formHyperlink,returnUrl));
+                string urlText = "To create a view, please <a href=\"/_layouts/niem/login.aspx\">login.</a>";
+
+                if (SPContext.Current.Web.CurrentUser != null)
+                {
+                    urlText = String.Format("<a href=\"{0}\"'>Why don't you add one?</a>", formHyperlink);
+                }
+                ShowNotificationMessage(String.Format("There are no reviews for <strong>{0}</strong>. {1} <br/><br/> <a href='{2}'>Go back</a>", articleTitle, urlText ,returnUrl));
                 
             }
         }
@@ -147,8 +153,16 @@ namespace NIEM.Reviews.ReviewViewer
             {
                 if (createMode == true)
                 {
-                    formHyperlinkText = "Create Review";
-                    formHyperlink = string.Format("javascript:CreateEditReview('{0}','{1}')", "/Lists/Reviews/NewForm.aspx", articleUrl);
+                    if (SPContext.Current.Web.CurrentUser == null)
+                    {
+                        formHyperlinkText = "Login to create a review";
+                        formHyperlink = String.Format("/_layouts/niem/login.aspx");
+                    }
+                    else
+                    {
+                        formHyperlinkText = "Create Review";
+                        formHyperlink = string.Format("javascript:CreateEditReview('{0}','{1}')", "/Lists/Reviews/NewForm.aspx", articleUrl);
+                    }
                 }
                 else
                 {
@@ -204,8 +218,13 @@ namespace NIEM.Reviews.ReviewViewer
         /// <returns>This will return either the email address if found or the user's name.</returns>
         private string FormatAuthor(string author)
         {
-            SPUser creator = new SPFieldUserValue(SPContext.Current.Web, author).User;
-            return (string.IsNullOrEmpty(creator.Email) ? creator.Name : creator.Email);
+            string result = author;
+            if (SPContext.Current.Web.CurrentUser != null)
+            {
+                SPUser creator = new SPFieldUserValue(SPContext.Current.Web, author).User;
+                result = string.IsNullOrEmpty(creator.Email) ? creator.Name : creator.Email;
+            }
+            return (result);
         }
 
         /// <summary>
@@ -215,10 +234,15 @@ namespace NIEM.Reviews.ReviewViewer
         /// <returns>True if the author and the current user are the same, false otherwise.</returns>
         private bool IsUserAuthor(string author)
         {
-            SPUser creator = new SPFieldUserValue(SPContext.Current.Web, author).User;
-            SPUser currentUser = SPContext.Current.Web.CurrentUser;
-           
-           return creator.ID.Equals(currentUser.ID);
+            bool result = false;
+
+            if (SPContext.Current.Web.CurrentUser != null)
+            {
+                SPUser creator = new SPFieldUserValue(SPContext.Current.Web, author).User;
+                SPUser currentUser = SPContext.Current.Web.CurrentUser;
+                result = creator.ID.Equals(currentUser.ID);
+            }
+            return result;
         }
 
         /// <summary>
