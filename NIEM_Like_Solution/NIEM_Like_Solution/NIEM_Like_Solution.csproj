@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7AF6401E-1A3F-423A-9056-43BDF45F4F62}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NIEM_Like_Solution</RootNamespace>
+    <AssemblyName>NIEM_Like_Solution</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BB1F664B-9266-4fd6-B973-E1E44974B511};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SandboxedSolution>False</SandboxedSolution>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.SharePoint" />
+    <Reference Include="Microsoft.SharePoint.Security" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ControlTemplates\NIEM_Like_Solution\NIEM_Like_Control.ascx.cs">
+      <DependentUpon>NIEM_Like_Control.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ControlTemplates\NIEM_Like_Solution\NIEM_Like_Control.ascx.designer.cs">
+      <DependentUpon>NIEM_Like_Control.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\NIEM_Like\NIEM_Like.EventReceiver.cs">
+      <DependentUpon>NIEM_Like.feature</DependentUpon>
+    </Compile>
+    <Compile Include="LikeTestWebpart\LikeTestWebpart.cs" />
+    <Compile Include="LikeTestWebpart\LikeTestWebpartUserControl.ascx.cs">
+      <DependentUpon>LikeTestWebpartUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LikeTestWebpart\LikeTestWebpartUserControl.ascx.designer.cs">
+      <DependentUpon>LikeTestWebpartUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NIEMLike.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ControlTemplates\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{caf4fe2e-80ff-41c9-98dd-9e5f393f5972}</SharePointProjectItemId>
+    </None>
+    <None Include="Features\TestWebpart\TestWebpart.feature">
+      <FeatureId>{a3d570c2-8dad-43a1-8d7c-8d564cb6fe54}</FeatureId>
+    </None>
+    <None Include="Features\NIEM_Like\NIEM_Like.feature">
+      <FeatureId>{1b1162b1-1e1b-4adb-b009-c06433cf2a51}</FeatureId>
+    </None>
+    <None Include="key.snk" />
+    <None Include="LikeTestWebpart\LikeTestWebpart.webpart" />
+    <None Include="LikeTestWebpart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{55497a04-e37e-42e4-81c3-102ec124944c}</SharePointProjectItemId>
+    </None>
+    <None Include="Package\Package.package">
+      <PackageId>{a958c316-6fe6-4d1c-8e1f-45f41ed9950c}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ControlTemplates\NIEM_Like_Solution\NIEM_Like_Control.ascx" />
+    <Content Include="Features\TestWebpart\TestWebpart.Template.xml">
+      <DependentUpon>TestWebpart.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\NIEM_Like\NIEM_Like.Template.xml">
+      <DependentUpon>NIEM_Like.feature</DependentUpon>
+    </Content>
+    <Content Include="LikeTestWebpart\Elements.xml" />
+    <Content Include="LikeTestWebpart\LikeTestWebpartUserControl.ascx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" />
+</Project>

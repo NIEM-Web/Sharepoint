@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <CustomAction Id="NIEMSiteSettings"
+        GroupId="UsersAndPermissions"
+        Location="Microsoft.SharePoint.SiteSettings"
+        Sequence="1000"
+        Title="Export Users to xlsx">
+    <UrlAction Url="/_layouts/niem/exportusers.aspx?f=excel"/>
+  </CustomAction>
+</Elements>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="7849e51d-8f16-474b-be0c-40609bfb4588" solutionId="7849e51d-8f16-474b-be0c-40609bfb4588" resetWebServer="false" name="lmd.NIEM.FarmSolution" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <assemblies>
+    <customAssembly location="EPPlus.dll" deploymentTarget="WebApplication" sourcePath="..\EP\EPPlus.dll" />
+  </assemblies>
+  <features>
+    <featureReference itemId="2e7c204c-a2ab-48fd-a93b-12ca7f4291f0" />
+    <featureReference itemId="9d8817ce-f79d-432d-b32f-404b0d587cd4" />
+    <featureReference itemId="0ec8a3b3-5b4e-4af3-a5c1-caba0307f48e" />
+    <featureReference itemId="40a96059-6950-47e4-b604-e92d82f83137" />
+    <featureReference itemId="a9781f76-c563-42e8-8e06-8e79b981d6dc" />
+    <featureReference itemId="e23a72fd-adb6-4392-b691-9bbc310ab0a3" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="a61e6bce-74aa-414a-bfdb-d214a9348857" />
+    <projectItemReference itemId="20821483-1ff3-40ad-88d6-257573931705" />
+    <projectItemReference itemId="3ca6f17e-78e9-4214-b87a-9bb0b0e855cd" />
+  </projectItems>
+</package>

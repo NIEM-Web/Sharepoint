@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D5066D7E-BF88-4712-AA7B-AC59E59C71F3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>lmd.NIEM.FarmSolution</RootNamespace>
+    <AssemblyName>lmd.NIEM.FarmSolution</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BB1F664B-9266-4fd6-B973-E1E44974B511};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SandboxedSolution>False</SandboxedSolution>
+    <PostDeploymentCommand>%25windir%25\sysnative\windowspowershell\v1.0\powershell -file "%24%28ProjectDir%29PSDeploy.ps1"</PostDeploymentCommand>
+    <ActiveDeploymentConfiguration>No Activation</ActiveDeploymentConfiguration>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus">
+      <HintPath>..\EP\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Server, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Server\14.0.0.0__71e9bce111e9429c\Microsoft.Office.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Server.UserProfiles, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Server.UserProfiles\14.0.0.0__71e9bce111e9429c\Microsoft.Office.Server.UserProfiles.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.IdentityModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Windows\assembly\GAC_MSIL\Microsoft.SharePoint.IdentityModel\14.0.0.0__71e9bce111e9429c\Microsoft.SharePoint.IdentityModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Publishing, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files\Common Files\Microsoft Shared\Web Server Extensions\14\ISAPI\Microsoft.SharePoint.Publishing.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.SharePoint" />
+    <Reference Include="Microsoft.SharePoint.Security" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="ControlTemplates\CurrentUser.ascx.cs">
+      <DependentUpon>CurrentUser.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ControlTemplates\CurrentUser.ascx.designer.cs">
+      <DependentUpon>CurrentUser.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlTemplates\lmd.NIEM.FarmSolution\ctrlUserProfile.ascx.cs">
+      <DependentUpon>ctrlUserProfile.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ControlTemplates\lmd.NIEM.FarmSolution\ctrlUserProfile.ascx.designer.cs">
+      <DependentUpon>ctrlUserProfile.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlTemplates\NIEM-RUContent.ascx.cs">
+      <DependentUpon>NIEM-RUContent.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ControlTemplates\NIEM-RUContent.ascx.designer.cs">
+      <DependentUpon>NIEM-RUContent.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlTemplates\UserStatusLink.ascx.cs">
+      <DependentUpon>UserStatusLink.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ControlTemplates\UserStatusLink.ascx.designer.cs">
+      <DependentUpon>UserStatusLink.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExportUsersToExcel\ExportUsersToExcel.cs" />
+    <Compile Include="ExportUsersToExcel\ExportUsersToExcelUserControl.ascx.cs">
+      <DependentUpon>ExportUsersToExcelUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExportUsersToExcel\ExportUsersToExcelUserControl.ascx.designer.cs">
+      <DependentUpon>ExportUsersToExcelUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Features\NiemAnonymousDiscussions\NiemAnonymousDiscussions.EventReceiver.cs">
+      <DependentUpon>NiemAnonymousDiscussions.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\ItemLevelPermission\ItemLevelPermission.EventReceiver.cs">
+      <DependentUpon>ItemLevelPermission.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\LayoutsPageMapping\LayoutsPageMapping.EventReceiver.cs">
+      <DependentUpon>LayoutsPageMapping.feature</DependentUpon>
+    </Compile>
+    <Compile Include="HttpModules\PageNotFoundHttpModule.cs" />
+    <Compile Include="HttpModules\RedirectModule.cs" />
+    <Compile Include="ItemLevelEventReceiver.cs" />
+    <Compile Include="Layouts\niem\login.aspx.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\niem\login.aspx.designer.cs">
+      <DependentUpon>login.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\niem\ExportUsers.aspx.cs">
+      <DependentUpon>ExportUsers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\niem\ExportUsers.aspx.designer.cs">
+      <DependentUpon>ExportUsers.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NiemUserProfileVisual\NiemUserProfileVisual.cs" />
+    <Compile Include="NiemUserProfileWebPart\NiemUserProfileWebPart.cs" />
+    <Compile Include="PageNotFoundWidgetWebpart\PageNotFoundWidgetWebpart.cs" />
+    <Compile Include="PersmissiveScriptControl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubscribeForEmailWP\SubscribeForEmailWP.cs" />
+    <Compile Include="SubscribeForEmailWP\SubscribeForEmailWPUserControl.ascx.cs">
+      <DependentUpon>SubscribeForEmailWPUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SubscribeForEmailWP\SubscribeForEmailWPUserControl.ascx.designer.cs">
+      <DependentUpon>SubscribeForEmailWPUserControl.ascx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserDetail.cs" />
+    <Compile Include="Utility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AdditionalPageHead\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{e1d2c3e4-68e3-46bb-8f59-fc29efb00648}</SharePointProjectItemId>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ControlTemplates\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{20821483-1ff3-40ad-88d6-257573931705}</SharePointProjectItemId>
+    </None>
+    <None Include="ExportUsersToExcel\ExportUsersToExcel.webpart" />
+    <None Include="ExportUsersToExcel\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{4cb0e93e-97bd-4cca-8b21-60373bb82947}</SharePointProjectItemId>
+    </None>
+    <None Include="Features\DelegateControls\DelegateControls.feature">
+      <FeatureId>{0ec8a3b3-5b4e-4af3-a5c1-caba0307f48e}</FeatureId>
+    </None>
+    <None Include="Features\NIEMSiteSettings\NIEMSiteSettings.feature">
+      <FeatureId>{a9781f76-c563-42e8-8e06-8e79b981d6dc}</FeatureId>
+    </None>
+    <None Include="Features\NiemAnonymousDiscussions\NiemAnonymousDiscussions.feature">
+      <FeatureId>{2e7c204c-a2ab-48fd-a93b-12ca7f4291f0}</FeatureId>
+    </None>
+    <None Include="Features\ItemLevelPermission\ItemLevelPermission.feature">
+      <FeatureId>{9d8817ce-f79d-432d-b32f-404b0d587cd4}</FeatureId>
+    </None>
+    <None Include="Features\LayoutsPageMapping\LayoutsPageMapping.feature">
+      <FeatureId>{e23a72fd-adb6-4392-b691-9bbc310ab0a3}</FeatureId>
+    </None>
+    <None Include="Features\NiemCustomWebparts\NiemCustomWebparts.feature">
+      <FeatureId>{40a96059-6950-47e4-b604-e92d82f83137}</FeatureId>
+    </None>
+    <None Include="Images\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{3ca6f17e-78e9-4214-b87a-9bb0b0e855cd}</SharePointProjectItemId>
+    </None>
+    <None Include="key.snk" />
+    <None Include="Layouts\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{a61e6bce-74aa-414a-bfdb-d214a9348857}</SharePointProjectItemId>
+    </None>
+    <None Include="NiemUserProfileVisual\NiemUserProfileVisual.webpart" />
+    <None Include="NiemUserProfileVisual\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{7aaa3ef5-f522-44a3-a4bd-bb1215dd46e7}</SharePointProjectItemId>
+    </None>
+    <None Include="NiemUserProfileWebPart\NiemUserProfileWebPart.webpart">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NiemUserProfileWebPart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{d0871993-e73b-42bf-b1c5-175839d4f5d7}</SharePointProjectItemId>
+    </None>
+    <None Include="NIEM_SiteSettings\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{be6ba5bd-bec1-4229-865a-c11ac3a0fec4}</SharePointProjectItemId>
+    </None>
+    <None Include="Package\Package.package">
+      <PackageId>{7849e51d-8f16-474b-be0c-40609bfb4588}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PageNotFoundWidgetWebpart\PageNotFoundWidgetWebpart.webpart" />
+    <None Include="PageNotFoundWidgetWebpart\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{673a66fc-1bca-4aef-b9a3-f1663db86a65}</SharePointProjectItemId>
+    </None>
+    <None Include="PsDeploy.ps1" />
+    <None Include="SubscribeForEmailWP\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{80573d61-4aa2-4ab2-a896-a0626c8b2a35}</SharePointProjectItemId>
+    </None>
+    <None Include="SubscribeForEmailWP\SubscribeForEmailWP.webpart" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AdditionalPageHead\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="ControlTemplates\CurrentUser.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="ControlTemplates\lmd.NIEM.FarmSolution\ctrlUserProfile.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="ControlTemplates\NIEM-RUContent.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="ControlTemplates\UserStatusLink.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="ExportUsersToExcel\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="ExportUsersToExcel\ExportUsersToExcelUserControl.ascx" />
+    <Content Include="Features\DelegateControls\DelegateControls.Template.xml">
+      <DependentUpon>DelegateControls.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\NIEMSiteSettings\NIEMSiteSettings.Template.xml">
+      <DependentUpon>NIEMSiteSettings.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\NiemAnonymousDiscussions\NiemAnonymousDiscussions.Template.xml">
+      <DependentUpon>NiemAnonymousDiscussions.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\ItemLevelPermission\ItemLevelPermission.Template.xml">
+      <DependentUpon>ItemLevelPermission.feature</DependentUpon>
+    </Content>
+    <Content Include="Features\LayoutsPageMapping\LayoutsPageMapping.Template.xml">
+      <DependentUpon>LayoutsPageMapping.feature</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Features\NiemCustomWebparts\NiemCustomWebparts.Template.xml">
+      <DependentUpon>NiemCustomWebparts.feature</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Features\NiemCustomWebparts\Resources.resx" />
+    <Content Include="Images\lmd.NIEM.FarmSolution\NiemFeature.gif" />
+    <Content Include="Layouts\niem\error.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Layouts\niem\login.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Layouts\niem\AccessDenied.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="Layouts\niem\confirmation.aspx" />
+    <Content Include="Layouts\niem\ExportUsers.aspx" />
+    <Content Include="Layouts\niem\reqacc.aspx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="NiemUserProfileVisual\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="NiemUserProfileWebPart\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="NIEM_SiteSettings\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="PageNotFoundWidgetWebpart\Elements.xml" />
+    <None Include="Resources\NiemFeature.gif" />
+    <Content Include="SubscribeForEmailWP\Elements.xml" />
+    <Content Include="SubscribeForEmailWP\SubscribeForEmailWPUserControl.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Features\NiemAnonymousDiscussions\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bkp\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" />
+</Project>

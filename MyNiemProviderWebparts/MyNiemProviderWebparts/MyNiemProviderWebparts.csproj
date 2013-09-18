@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5FD0E963-C7FA-4AAA-87AF-141A88F1C76E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyNiemProviderWebparts</RootNamespace>
+    <AssemblyName>MyNiemProviderWebparts</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BB1F664B-9266-4fd6-B973-E1E44974B511};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SandboxedSolution>False</SandboxedSolution>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files\Reference Assemblies\Microsoft\Windows Identity Foundation\v3.5\Microsoft.IdentityModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Server, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Server.UserProfiles, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SharePoint.IdentityModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Windows\assembly\GAC_MSIL\Microsoft.SharePoint.IdentityModel\14.0.0.0__71e9bce111e9429c\Microsoft.SharePoint.IdentityModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.SharePoint" />
+    <Reference Include="Microsoft.SharePoint.Security" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Webparts\MyNiemPasswordChange\Email.cs" />
+    <Compile Include="Webparts\MyNiemPasswordChange\FBADiagnosticServices.cs" />
+    <Compile Include="Webparts\MyNiemPasswordChange\LocalizedCategory.cs" />
+    <Compile Include="Webparts\MyNiemPasswordChange\LocalizedString.cs" />
+    <Compile Include="Webparts\MyNiemPasswordChange\LocalizedWebDescription.cs" />
+    <Compile Include="Webparts\MyNiemPasswordChange\LocalizedWebDisplayname.cs" />
+    <Compile Include="Webparts\MyNiemPasswordChange\MembershipRequest.cs" />
+    <Compile Include="Webparts\MyNiemPasswordChange\MembershipSettings.cs" />
+    <Compile Include="Webparts\MyNiemPasswordChange\MyNiemPasswordChange.cs" />
+    <Compile Include="Webparts\MyNiemPasswordChange\TemplateHelper.cs" />
+    <Compile Include="Webparts\MyNiemPasswordChange\TemplateLoader.cs" />
+    <Compile Include="Webparts\MyNiemPasswordChange\Utils.cs" />
+    <Compile Include="Webparts\MyNiemUserProfile\MyNiemUserProfile.cs" />
+    <Compile Include="Webparts\MyNiemUserProfile\MyNiemUserProfileUserControl.ascx.cs">
+      <DependentUpon>MyNiemUserProfileUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Webparts\MyNiemUserProfile\MyNiemUserProfileUserControl.ascx.designer.cs">
+      <DependentUpon>MyNiemUserProfileUserControl.ascx.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Features\MyNiemModals\MyNiemModals.feature">
+      <FeatureId>{95ee2942-29a6-46e3-921c-56773307d1d8}</FeatureId>
+    </None>
+    <None Include="key.snk" />
+    <None Include="Package\Package.package">
+      <PackageId>{3d3088cf-4640-4312-99f1-955292482bc2}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+    </None>
+    <None Include="Webparts\MyNiemPasswordChange\MyNiemPasswordChange.webpart" />
+    <None Include="Webparts\MyNiemPasswordChange\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{dc19cd97-e62d-45f5-a3b3-8dd54601c373}</SharePointProjectItemId>
+    </None>
+    <None Include="Webparts\MyNiemUserProfile\MyNiemUserProfile.webpart" />
+    <None Include="Webparts\MyNiemUserProfile\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{27eaabd9-4e03-4f5b-9160-ab34f587941e}</SharePointProjectItemId>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Features\MyNiemModals\MyNiemModals.Template.xml">
+      <DependentUpon>MyNiemModals.feature</DependentUpon>
+    </Content>
+    <Content Include="Webparts\MyNiemPasswordChange\Elements.xml" />
+    <Content Include="Webparts\MyNiemUserProfile\Elements.xml" />
+    <Content Include="Webparts\MyNiemUserProfile\MyNiemUserProfileUserControl.ascx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" />
+</Project>

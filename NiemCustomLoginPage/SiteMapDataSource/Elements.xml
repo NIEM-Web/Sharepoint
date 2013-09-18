@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Control Id="QuickLaunchDataSource" Sequence="50"
+    ControlClass="NiemCustomLoginPage.SiteMapDataSource.NiemDataSource"
+    ControlAssembly="NiemCustomLoginPage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f557e1aff1f6f296">
+    <Property Name="SiteMapProvider">CurrentNavSiteMapProvider</Property>
+    <Property Name="ID">QuickLaunchSiteMap</Property>
+  </Control>
+</Elements>

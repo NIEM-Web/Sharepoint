@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Receivers >
+      <Receiver>
+        <Name>NiemSignoutReceiver</Name>
+        <Type>WebMoving</Type>
+        <Assembly>$SharePoint.Project.AssemblyFullName$</Assembly>
+        <Class>NiemCustomLoginPage.NiemSignoutReceiver.NiemSignoutReceiver</Class>
+        <SequenceNumber>10000</SequenceNumber>
+      </Receiver>
+
+  </Receivers>
+</Elements>

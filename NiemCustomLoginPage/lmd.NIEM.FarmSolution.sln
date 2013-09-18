@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lmd.NIEM.FarmSolution", "lmd.NIEM.FarmSolution.csproj", "{D5066D7E-BF88-4712-AA7B-AC59E59C71F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5066D7E-BF88-4712-AA7B-AC59E59C71F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5066D7E-BF88-4712-AA7B-AC59E59C71F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5066D7E-BF88-4712-AA7B-AC59E59C71F3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D5066D7E-BF88-4712-AA7B-AC59E59C71F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5066D7E-BF88-4712-AA7B-AC59E59C71F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5066D7E-BF88-4712-AA7B-AC59E59C71F3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

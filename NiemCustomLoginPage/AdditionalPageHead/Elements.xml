@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Control Id="AdditionalPageHead" Sequence="51"
+           ControlAssembly="lmd.NIEM.FarmSolution, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f557e1aff1f6f296"
+           ControlClass="lmd.NIEM.FarmSolution.PersmissiveScriptControl" />
+</Elements>
