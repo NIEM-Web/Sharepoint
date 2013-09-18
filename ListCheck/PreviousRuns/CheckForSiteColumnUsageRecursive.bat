@@ -1,0 +1,2 @@
+LMD.ListCheck.exe -url https://www.niem.gov -outputpath "C:\Deploy\LMD\ListCheck\ListCheckLogging.txt" -CredentialType Forms -UID rsnyder -Password <password> -option RecursivelyEnumerateSiteColumnReferences -p1 FilterCategory
+PAUSE

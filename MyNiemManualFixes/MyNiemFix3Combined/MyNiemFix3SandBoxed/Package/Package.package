@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="e49eda75-fe5e-44be-bf2c-4542c55c9fe4" solutionId="e49eda75-fe5e-44be-bf2c-4542c55c9fe4" resetWebServer="false" name="MyNiemFix3SandBoxed" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="fcb4b101-cde1-4108-93ee-13a30aca62ca" />
+  </features>
+</package>

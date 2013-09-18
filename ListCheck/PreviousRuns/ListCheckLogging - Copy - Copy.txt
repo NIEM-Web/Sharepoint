@@ -1,0 +1,198 @@
+=============================================================
+Start run at 4/10/2013 2:44:33 PM
+Performing the following command EnumerateSiteColumnsOnList
+With these input parametesr: Exporting all columns in lists that have a title that contains this text Forum information at the site collection level
+against https://www.niem.gov
+------------------------------------------------------------
+
+
+Url: https://www.niem.gov/communities/cross-domain, List Title: Cross-Domain Forum
+  ID, 
+	<Field ID="{1d22ea11-1e32-424e-89ab-9fedbadb6ce1}" ColName="tp_ID" RowOrdinal="0" ReadOnly="TRUE" Type="Counter" Name="ID" PrimaryKey="TRUE" DisplayName="ID" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="ID" FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  ContentType, 
+	<Field ID="{c042a256-787d-4a6f-8a8a-cf6ab767f12d}" Type="Computed" DisplayName="Content Type" Name="ContentType" DisplaceOnUpgrade="TRUE" RenderXMLUsingPattern="TRUE" Sortable="FALSE" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="ContentType" Group="_Hidden" PITarget="MicrosoftWindowsSharePointServices" PIAttribute="ContentTypeID" FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><FieldRefs><FieldRef Name="ContentTypeId" /></FieldRefs><DisplayPattern><MapToContentType><Column Name="ContentTypeId" /></MapToContentType></DisplayPattern></Field>
+
+  Title, 
+	<Field ID="{fa564e0f-0c70-4ab9-b863-0177e6ddd247}" Type="Text" Name="Title" DisplayName="Subject" Required="TRUE" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="Title" FromBaseType="TRUE" ColName="nvarchar6" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Modified, 
+	<Field ID="{28cf69c5-fa48-462a-b5cd-27b6f9d2bd5f}" ColName="tp_Modified" RowOrdinal="0" ReadOnly="TRUE" Type="DateTime" Name="Modified" DisplayName="Modified" StorageTZ="TRUE" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="Modified" FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Created, 
+	<Field ID="{8c06beca-0777-48f7-91c7-6da68bc07b69}" ColName="tp_Created" RowOrdinal="0" ReadOnly="TRUE" Type="DateTime" Name="Created" DisplayName="Created" StorageTZ="TRUE" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="Created" FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Author, 
+	<Field ID="{1df5e554-ec7e-46a6-901d-d85a3881cb18}" ColName="tp_Author" RowOrdinal="0" ReadOnly="TRUE" Type="User" List="UserInfo" Name="Author" DisplayName="Created By" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="Author" FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Editor, 
+	<Field ID="{d31655d1-1d5b-4511-95a1-7a09e9b75bf2}" ColName="tp_Editor" RowOrdinal="0" ReadOnly="TRUE" Type="User" List="UserInfo" Name="Editor" DisplayName="Modified By" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="Editor" FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  _UIVersionString, 
+	<Field ID="{dce8262a-3ae9-45aa-aab4-83bd75fb738a}" ColName="tp_UIVersionString" RowOrdinal="0" ReadOnly="TRUE" Type="Text" Name="_UIVersionString" DisplaceOnUpgrade="TRUE" DisplayName="Version" CanToggleHidden="TRUE" Required="FALSE" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="_UIVersionString" FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Attachments, 
+	<Field ID="{67df98f4-9dec-48ff-a553-29bece9c5bf4}" ColName="tp_HasAttachment" RowOrdinal="0" Type="Attachments" Name="Attachments" DisplayName="Attachments" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="Attachments" FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  _ModerationStatus, 
+	<Field ID="{fdc3b2ed-5bf2-4835-a4bc-b885f3396a61}" ColName="tp_ModerationStatus" RowOrdinal="0" ReadOnly="TRUE" Type="ModStat" Name="_ModerationStatus" DisplayName="Approval Status" Hidden="FALSE" CanToggleHidden="TRUE" Required="TRUE" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="_ModerationStatus" FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><CHOICES><CHOICE>0;#Approved</CHOICE><CHOICE>1;#Rejected</CHOICE><CHOICE>2;#Pending</CHOICE><CHOICE>3;#Draft</CHOICE><CHOICE>4;#Scheduled</CHOICE></CHOICES><Default>0</Default></Field>
+
+  _ModerationComments, 
+	<Field ID="{34ad21eb-75bd-4544-8c73-0e08330291fe}" ReadOnly="TRUE" Type="Note" Name="_ModerationComments" DisplayName="Approver Comments" Hidden="FALSE" CanToggleHidden="TRUE" Filterable="FALSE" Sortable="FALSE" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="_ModerationComments" FromBaseType="TRUE" ColName="ntext11" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Edit, 
+	<Field ID="{503f1caa-358e-4918-9094-4a2cdc4bc034}" ReadOnly="TRUE" Type="Computed" Name="Edit" Sortable="FALSE" Filterable="FALSE" DisplayName="Edit" ClassInfo="Icon" AuthoringInfo="(link to edit item)" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="Edit" FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><DisplayPattern><IfHasRights><RightsChoices><RightsGroup PermEditListItems="required" /></RightsChoices><Then><HTML><![CDATA[<a href="]]></HTML><URL Cmd="Edit" /><HTML><![CDATA[" onclick="EditLink(this, ]]></HTML><Counter Type="View" /><HTML><![CDATA[);return false;" target="_self">]]></HTML><HTML><![CDATA[<img border="0" alt="]]></HTML><HTML>Edit</HTML><HTML><![CDATA[" src="/_layouts/images/edititem.gif"/>]]></HTML><HTML><![CDATA[</a>]]></HTML></Then><Else><HTML><![CDATA[&#160;]]></HTML></Else></IfHasRights></DisplayPattern></Field>
+
+  LinkTitle, 
+	<Field ID="{82642ec8-ef9b-478f-acf9-31f7d45fbc31}" ReadOnly="TRUE" Type="Computed" Name="LinkTitle" DisplayName="Title" DisplayNameSrcField="Title" 
+	ClassInfo="Menu" AuthoringInfo="(linked to item with edit menu)" ListItemMenuAllowed="Required" LinkToItemAllowed="Prohibited" 
+	SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="LinkTitle" FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/">
+	<FieldRefs><FieldRef Name="Title" /><FieldRef Name="LinkTitleNoMenu" /><FieldRef Name="_EditMenuTableStart2" /><FieldRef Name="_EditMenuTableEnd" />
+	</FieldRefs><DisplayPattern><FieldSwitch><Expr><GetVar Name="FreeForm" /></Expr><Case Value="TRUE"><Field Name="LinkTitleNoMenu" /></Case><Default><Switch>
+	<Expr><GetVar Name="MasterVersion" /></Expr><Case Value="4"><HTML><![CDATA[<div class="ms-vb itx" onmouseover="OnItem(this)" CTXName="ctx]]></HTML>
+	<Field Name="_EditMenuTableStart2" /><HTML><![CDATA[">]]></HTML><Field Name="LinkTitleNoMenu" /><HTML><![CDATA[</div>]]></HTML><HTML><![CDATA[
+	<div class="s4-ctx" onmouseover="OnChildItem(this.parentNode); return false;">]]></HTML><HTML><![CDATA[<span>&nbsp;</span>]]></HTML><HTML><![CDATA[
+	<a onfocus="OnChildItem(this.parentNode.parentNode); return false;" onclick="PopMenuFromChevron(event); return false;" href="javascript:;" title="Open Menu">
+	</a>]]></HTML><HTML><![CDATA[<span>&nbsp;</span>]]></HTML><HTML><![CDATA[</div>]]></HTML></Case><Default><HTML><![CDATA[<table height="100%" cellspacing="0" 
+	class="ms-unselectedtitle itx" onmouseover="OnItem(this)" CTXName="ctx]]></HTML><Field Name="_EditMenuTableStart2" /><HTML><![CDATA["><tr><td width="100%" 
+	class="ms-vb">]]></HTML><SetVar Name="ShowAccessibleIcon" Value="1" /><Field Name="LinkTitleNoMenu" /><SetVar Name="ShowAccessibleIcon" Value="0" /><HTML>
+	<![CDATA[</td><td><img src="/_layouts/images/blank.gif" width="13" style="visibility:hidden" alt=""/></td></tr></table>]]></HTML></Default></Switch></Default>
+	</FieldSwitch></DisplayPattern></Field>
+
+  DocIcon, <Field ID="{081c6e4c-5c14-4f20-b23e-1a71ceb6a67c}" Type="Computed" ReadOnly="TRUE" Name="DocIcon" DisplaceOnUpgrade="TRUE" DisplayName="Type" 
+	TextOnly="TRUE" ClassInfo="Icon" AuthoringInfo="(icon linked to document)" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="DocIcon" 
+	FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><FieldRefs><FieldRef Name="File_x0020_Type" /><FieldRef Name="FSObjType" />
+	<FieldRef Name="FileRef" /><FieldRef Name="FileLeafRef" /><FieldRef Name="HTML_x0020_File_x0020_Type" /><FieldRef Name="PermMask" /><FieldRef 
+	Name="IconOverlay" /></FieldRefs><DisplayPattern><SetVar Name="DocIconImg"><SetVar Name="DocIconAltText"><IfEqual><Expr1><LookupColumn Name="FSObjType" />
+	</Expr1><Expr2>1</Expr2><Then><IfSubString><Expr1>0x0120D5</Expr1><Expr2><Column Name="ContentTypeId" /></Expr2><Then><HTML>Document Collection: </HTML>
+	<LookupColumn Name="FileLeafRef" HTMLEncode="TRUE" /></Then><Else><HTML>Folder: </HTML><LookupColumn Name="FileLeafRef" HTMLEncode="TRUE" /></Else>
+	</IfSubString></Then><Else><LookupColumn Name="Title" HTMLEncode="TRUE" /></Else></IfEqual></SetVar><SetVar Name="DocIconFileName"><IfEqual><Expr1>
+	<Column Name="IconOverlay" /></Expr1><Expr2 /><Then><IfEqual><Expr1><LookupColumn Name="FSObjType" /></Expr1><Expr2>1</Expr2><Then><IfEqual><Expr1>
+	<Column Name="HTML_x0020_File_x0020_Type" /><HTML>|</HTML><Column Name="File_x0020_Type" /></Expr1><Expr2><HTML>|</HTML></Expr2><Then><HTML>folder.gif</HTML>
+	</Then><Else><SetVar Name="FolderIconFromMap"><MapToIcon><Column Name="HTML_x0020_File_x0020_Type" /><HTML>|</HTML><Column Name="File_x0020_Type" />
+	</MapToIcon></SetVar><IfEqual><Expr1><GetVar Name="FolderIconFromMap" /></Expr1><Expr2><MapToIcon /></Expr2><Then><HTML>folder.gif</HTML></Then><Else>
+	<GetVar Name="FolderIconFromMap" /></Else></IfEqual></Else></IfEqual></Then><Else><MapToIcon><Column Name="HTML_x0020_File_x0020_Type" /><HTML>|</HTML>
+	<Column Name="File_x0020_Type" /></MapToIcon></Else></IfEqual></Then><Else><MapToIcon><Column Name="IconOverlay" /></MapToIcon></Else></IfEqual></SetVar><HTML><![CDATA[<img border="0" alt="]]></HTML><GetVar Name="DocIconAltText" /><HTML><![CDATA[" title="]]></HTML><GetVar Name="DocIconAltText" /><HTML><![CDATA[" src="/_layouts/images/]]></HTML><GetVar Name="DocIconFileName" /><HTML><![CDATA[" />]]></HTML></SetVar><SetVar Name="DocIconOverlayImg"><IfEqual><Expr1><Column Name="IconOverlay" /></Expr1><Expr2 /><Then /><Else><HTML><![CDATA[<img class="ms-vb-icon-overlay" alt="*" src="/_layouts/images/]]></HTML><MapToOverlay><Column Name="IconOverlay" /></MapToOverlay><HTML><![CDATA[" />]]></HTML></Else></IfEqual></SetVar><IfEqual><Expr1><LookupColumn Name="FSObjType" /></Expr1><Expr2>1</Expr2><Then><FieldSwitch><Expr><GetVar Name="RecursiveView" /></Expr><Case Value="1">
+	<GetVar Name="DocIconImg" /><GetVar Name="DocIconOverlayImg" /></Case><Default><SetVar Name="UnencodedFilterLink"><SetVar Name="RootFolder"><HTML>/</HTML>
+	<LookupColumn Name="FileRef" /></SetVar><SetVar Name="SkipHost">1</SetVar><SetVar Name="FolderCTID"><FieldSwitch><Expr>
+	<ListProperty Select="EnableContentTypes" /></Expr><Case Value="1"><Column Name="ContentTypeId" /></Case></FieldSwitch></SetVar>
+	<FilterLink Default="" Paged="FALSE" /></SetVar><FieldSwitch><Expr><GetVar Name="FileDialog" /></Expr><Case Value="1"><GetVar Name="DocIconImg" /><GetVar Name="DocIconOverlayImg" /></Case><Default><HTML><![CDATA[<a href="]]></HTML><GetVar Name="UnencodedFilterLink" HTMLEncode="TRUE" /><HTML><![CDATA[" onclick="javascript:EnterFolder(']]></HTML><ScriptQuote NotAddingQuote="TRUE"><GetVar Name="UnencodedFilterLink" /></ScriptQuote><HTML><![CDATA[');javascript:return false;">]]></HTML><GetVar Name="DocIconImg" /><GetVar Name="DocIconOverlayImg" /><HTML><![CDATA[</a>]]></HTML></Default></FieldSwitch></Default></FieldSwitch></Then><Else><HTML><![CDATA[<a onfocus="OnLink(this)" href="]]></HTML><URL /><HTML><![CDATA[" onclick="GoToLink(this);return false;" target="_self">]]></HTML><GetVar Name="DocIconImg" /><GetVar Name="DocIconOverlayImg" /><HTML><![CDATA[</a>]]></HTML></Else></IfEqual></DisplayPattern></Field>
+
+  ItemChildCount, 
+	<Field ID="{b824e17e-a1b3-426e-aecf-f0184d900485}" Name="ItemChildCount" DisplaceOnUpgrade="TRUE" ReadOnly="TRUE" ShowInFileDlg="FALSE" Type="Lookup" DisplayName="Replies" List="Docs" FieldRef="ID" ShowField="ItemChildCount" JoinColName="DoclibRowId" JoinRowOrdinal="0" JoinType="INNER" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="ItemChildCount" FromBaseType="TRUE" Hidden="FALSE" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+ 
+  FolderChildCount, 
+	<Field ID="{960ff01f-2b6d-4f1b-9c3f-e19ad8927341}" Name="FolderChildCount" DisplaceOnUpgrade="TRUE" ReadOnly="TRUE" ShowInFileDlg="FALSE" Type="Lookup" DisplayName="Folder Child Count" List="Docs" FieldRef="ID" ShowField="FolderChildCount" JoinColName="DoclibRowId" JoinRowOrdinal="0" JoinType="INNER" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="FolderChildCount" FromBaseType="TRUE" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Body, 
+	<Field ID="{7662cd2c-f069-4dba-9e35-082cf976e170}" Type="Note" RichText="TRUE" RichTextMode="FullHtml" IsolateStyles="TRUE" NumLines="15" Name="Body" DisplayName="Body" Sortable="FALSE" AllowDeletion="FALSE" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="Body" ColName="ntext2" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  MyEditor, 
+	<Field ID="{078b9dba-eb8c-4ec5-bfdd-8d220a3fcc5d}" FieldRef="Editor" ReadOnly="TRUE" Type="User" List="UserInfo" Name="MyEditor" DisplayName="Modified By" StaticName="MyEditor" FromBaseType="TRUE" Required="FALSE" Group="" ShowField="NameWithPicture" AuthoringInfo="(picture and name)" SourceID="http://schemas.microsoft.com/sharepoint/v3" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  DiscussionLastUpdated, 
+	<Field ID="{59956c56-30dd-4cb1-bf12-ef693b42679c}" Name="DiscussionLastUpdated" SourceID="http://schemas.microsoft.com/sharepoint/v3" DisplaceOnUpgrade="TRUE" Group="_Hidden" Type="DateTime" DisplayName="Last Updated" StaticName="DiscussionLastUpdated" ReadOnly="TRUE" StorageTZ="TRUE" Format="DateTime" Indexed="TRUE" ColName="datetime1" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><Default>[today]</Default><DefaultFormulaValue>2013-04-10T00:00:00Z</DefaultFormulaValue></Field>
+
+  EmailSender, 
+	<Field ID="{4ce600fb-a927-4911-bfc1-11076b76b522}" Name="EmailSender" DisplaceOnUpgrade="TRUE" Type="Note" RichText="TRUE" RichTextMode="Compatible" DisplayName="E-Mail Sender" Sealed="TRUE" ShowInDisplayForm="FALSE" ShowInEditForm="FALSE" ShowInFileDlg="FALSE" ShowInNewForm="FALSE" ShowInListSettings="FALSE" Required="FALSE" SourceID="http://schemas.microsoft.com/sharepoint/v3" StaticName="EmailSender" ColName="ntext7" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Category_x0020_Subject_x0020_Are, 
+	<Field Type="Lookup" DisplayName="Category Subject Area/Audience" Required="FALSE" EnforceUniqueValues="FALSE" List="{83044d28-45d1-419c-adbe-51667dc23265}" WebId="3186fe69-b229-4a30-892c-ada08bdc2866" ShowField="Title" Mult="FALSE" UnlimitedLengthInDocumentLibrary="FALSE" Group="Niem Custom Columns" ID="{5c615c06-3db3-42d5-8834-b8d193042174}" SourceID="{3186fe69-b229-4a30-892c-ada08bdc2866}" StaticName="Category_x0020_Subject_x0020_Area_x002f_Audience" Name="Category_x0020_Subject_x0020_Are" Version="2" ColName="int2" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Committee, 
+	<Field Type="Lookup" DisplayName="Category Committee" Required="FALSE" EnforceUniqueValues="FALSE" List="{aef84512-f30b-4fd9-8451-214815eeaeba}" WebId="3186fe69-b229-4a30-892c-ada08bdc2866" ShowField="Title" UnlimitedLengthInDocumentLibrary="FALSE" Group="Niem Custom Columns" ID="{d4f20847-dee7-46df-8c41-f6ce1562ad63}" SourceID="{3186fe69-b229-4a30-892c-ada08bdc2866}" StaticName="Committee" Name="Committee" Version="2" ColName="int3" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Committee_x003A_Title, 
+	<Field Type="Lookup" DisplayName="Committee:Title" List="{aef84512-f30b-4fd9-8451-214815eeaeba}" WebId="3186fe69-b229-4a30-892c-ada08bdc2866" ShowField="Title" FieldRef="d4f20847-dee7-46df-8c41-f6ce1562ad63" ReadOnly="TRUE" UnlimitedLengthInDocumentLibrary="FALSE" Group="Niem Custom Columns" ID="{546e5b93-a973-4f1c-bd17-a2036f89bbe4}" SourceID="{3186fe69-b229-4a30-892c-ada08bdc2866}" StaticName="Committee_x003a_Title" Name="Committee_x003A_Title" Version="2" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  ActiveItem, 
+	<Field Type="Boolean" DisplayName="ActiveItem" EnforceUniqueValues="FALSE" Indexed="FALSE" Group="Niem Custom Columns" ID="{83c82c78-ff82-444b-91ae-da5aff7d9496}" SourceID="{3186fe69-b229-4a30-892c-ada08bdc2866}" StaticName="ActiveItem" Name="ActiveItem" Required="FALSE" Version="2" ColName="bit1" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><Default>0</Default></Field>
+ 
+  AverageRating, 
+	<Field ID="{5a14d1ab-1513-48c7-97b3-657a5ba6c742}" Name="AverageRating" StaticName="AverageRating" DisplayName="Rating (0-5)" Description="Average value of all the ratings that have been submitted" Group="Ratings" Type="AverageRating" Decimals="2" Min="0" Max="5" ShowInEditForm="TRUE" ShowInDisplayForm="TRUE" ShowInNewForm="FALSE" SourceID="http://schemas.microsoft.com/sharepoint/v3" ColName="float1" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  RatingCount, 
+	<Field ID="{b1996002-9167-45e5-a4df-b2c41c6723c7}" Name="RatingCount" StaticName="RatingCount" DisplayName="Number of Ratings" Description="Number of ratings submitted" Group="Ratings" Type="RatingCount" Min="0" Decimals="0" ShowInEditForm="FALSE" ShowInDisplayForm="TRUE" ShowInNewForm="FALSE" SourceID="http://schemas.microsoft.com/sharepoint/v3" ColName="int5" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Audience1, 
+	<Field Type="MultiChoice" DisplayName="Audience" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" FillInChoice="FALSE" Group="Multi Tagging Columns" ID="{47b6fcfb-3533-4738-8222-3b88c3feb09b}" SourceID="{3186fe69-b229-4a30-892c-ada08bdc2866}" StaticName="Audience1" Name="Audience1" Version="2" ColName="ntext8" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><Default>Program Manager</Default><CHOICES><CHOICE>Program Manager</CHOICE><CHOICE>Developer</CHOICE><CHOICE>Implementer</CHOICE><CHOICE>International</CHOICE><CHOICE>Federal Government</CHOICE><CHOICE>State Government</CHOICE><CHOICE>Local Government</CHOICE><CHOICE>Tribal</CHOICE><CHOICE>Industry</CHOICE><CHOICE>Training</CHOICE></CHOICES></Field>
+
+  Committee1, 
+	<Field Type="MultiChoice" DisplayName="Committee" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" FillInChoice="FALSE" Group="Multi Tagging Columns" ID="{f84b73a6-8d90-4a64-bf5f-9a6fd8186dde}" SourceID="{3186fe69-b229-4a30-892c-ada08bdc2866}" StaticName="Committee1" Name="Committee1" Version="2" ColName="ntext9" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><Default>Canada COE</Default><CHOICES><CHOICE>Canada COE</CHOICE><CHOICE>Communications</CHOICE><CHOICE>NBAC</CHOICE><CHOICE>NC &amp; OC</CHOICE><CHOICE>NTAC</CHOICE><CHOICE>PMO</CHOICE></CHOICES></Field>
+
+  Domains, 
+	<Field Type="MultiChoice" DisplayName="Domains" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" FillInChoice="FALSE" Group="Multi Tagging Columns"
+	 ID="{9f7f422e-7793-4473-88a8-8987219c4638}" SourceID="{3186fe69-b229-4a30-892c-ada08bdc2866}" StaticName="Domains" Name="Domains" Version="6" 
+	ColName="ntext10" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><Default>Biometrics</Default><CHOICES><CHOICE>Biometrics</CHOICE>
+	<CHOICE>Canada COE</CHOICE><CHOICE>CBRN (Chemical, Biological, Radiological, Nuclear)</CHOICE><CHOICE>Cross-Domain</CHOICE><CHOICE>Cyber</CHOICE>
+	<CHOICE>CYFS (Children Youth and Family Services)</CHOICE><CHOICE>DOD UCore</CHOICE><CHOICE>Emergency Management</CHOICE>
+	<CHOICE>GRM (Government Resources Management)</CHOICE><CHOICE>Health</CHOICE><CHOICE>Human Services</CHOICE><CHOICE>Immigration</CHOICE>
+	<CHOICE>Infrastructure Protection</CHOICE><CHOICE>Intelligence</CHOICE><CHOICE>International Trade</CHOICE><CHOICE>Justice</CHOICE><CHOICE>Maritime</CHOICE><CHOICE>NAD Public Health</CHOICE><CHOICE>NAD Public Safety</CHOICE><CHOICE>NBAC Workspace</CHOICE><CHOICE>NC&amp;OC</CHOICE><CHOICE>NTAC</CHOICE><CHOICE>PMO</CHOICE><CHOICE>Screening</CHOICE></CHOICES></Field>
+
+  DiscussionTitle, 
+	<Field ID="{c5abfdc7-3435-4183-9207-3d1146895cf8}" Name="DiscussionTitle" SourceID="http://schemas.microsoft.com/sharepoint/v3" DisplaceOnUpgrade="TRUE" Group="_Hidden" Type="Computed" ReadOnly="TRUE" DisplayName="Discussion Subject" Sortable="FALSE" Filterable="FALSE" StaticName="DiscussionTitle" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><FieldRefs><FieldRef ID="{f0218b98-d0d6-4fc1-b15b-aabeb89f32a9}" Name="DiscussionTitleLookup" /><FieldRef ID="{fa564e0f-0c70-4ab9-b863-0177e6ddd247}" Name="Title" /><FieldRef ID="{30bb605f-5bae-48fe-b4e3-1f81d9772af9}" Name="FSObjType" /></FieldRefs><DisplayPattern><Switch><Expr><LookupColumn Name="FSObjType" /></Expr><Case Value="1"><Column Name="Title" HTMLEncode="TRUE" /></Case><Default><LookupColumn Name="DiscussionTitleLookup" HTMLEncode="TRUE" /></Default></Switch></DisplayPattern></Field>
+
+  LinkDiscussionTitleNoMenu, 
+	<Field ID="{3ac9353f-613f-42bd-98e1-530e9fd1cbf6}" Name="LinkDiscussionTitleNoMenu" SourceID="http://schemas.microsoft.com/sharepoint/v3" 
+	DisplaceOnUpgrade="TRUE" Group="Base Columns" Type="Computed" DisplayName="Subject" DisplayNameSrcField="Title" ReadOnly="TRUE" 
+	AuthoringInfo="(linked to item)" StaticName="LinkDiscussionTitleNoMenu" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><FieldRefs><FieldRef ID="{fa564e0f-0c70-4ab9-b863-0177e6ddd247}" Name="Title" /><FieldRef ID="{bc91a437-52e7-49e1-8c4e-4698904b2b6d}" Name="LinkTitleNoMenu" /><FieldRef ID="{30bb605f-5bae-48fe-b4e3-1f81d9772af9}" Name="FSObjType" /><FieldRef ID="{998b5cff-4a35-47a7-92f3-3914aa6aa4a2}" Name="Created_x0020_Date" /><FieldRef ID="{94f89715-e097-4e8b-ba79-ea02aa8b7adb}" Name="FileRef" /><FieldRef ID="{39360f11-34cf-4356-9945-25c44e68dade}" Name="File_x0020_Type" /><FieldRef ID="{03e45e84-1992-4d42-9116-26f756012634}" Name="ContentTypeId" /></FieldRefs><DisplayPattern><IfEqual><Expr1><LookupColumn Name="FSObjType" /></Expr1><Expr2>1</Expr2><Then><Switch><Expr><GetVar Name="RecursiveView" /></Expr><Case Value="1"><Column Name="Title" HTMLEncode="TRUE" Default="(no title)" /></Case><Default>
+	<SetVar Name="DiscussionFilterLink"><SetVar Name="RootFolder"><HTML>/</HTML><LookupColumn Name="FileRef" /></SetVar><SetVar Name="FolderCTID"><FieldSwitch><Expr><ListProperty Select="EnableContentTypes" /></Expr><Case Value="1"><Column Name="ContentTypeId" /></Case></FieldSwitch></SetVar><FilterLink Default="" Paged="FALSE" /></SetVar><HTML><![CDATA[<a onfocus="OnLink(this)"  href="]]></HTML><GetVar Name="DiscussionFilterLink" HTMLEncode="TRUE" /><HTML><![CDATA[" onclick='javascript:GoToDiscussion("]]></HTML><ScriptQuote NotAddingQuote="TRUE"><GetVar Name="DiscussionFilterLink" /></ScriptQuote><HTML><![CDATA[");javascript:return false;'>]]></HTML><Column Name="Title" HTMLEncode="TRUE" Default="(no title)" /><IfEqual><Expr1><GetVar Name="ShowAccessibleIcon" /></Expr1><Expr2>1</Expr2><Then><HTML><![CDATA[<img src="/_layouts/images/blank.gif" class="ms-hidden" border="0" width="1" height="1" alt="Use SHIFT+ENTER to open the menu (new window)."/>]]></HTML></Then></IfEqual><HTML>
+	<![CDATA[</a>]]></HTML></Default></Switch><IfNew><HTML><![CDATA[<img src="/_layouts/1033/images/new.gif" alt="]]></HTML><HTML>New</HTML><HTML><![CDATA[" class="ms-newgif" />]]></HTML></IfNew></Then><Else><Field Name="LinkTitleNoMenu" /></Else></IfEqual></DisplayPattern></Field>
+
+  LinkDiscussionTitle, 
+	<Field ID="{46045bc4-283a-4826-b3dd-7a78d790b266}" Name="LinkDiscussionTitle" SourceID="http://schemas.microsoft.com/sharepoint/v3" DisplaceOnUpgrade="TRUE" 
+	Group="Base Columns" Type="Computed" DisplayName="Subject" ReadOnly="TRUE" DisplayNameSrcField="Title" ClassInfo="Menu" 
+	AuthoringInfo="(linked to item with edit menu)" ListItemMenuAllowed="Required" LinkToItemAllowed="Prohibited" StaticName="LinkDiscussionTitle" 
+	xmlns="http://schemas.microsoft.com/sharepoint/soap/"><FieldRefs><FieldRef ID="{3ac9353f-613f-42bd-98e1-530e9fd1cbf6}" Name="LinkDiscussionTitleNoMenu" />
+	<FieldRef ID="{3c6303be-e21f-4366-80d7-d6d0a3b22c7a}" Name="_EditMenuTableStart2" /><FieldRef ID="{2ea78cef-1bf9-4019-960a-02c41636cb47}" 
+	Name="_EditMenuTableEnd" /></FieldRefs><DisplayPattern><Switch><Expr><GetVar Name="MasterVersion" /></Expr><Case Value="4"><HTML><![CDATA[
+	<div class="ms-vb itx" onmouseover="OnItem(this)" CTXName="ctx]]></HTML><Field Name="_EditMenuTableStart2" /><HTML><![CDATA[">]]></HTML><Field Name="LinkDiscussionTitleNoMenu" /><HTML><![CDATA[</div>]]></HTML><HTML><![CDATA[<div class="s4-ctx" onmouseover="OnChildItem(this.parentNode); return false;">]]></HTML><HTML><![CDATA[<span>&nbsp;</span>]]></HTML><HTML><![CDATA[<a onfocus="OnChildItem(this.parentNode.parentNode); return false;" onclick="PopMenuFromChevron(event); return false;" href="javascript:;" title="Open Menu"></a>]]></HTML><HTML><![CDATA[<span>&nbsp;</span>]]></HTML><HTML><![CDATA[</div>]]></HTML></Case><Default><HTML><![CDATA[<table height="100%" cellspacing="0" class="ms-unselectedtitle itx" onmouseover="OnItem(this)" CTXName="ctx]]></HTML><Field Name="_EditMenuTableStart2" /><HTML><![CDATA["><tr><td width="100%" class="ms-vb">]]></HTML><SetVar Name="ShowAccessibleIcon" Value="1" />
+	<Field Name="LinkDiscussionTitleNoMenu" /><SetVar Name="ShowAccessibleIcon" Value="0" /><HTML><![CDATA[</td><td><img src="/_layouts/images/blank.gif" width="13" style="visibility:hidden" alt=""/></td></tr></table>]]></HTML></Default></Switch></DisplayPattern></Field>
+
+  LinkDiscussionTitle2, 
+	<Field ID="{b4e31c47-f962-4f9f-9132-eb555a1a026c}" Name="LinkDiscussionTitle2" SourceID="http://schemas.microsoft.com/sharepoint/v3" DisplaceOnUpgrade="TRUE" 
+	Group="Base Columns" Type="Computed" DisplayName="Subject" ReadOnly="TRUE" DisplayNameSrcField="Title" ClassInfo="Menu" AuthoringInfo="(linked to item with 
+	edit menu) (old)" StaticName="LinkDiscussionTitle2" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><FieldRefs><FieldRef 
+	ID="{3ac9353f-613f-42bd-98e1-530e9fd1cbf6}" Name="LinkDiscussionTitleNoMenu" /><FieldRef ID="{3c6303be-e21f-4366-80d7-d6d0a3b22c7a}" 
+	Name="_EditMenuTableStart" /><FieldRef ID="{2ea78cef-1bf9-4019-960a-02c41636cb47}" Name="_EditMenuTableEnd" /></FieldRefs><DisplayPattern>
+	<Field Name="_EditMenuTableStart" /><SetVar Name="ShowAccessibleIcon" Value="1" /><Field Name="LinkDiscussionTitleNoMenu" />
+	<SetVar Name="ShowAccessibleIcon" Value="0" /><Field Name="_EditMenuTableEnd" /></DisplayPattern></Field>
+  	ReplyNoGif, <Field ID="{87cda0e2-fc57-4eec-a696-b0de2f61f361}" Name="ReplyNoGif" SourceID="http://schemas.microsoft.com/sharepoint/v3" 
+	DisplaceOnUpgrade="TRUE" Group="_Hidden" ReadOnly="TRUE" Type="Computed" Sortable="FALSE" Filterable="FALSE" DisplayName="Reply" StaticName="ReplyNoGif" 
+	xmlns="http://schemas.microsoft.com/sharepoint/soap/"><FieldRefs><FieldRef ID="{56605df6-8fa1-47e4-a04c-5b384d59609f}" Name="FileDirRef" />
+	<FieldRef ID="{94f89715-e097-4e8b-ba79-ea02aa8b7adb}" Name="FileRef" /><FieldRef ID="{1d22ea11-1e32-424e-89ab-9fedbadb6ce1}" Name="ID" /><FieldRef ID="{30bb605f-5bae-48fe-b4e3-1f81d9772af9}" Name="FSObjType" /></FieldRefs><DisplayPattern><IfHasRights><RightsChoices><RightsGroup PermAddListItems="required" /></RightsChoices><Then><HTML><![CDATA[<a id="ReplyLink]]></HTML><Field Name="ID" /><HTML><![CDATA[" href="]]></HTML><URL Cmd="New" /><HTML><![CDATA[&ContentTypeId=0x0107&DiscussionParentID=]]></HTML><Field Name="ID" StripWS="TRUE" URLEncode="TRUE" /><HTML><![CDATA[" onclick="EditLink2(this,]]></HTML><Counter Type="View" /><HTML><![CDATA[");return false;" target="_self">]]></HTML><HTML><![CDATA[<img id="replyButton" border="0" align="middle" alt="Reply"]]></HTML><HTML><![CDATA[ src="/_layouts/images/reply.gif" />&#160;]]></HTML><HTML><![CDATA[<nobr><b>Reply</b></nobr></a>]]></HTML></Then><Else><HTML><![CDATA[&#160;]]></HTML></Else></IfHasRights></DisplayPattern></Field>
+
+  BodyAndMore, 
+	<Field ID="{c7e9537e-bde4-4923-a100-adbd9e0a0a0d}" SourceID="http://schemas.microsoft.com/sharepoint/v3" Name="BodyAndMore" DisplaceOnUpgrade="TRUE" 
+	Group="_Hidden" Type="Computed" DisplayName="Post" ReadOnly="TRUE" Filterable="FALSE" Sortable="FALSE" AuthoringInfo="(with More/Less links)" 
+	StaticName="BodyAndMore" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><FieldRefs><FieldRef ID="{7662cd2c-f069-4dba-9e35-082cf976e170}" Name="Body" />
+		<FieldRef ID="{28cf69c5-fa48-462a-b5cd-27b6f9d2bd5f}" Name="Modified" /><FieldRef ID="{fbba993f-afee-4e00-b9be-36bc660dcdd1}" Name="MessageBody" />
+		<FieldRef ID="{ae069f25-3ac2-4256-b9c3-15dbc15da0e0}" Name="GUID" /><FieldRef ID="{c5abfdc7-3435-4183-9207-3d1146895cf8}" Name="DiscussionTitle" />
+		<FieldRef ID="{cef73bf1-edf6-4dd9-9098-a07d83984700}" Name="ThreadIndex" /><FieldRef ID="{9c4be348-663a-4172-a38a-9714b2634c17}" Name="FullBody" />
+		<FieldRef ID="{076193bd-865b-4de7-9633-1f12069a6fff}" Name="LessLink" /><FieldRef ID="{61b97279-cbc0-4aa9-a362-f1ff249c1706}" Name="LimitedBody" />
+		<FieldRef ID="{af82aa75-3039-4573-84a8-73ffdfd22733}" Name="BodyWasExpanded" />
+		<FieldRef ID="{bd2216c1-a2f3-48c0-b21c-dc297d0cc658}" Name="IsRootPost" /></FieldRefs><DisplayPattern><Switch><Expr>
+		<GetVar Name="HaveRenderedCAML_Expand" /></Expr><Case Value="TRUE" /><Default><HTML><![CDATA[<input type="hidden" name="CAML_Expand" value="]]></HTML>
+		<GetVar Name="CAML_Expand" HTMLEncode="TRUE" /><HTML><![CDATA["/>]]></HTML><SetVar Scope="Request" Name="HaveRenderedCAML_Expand" Value="TRUE" />
+		</Default></Switch><Switch><Expr><GetVar Name="HaveRenderedCAML_ShowOriginalEmailBody" /></Expr><Case Value="TRUE" /><Default><HTML><![CDATA[
+		<input type="hidden" name="CAML_ShowOriginalEmailBody" value="]]></HTML><GetVar Name="CAML_ShowOriginalEmailBody" HTMLEncode="TRUE" /><HTML>
+		<![CDATA["/>]]></HTML><SetVar Scope="Request" Name="HaveRenderedCAML_ShowOriginalEmailBody" Value="TRUE" /></Default></Switch><Switch><Expr>
+		<Field Name="IsRootPost" /></Expr><Case Value="TRUE"><HTML><![CDATA[<div style="padding-bottom: 4px;"><b>]]></HTML><Field Name="DiscussionTitle" />
+		<HTML><![CDATA[</b></div>]]></HTML></Case></Switch><Switch><Expr><Column Name="Body" /></Expr><Case Value=""><HTML><![CDATA[(no text)]]></HTML></Case><Default><Switch><Expr><Field Name="BodyWasExpanded" /></Expr><Case Value="TRUE"><Field Name="FullBody" /><IfSubString><Expr1>TrimmedBody</Expr1><Expr2><Field Name="CorrectBodyToShow" /></Expr2><Then><HTML><![CDATA[<div><table border="0" cellspacing="0" cellpadding="0" class="ms-disc" dir="]]></HTML><ListProperty Select="Direction" HTMLEncode="TRUE" /><HTML><![CDATA["><tr valign="top"><td>]]></HTML><Field Name="LessLink" /><HTML><![CDATA[ </td><td> | </td><td> ]]></HTML><Field Name="ToggleQuotedText" /><HTML><![CDATA[</td></tr></table></div>]]></HTML></Then><Else><Field Name="LessLink" /></Else></IfSubString></Case><Default><Switch><Expr><Field Name="QuotedTextWasExpanded" /></Expr><Case Value="TRUE"><Field Name="FullBody" />
+		<Field Name="ToggleQuotedText" /></Case><Default><Field Name="LimitedBody" /></Default></Switch></Default></Switch></Default></Switch></DisplayPattern>
+		</Field>
+  Threading, 
+	<Field ID="{58ca6516-51cd-41fb-a908-dd2a4aeea8bc}" Name="Threading" Group="_Hidden" SourceID="http://schemas.microsoft.com/sharepoint/v3" Type="Computed" 
+	DisplayName="Threading" ReadOnly="TRUE" Sortable="TRUE" Filterable="FALSE" AuthoringInfo="(threaded)" StaticName="Threading" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><FieldRefs><FieldRef ID="{cef73bf1-edf6-4dd9-9098-a07d83984700}" Name="ThreadIndex" /><FieldRef ID="{68227570-72dd-4816-b6b6-4b81ff99a393}" Name="Indentation" /><FieldRef ID="{c7e9537e-bde4-4923-a100-adbd9e0a0a0d}" Name="BodyAndMore" /><FieldRef ID="{f90bce56-87dc-4d73-bfcb-03fcaf670500}" Name="StatusBar" /></FieldRefs><DisplayPattern><HTML><![CDATA[<table class="ms-disc-nopad" border="0" cellpadding="0" cellspacing="0" width="100%">]]></HTML><HTML><![CDATA[<tr><td width="1px" rowspan="2">]]></HTML><Field Name="Indentation" /><HTML><![CDATA[</td><td class="ms-disc-bordered-noleft">]]></HTML><Field Name="BodyAndMore" /><HTML><![CDATA[</td></tr><tr><td height="1px" valign="bottom"><img src="/_layouts/images/blank.gif" alt="" width="450px" height="1px" />]]></HTML><HTML><![CDATA[</td></tr></table>]]></HTML></DisplayPattern></Field>
+
+  PersonViewMinimal, 
+	<Field ID="{b4ab471e-0262-462a-8b3f-c1dfc9e2d5fd}" Name="PersonViewMinimal" SourceID="http://schemas.microsoft.com/sharepoint/v3" DisplaceOnUpgrade="TRUE" Group="_Hidden" Filterable="TRUE" Sortable="TRUE" Type="Computed" DisplayName="Posted By" ReadOnly="TRUE" DisplayNameSrcField="Editor" AuthoringInfo="(picture and name)" StaticName="PersonViewMinimal" xmlns="http://schemas.microsoft.com/sharepoint/soap/"><FieldRefs><FieldRef ID="{d31655d1-1d5b-4511-95a1-7a09e9b75bf2}" Name="Editor" /><FieldRef ID="{adfe65ee-74bb-4771-bec5-d691d9a6a14e}" Name="PersonImage" /></FieldRefs><DisplayPattern><HTML><![CDATA[<table cellpadding="0" cellspacing="0"><tr><td style="padding-left: 5px;">]]></HTML><Field Name="PersonImage" /><HTML><![CDATA[</td></tr><tr><td style="padding-left: 5px;" nowrap="nowrap">]]></HTML><Field Name="Editor" /><HTML><![CDATA[</td></tr></table>]]></HTML></DisplayPattern></Field>
+
+  Category_x0020_Audience, 
+	<Field Type="LookupMulti" DisplayName="Category Audience" Required="FALSE" EnforceUniqueValues="FALSE" List="{ec103eba-07bb-4642-833c-aa17567a3202}" WebId="3186fe69-b229-4a30-892c-ada08bdc2866" ShowField="Title" Mult="TRUE" Sortable="FALSE" UnlimitedLengthInDocumentLibrary="FALSE" Group="Niem Custom Columns" ID="{a30d4d30-e241-409d-b19e-2751c2b80f6b}" SourceID="{3186fe69-b229-4a30-892c-ada08bdc2866}" StaticName="Category_x0020_Audience" Name="Category_x0020_Audience" Version="2" ColName="int6" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Category_x0020_Communities, 
+	<Field Type="LookupMulti" DisplayName="Category Communities" Required="FALSE" EnforceUniqueValues="FALSE" List="{3831bd8e-2854-4a71-b04c-d83be7369632}" WebId="3186fe69-b229-4a30-892c-ada08bdc2866" ShowField="Title" Mult="TRUE" Sortable="FALSE" UnlimitedLengthInDocumentLibrary="FALSE" Group="Niem Custom Columns" ID="{20d01ab8-bf65-4d45-8f20-efd20341117d}" SourceID="{3186fe69-b229-4a30-892c-ada08bdc2866}" StaticName="Category_x0020_Communities" Name="Category_x0020_Communities" Version="3" ColName="int7" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+  Category_x0020_Domains, 
+	<Field Type="Lookup" DisplayName="Category Domains" EnforceUniqueValues="FALSE" List="{3831bd8e-2854-4a71-b04c-d83be7369632}" WebId="{3186FE69-B229-4A30-892C-ADA08BDC2866}" ShowField="Title" UnlimitedLengthInDocumentLibrary="FALSE" Group="Niem Custom Columns" ID="{4ea691c3-1e89-4a0b-9bd3-c5dad0c6f455}" SourceID="{3186fe69-b229-4a30-892c-ada08bdc2866}" StaticName="Category_x0020_Domains" Name="Category_x0020_Domains" Version="10" Description="test" Required="FALSE" Indexed="FALSE" MaxLength="255" ColName="int4" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />

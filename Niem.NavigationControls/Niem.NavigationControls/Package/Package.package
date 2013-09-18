@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="2db1f591-7518-4c8a-a5aa-db682b4b442c" solutionId="2db1f591-7518-4c8a-a5aa-db682b4b442c" resetWebServer="false" name="Niem.NavigationControls" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="665960ee-de9e-4d6b-8186-1f2fd4134544" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="5e5612eb-8289-4833-a066-df88789fbb1c" />
+  </projectItems>
+</package>

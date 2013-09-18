@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LMD.ListCheck.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="LMD_ListCheck_WS_List_Lists" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.niem.gov/_vti_bin/lists.asmx</Value>
+    </Setting>
+    <Setting Name="LMD_ListCheck_WSSAuthentication_Authentication" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.niem.gov/_vti_bin/authentication.asmx</Value>
+    </Setting>
+    <Setting Name="LMD_ListCheck_WS_WebSvcWebs_Webs" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.niem.gov/_vti_bin/webs.asmx</Value>
+    </Setting>
+    <Setting Name="LMD_ListCheck_WS_Permissions_Permissions" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.niem.gov/_vti_bin/Permissions.asmx</Value>
+    </Setting>
+    <Setting Name="LMD_ListCheck_WS_usergroup_UserGroup" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://www.niem.gov/_vti_bin/usergroup.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

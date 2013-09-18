@@ -1,0 +1,10 @@
+=============================================================
+Start run at 4/1/2013 4:56:28 PM
+Performing the following command RecursivelyEnumerateSiteColumnReferences
+With these input parametesr: Searching for internal field name = FilterCategory
+against https://www.niem.gov
+------------------------------------------------------------
+
+Url: https://www.niem.gov, Field SchemaXml: <Field Type="Lookup" DisplayName="FilterCategory" Description="Used to filter documents in the documentdb site level." Required="TRUE" EnforceUniqueValues="FALSE" List="{83044d28-45d1-419c-adbe-51667dc23265}" WebId="3186fe69-b229-4a30-892c-ada08bdc2866" ShowField="Title" UnlimitedLengthInDocumentLibrary="FALSE" Group="Niem Custom Columns" ID="{93ce0610-c102-42de-8308-6fa6fbbbac22}" SourceID="{3186fe69-b229-4a30-892c-ada08bdc2866}" StaticName="FilterCategory" Name="FilterCategory" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
+
+Url: https://www.niem.gov/documentsdb, List Title: Upload A Case, Field SchemaXml: <Field Type="Lookup" DisplayName="FilterCategory" Description="Used to filter documents in the documentdb site level." Required="FALSE" EnforceUniqueValues="FALSE" List="{83044d28-45d1-419c-adbe-51667dc23265}" WebId="3186fe69-b229-4a30-892c-ada08bdc2866" ShowField="Title" UnlimitedLengthInDocumentLibrary="FALSE" Group="Niem Custom Columns" ID="{93ce0610-c102-42de-8308-6fa6fbbbac22}" SourceID="{3186fe69-b229-4a30-892c-ada08bdc2866}" StaticName="FilterCategory" Name="FilterCategory" Customization="" ColName="int3" RowOrdinal="0" xmlns="http://schemas.microsoft.com/sharepoint/soap/" />
