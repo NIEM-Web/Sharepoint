@@ -34,7 +34,22 @@ namespace NiemMapMoveSiteColumnUpdate.Features.NiemMapMoveSiteColumnUpdateFeatur
                         | SPBasePermissions.ViewVersions | SPBasePermissions.Open
                         | SPBasePermissions.UseClientIntegration
                         | SPBasePermissions.ViewFormPages
-                        | SPBasePermissions.ViewListItems;
+                        | SPBasePermissions.ViewListItems
+                        | SPBasePermissions.AddListItems;
+                    list.Update();
+                }
+
+                list = targetWeb.Lists.TryGetList("UploadCase");
+                if (list != null)
+                {
+                    list.BreakRoleInheritance(true, false);
+                    list.AllowEveryoneViewItems = true;
+                    list.AnonymousPermMask64 = SPBasePermissions.ViewListItems |
+                        SPBasePermissions.OpenItems |
+                        SPBasePermissions.Open |
+                        SPBasePermissions.ViewFormPages |
+                        SPBasePermissions.AddListItems;
+
                     list.Update();
                 }
 

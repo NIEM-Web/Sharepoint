@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="2efca87f-1b39-497f-a6bf-12bddc69d622" solutionId="2efca87f-1b39-497f-a6bf-12bddc69d622" resetWebServer="false" name="NIEM.Map.ProjectInfoEventHandler" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="d9040ec8-5fa3-4518-9acc-cc927992ca06" />
+  </features>
+</package>

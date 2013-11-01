@@ -375,7 +375,7 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
             DataView dvResults = new DataView(dtResults);
             DataView dView = FilterDataAccordingToUsers(dvResults);
             
-            return dView;// GetLikedResources(dTable);
+            return GetLikedResources(dView);
         }
         #endregion
 
@@ -500,7 +500,10 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
                 }
             }
             dTable.Sort = "Created desc";
-            dTable.Table.Columns.Add("DateDiff",typeof(int));
+            if(!dTable.Table.Columns.Contains("DateDiff"))
+            {
+                dTable.Table.Columns.Add("DateDiff",typeof(int));
+            }
             foreach (DataRow dRow in dTable.Table.Rows)
             {
                 DateTime itemTime = DateTime.Parse(dRow["Created"].ToString());
@@ -571,7 +574,8 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
 
             if (ddlCommunities.SelectedItem.Text != "All")
             {
-                orString = (sbQuery.Length > 0 ? " OR " : string.Empty);
+                //change from and to Or
+                orString = (sbQuery.Length > 0 ? " AND " : string.Empty);
                 sbQuery.Append(orString + "Category_x0020_Domains like'%" + ddlCommunities.SelectedItem.Text + "%'");
             }
             else

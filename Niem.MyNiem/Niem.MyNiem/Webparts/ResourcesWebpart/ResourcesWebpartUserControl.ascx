@@ -47,7 +47,7 @@
     </tr>
     <tr style="margin-top: 6px;">
         <td style="vertical-align: top; margin-right: 6px;">
-            Established Communities:
+            Community:
         </td>
         <td colspan='2'>
             <div>
@@ -57,7 +57,7 @@
     </tr>
     <tr style="margin-top: 6px">
         <td style="vertical-align: top; margin-right: 6px;">
-            Your Audience:
+            Audience:
         </td>
         <td colspan='2'>
             <div>

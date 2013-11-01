@@ -16,15 +16,19 @@ namespace LMD.ListCheck
     class Program
     {
 
+
+        static string _userName = "rsnyder";
+        static string _password = "<password>";
+
         static void Main(string[] args)
         {
 
 
-            //string url = "https://www.niem.gov/";
-            string url = "https://www.niem.gov/communities";
+            string url = "https://www.niem.gov/";
+            //string url = "https://www.niem.gov/communities";
             string internalName = "Category_x0020_Domains";
             //string path = @"C:\deploy\niemoutput.txt";
-            string path = @"C:\deploy\niempermissions.txt";
+            string path = @"C:\source\enumeration.txt";
 
             // This text is always added, making the file longer over time 
             // if it is not deleted. 
@@ -33,7 +37,7 @@ namespace LMD.ListCheck
 
                 sw.WriteLine("=============================================================");
                 sw.WriteLine("Start run at " + DateTime.Now.ToString());
-                sw.WriteLine("Looking for " + internalName);
+                sw.WriteLine("Execute iterateThroughWebsEnumeratingLists");
                 sw.WriteLine("at " + url);
                 sw.WriteLine("");
 
@@ -43,9 +47,10 @@ namespace LMD.ListCheck
                 _wssAuthentication.CookieContainer = new System.Net.CookieContainer();
                 _wssAuthentication.AllowAutoRedirect = true;
 
-                WSSAuthentication.LoginResult login_result = _wssAuthentication.Login("rsnyder", "#1Lcgtech");
+                WSSAuthentication.LoginResult login_result = _wssAuthentication.Login(_userName, _password);
 
-                iterateThroughWebsLookingAtPermissions(sw, _wssAuthentication, url);
+                iterateThroughWebsEnumeratingLists(sw, _wssAuthentication, url);
+                //iterateThroughWebsLookingAtPermissions(sw, _wssAuthentication, url);
 
                 //getUserGroupsForSite(sw, _wssAuthentication, url);
 
@@ -111,6 +116,95 @@ namespace LMD.ListCheck
                 }
             }
 
+        }
+
+        public static void iterateThroughWebsEnumeratingLists(StreamWriter sw, WSSAuthentication.Authentication wssAuthentication, string url)
+        {
+
+            string webUrl = String.Empty;
+            string webId = String.Empty;
+            string listTitle = String.Empty;
+
+            LMD.ListCheck.WS_WebSvcWebs.Webs myservice = new LMD.ListCheck.WS_WebSvcWebs.Webs();
+            myservice.CookieContainer = wssAuthentication.CookieContainer;
+            myservice.Url = url + "/_vti_bin/webs.asmx";
+
+            XmlNode ndWebs = myservice.GetWebCollection();
+
+
+            foreach (System.Xml.XmlNode node in ndWebs)
+            {
+                if (node.Name == "Web")
+                {
+                    webUrl = node.Attributes["Url"].Value;
+                    enumerateListsInWeb(sw, wssAuthentication, webUrl);
+
+                    iterateThroughWebsEnumeratingLists(sw, wssAuthentication, webUrl);
+                }
+            }
+
+        }
+
+        public static void enumerateListsInWeb(StreamWriter sw, WSSAuthentication.Authentication wssAuthentication, string url)
+        {
+
+            string listId = String.Empty;
+            string listTitle = String.Empty;
+
+            LMD.ListCheck.WS_List.Lists myservice = new LMD.ListCheck.WS_List.Lists();
+            myservice.CookieContainer = wssAuthentication.CookieContainer;
+            myservice.Url = url + "/_vti_bin/lists.asmx";
+
+            XmlNode ndLists = myservice.GetListCollection();
+
+
+            foreach (System.Xml.XmlNode node in ndLists)
+            {
+                //if (node.Name == "List")
+                //{
+
+                    listId = node.Attributes["ID"].Value;
+                    listTitle = node.Attributes["Title"].Value;
+
+                    //sw.WriteLine("Url: " + url + ", List Title: " + listTitle);
+
+                    enumerateListFields(sw, wssAuthentication, url, listId, listTitle);
+
+                //}
+            }
+
+        }
+
+        public static void enumerateListFields(StreamWriter sw, WSSAuthentication.Authentication wssAuthentication, string url, string listId, string listName)
+        {
+            string fieldTitle = String.Empty;
+            LMD.ListCheck.WS_List.Lists myservice = new LMD.ListCheck.WS_List.Lists();
+            myservice.CookieContainer = wssAuthentication.CookieContainer;
+            myservice.Url = url + "/_vti_bin/lists.asmx";
+            try
+            {
+
+                System.Xml.XmlNode nodes = myservice.GetList(listName);
+
+                foreach (System.Xml.XmlNode node in nodes)
+                {
+                    if (node.Name == "Fields")
+                    {
+                        for (int i = 0; i < node.ChildNodes.Count; i++)
+                        {
+                            if (node.ChildNodes[i].Name == "Field")
+                            {
+                                fieldTitle = node.ChildNodes[i].Attributes["DisplayName"].Value;
+                                sw.WriteLine("Url: " + url + ", List Title: " + listName + ", Field DisplayName: " + fieldTitle); //+ ", Field SchemaXml: " + node.ChildNodes[i].OuterXml);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+            }
         }
 
         public static void iterateThroughLists(StreamWriter sw, WSSAuthentication.Authentication wssAuthentication, string url, string internalName)
@@ -207,7 +301,7 @@ namespace LMD.ListCheck
             _wssAuthentication.CookieContainer = new System.Net.CookieContainer();
             _wssAuthentication.AllowAutoRedirect = true;
 
-            WSSAuthentication.LoginResult login_result = _wssAuthentication.Login("rsnyder", "#1Lcgtech");
+            WSSAuthentication.LoginResult login_result = _wssAuthentication.Login(_userName, _password);
 
 
 
@@ -600,7 +694,7 @@ namespace LMD.ListCheck
             _wssAuthentication.CookieContainer = new System.Net.CookieContainer();
             _wssAuthentication.AllowAutoRedirect = true;
 
-            WSSAuthentication.LoginResult login_result = _wssAuthentication.Login("rsnyder", "#1Lcgtech");
+            WSSAuthentication.LoginResult login_result = _wssAuthentication.Login(_userName, _password);
 
 
 

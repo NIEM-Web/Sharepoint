@@ -45,11 +45,11 @@
 </script>
 <table style="height:110px">
 <tr style="margin-top:6px;">
-<td style="vertical-align:top;margin-right:6px;">Established Communities: </td>
+<td style="vertical-align:top;margin-right:6px;">Community: </td>
 <td colspan='2'><div><asp:DropDownList ID="ddlCommunities" runat="server" /></div></td>
 </tr>
 <tr style="margin-top:6px">
-<td style="vertical-align:top;margin-right:6px;">Your Audience:</td>
+<td style="vertical-align:top;margin-right:6px;">Audience:</td>
 <td colspan='2'><div><asp:DropDownList ID="ddlAudience" runat="server" /></div></td>
 </tr>
 <tr style="margin-top:6px;">

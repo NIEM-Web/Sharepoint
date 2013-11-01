@@ -51,7 +51,10 @@ namespace SearchTest
 
                     ConsoleOut(String.Format("Begin operation against site collection: {0}", site.Url));
 
-                    LogMessage("Test", "Test message", site.ID);
+
+                    DiscussionWebPartTest(url);
+                    //EnableAnonymousAccessToTermsList(site);
+                    //LogMessage("Test", "Test message", site.ID);
 
                     //ConsoleOut(FixFor_GettingDistinctWebs(site));
                     //ConsoleOut(FixFor_GetQueryForRecentPosts(site));
@@ -222,6 +225,26 @@ namespace SearchTest
         }
         #endregion
 
+        private static void EnableAnonymousAccessToTermsList(SPSite site)
+        {
+
+            using (SPWeb web = site.OpenWeb("/DocumentsDb"))
+            {
+                var list = web.Lists.TryGetList("Terms");
+                if (list != null)
+                {
+                    list.BreakRoleInheritance(true, false);
+                    list.AllowEveryoneViewItems = true;
+                    list.AnonymousPermMask64 = SPBasePermissions.ViewPages | SPBasePermissions.OpenItems
+                        | SPBasePermissions.ViewVersions | SPBasePermissions.Open
+                        | SPBasePermissions.UseClientIntegration
+                        | SPBasePermissions.ViewFormPages
+                        | SPBasePermissions.ViewListItems
+                        | SPBasePermissions.AddListItems;
+                    list.Update();
+                }
+            }
+        }
         private static string EnumerateDistinctWebsWithDiscussions(SPSite site)
         {
 
@@ -591,7 +614,7 @@ namespace SearchTest
 
                     if (threads.Count == 1)
                     {
-                        queryText = "<And>" + queryText + "<Eq><FieldRef Name='FileRef' /><Value Type='Text'>" +  threads[0] + "</Value></Eq></And>";
+                        queryText = "<And>" + queryText + "<Eq><FieldRef Name='FileRef' /><Value Type='Text'>" + threads[0] + "</Value></Eq></And>";
                     }
                     else
                     {
@@ -599,11 +622,11 @@ namespace SearchTest
                         for (int i = 1; i < threads.Count; i++)
                         {
                             tempQuery = "<Or>" +
-                                                "<Eq><FieldRef Name='FileRef' /><Value Type='Text'>" +  threads[i] + "</Value></Eq>" +
+                                                "<Eq><FieldRef Name='FileRef' /><Value Type='Text'>" + threads[i] + "</Value></Eq>" +
                                                 tempQuery +
                                         "</Or>";
                         }
-                        queryText = "<And>" + tempQuery + "</And>";
+                        queryText = "<And>" + queryText + tempQuery + "</And>";
                     }
                     queryText = "<Where>" + queryText + "</Where>";
                     query = queryText;
@@ -707,6 +730,229 @@ namespace SearchTest
             catch
             {
             }
+        }
+
+        private static void DiscussionWebPartTest(string url)
+        {
+            try
+            {
+
+                string siteUrl = url;
+                SPUser CurrentUser = null;
+
+                using (SPSite site = new SPSite(url))
+                {
+                    CurrentUser = site.RootWeb.CurrentUser;
+                }
+
+                //GetData();
+                //SPSiteDataQuery query = new SPSiteDataQuery();
+
+                ////query.ViewFields = "<FieldRef Name=\"LinkDiscussionTitle\"><FieldRef Name=\"ID\">";
+
+                //query.Lists = "<Lists ServerTemplate=\"108\">";
+                //query.Webs = "<Webs Scope=\"SiteCollection\" />";
+                //SPWeb web = SPContext.Current.Site.RootWeb;
+                //DataTable table = web.GetSiteData(query);
+                //table.TableName = "Discussions";
+                //table.WriteXml("c:\\log.txt");
+                DateTime recentDate = DateTime.Parse(DateTime.Now.ToString("MM/dd/yyyy")).AddDays(-30);
+                List<string> communitiesWebUrl = new List<string>();
+                List<string> userCommunities = null;
+                string html = string.Empty;
+                string webRelUrl = String.Empty;
+
+                //html += "Current Web url: " + SPContext.Current.Web.Url + "<br/>";
+                //html += "Initial current user: " + SPContext.Current.Web.CurrentUser + "<br/>";
+
+
+                SPSecurity.RunWithElevatedPrivileges(delegate()
+                {
+
+                    //Rks: This was changed over from using SPContext.Current.Site.Id to using the url because
+                    // The Site object was opening against the default zone and the permissions there were not working
+                    //  properly.  using the siteurl zone means the objects are being opened in code against the same
+                    //  zone that they are seeing through the browser.
+                    using (SPSite site = new SPSite(siteUrl))
+                    {
+
+
+
+
+                        // Fetch using SPSiteDataQuery
+                        using (SPWeb web = site.OpenWeb())
+                        {
+
+                            //Distinct webs from SiteDataQuery for responses during the last 7 days.
+                            SPSiteDataQuery query = new SPSiteDataQuery();
+                            query.Lists = "<Lists ServerTemplate=\"108\" />";  // Discussions.
+                            //RKS - 2013-09-04 - this was commented out because the standard discussion list does not include the AverageRating field.  If this viewfield is not present, the discussion is not returned.
+                            //query.ViewFields = "<FieldRef Name=\"Title\" /><FieldRef Name=\"LinkDiscussionTitle\"/><FieldRef Name=\"DiscussionLastUpdated\"/><FieldRef Name=\"ItemChildCount\"/><FieldRef Name=\"AverageRating\"/>";   /* Title is LastName column */
+                            query.Webs = "<Webs Scope=\"SiteCollection\" />";
+                            query.Query = "<Where><Geq><FieldRef Name = 'Modified' /><Value Type ='DateTime'>" + Microsoft.SharePoint.Utilities.SPUtility.CreateISO8601DateTimeFromSystemDateTime(recentDate) + "</Value></Geq></Where>";
+
+                            DataTable dataTable = web.GetSiteData(query);
+                            foreach (DataRow row in dataTable.Rows)
+                            {
+                                webRelUrl = site.AllWebs[new Guid(row["WebId"].ToString())].ServerRelativeUrl;
+                                if (!communitiesWebUrl.Contains(webRelUrl))
+                                {
+                                    communitiesWebUrl.Add(webRelUrl);
+                                }
+
+                            }
+
+
+                            //Distinct webs from SiteDataQuery for responses to my posts.  I got this CAML from Chris' code.
+                            // Fetch using SPSiteDataQuery
+                            query = new SPSiteDataQuery();
+                            query.Lists = "<Lists ServerTemplate=\"108\" />";  // Discussions.
+                            //RKS - 2013-09-04 - this was commented out because the standard discussion list does not include the AverageRating field.  If this viewfield is not present, the discussion is not returned.
+                            //query.ViewFields = "<FieldRef Name=\"Title\" /><FieldRef Name=\"LinkDiscussionTitle\"/><FieldRef Name=\"DiscussionLastUpdated\"/><FieldRef Name=\"ItemChildCount\"/><FieldRef Name=\"AverageRating\"/>";   /* Title is LastName column */
+                            query.Webs = "<Webs Scope=\"SiteCollection\" />";
+                            query.Query = string.Format(@"<Where>
+                                        <And>
+                                            <Eq>
+                                                <FieldRef Name='ContentType' />
+                                                <Value Type='Computed'>Message</Value>
+                                            </Eq>
+                                            <Eq>
+                                                <FieldRef Name='Author' LookupId='True' />
+                                                <Value Type='Integer'>{0}</Value>
+                                            </Eq>
+                                        </And>
+                                   </Where>", CurrentUser.ID);
+
+                            dataTable = web.GetSiteData(query);
+                            foreach (DataRow row in dataTable.Rows)
+                            {
+                                webRelUrl = site.AllWebs[new Guid(row["WebId"].ToString())].ServerRelativeUrl;
+                                if (!communitiesWebUrl.Contains(webRelUrl))
+                                {
+                                    communitiesWebUrl.Add(webRelUrl);
+                                }
+
+                            }
+
+                        }
+
+
+
+
+
+                        //html += "using Site url: " + site.Url + "<br/>";
+
+                        bool discussionExist = false;
+                        foreach (var communityWebUrl in communitiesWebUrl)
+                        {
+
+                            //html += "> " + communityWebUrl + "<br/>";
+
+
+                            using (SPWeb communityWeb = site.OpenWeb(communityWebUrl))
+                            {
+
+                                //html += ">--- Url..: " + communityWeb.Url + "<br/>";
+                                //html += ">--- Title: " + communityWeb.Title + "<br/>";
+                                // html += ">--- CurrentUserWeb: " + communityWeb.CurrentUser + "<br/>";
+
+                                if (communityWeb.DoesUserHavePermissions(CurrentUser.LoginName, SPBasePermissions.AddListItems))
+                                {
+                                    //html += ">--- Has Permissions to: " + communityWeb.Title + "<br/>";
+
+                                    //html += "<p>" + communityWeb.Title + "</p>";
+                                    List<SPList> discussionBoards = GetDiscussionBoards(communityWeb);
+
+                                    foreach (SPList discussionBoard in discussionBoards)
+                                    {
+                                        discussionExist = true;
+                                        html += "<tr><td><div><b>" + discussionBoard.Title + "</b></div><hr/>";
+                                        string queryText = GetQueryForCurrentUserReplies(discussionBoard, CurrentUser, recentDate);
+                                        SPView view = discussionBoard.DefaultView;
+                                        view.Paged = false;
+                                        if (queryText != null)
+                                        {
+                                            html += "<div>Discussions replied by me: </div>";
+
+                                            SPQuery query = new SPQuery(view);
+                                            //'query.Query = queryText;
+                                            query.ViewFields = "<FieldRef Name=\"Title\" /><FieldRef Name=\"LinkDiscussionTitle\"/><FieldRef Name=\"DiscussionLastUpdated\"/><FieldRef Name=\"ItemChildCount\"/><FieldRef Name=\"AverageRating\"/>";   /* Title is LastName column */
+                                            query.Query = queryText;
+                                            //RKS: I removed this line of code because Replies are not Dicussions so the queryText was more appropriate
+                                            //query.Query = "<Where><Geq><FieldRef Name = 'Modified' /><Value Type ='DateTime'>" + Microsoft.SharePoint.Utilities.SPUtility.CreateISO8601DateTimeFromSystemDateTime(recentDate) + "</Value></Geq></Where>";
+
+                                            query.RowLimit = 3;
+                                            // query.ViewFields = "<OrderBy><FieldRef Name='Modified' Ascending='False' /></OrderBy><Fieldref Name='Subject'/><Fieldref Name='Body'/><Fieldref Name='AverageRating'/>";
+                                            query.ViewFields = "<FieldRef Name='LinkDiscussionTitle'/><FieldRef Name='DiscussionLastUpdated'/><FieldRef Name='ItemChildCount'/><FieldRef Name='AverageRating'/>";
+                                            query.ViewFieldsOnly = true;
+                                            string discussionHtml = discussionBoard.RenderAsHtml(query);
+                                            html += discussionHtml;
+
+                                        }
+                                        string recentForumsQuery = GetQueryForRecentPosts(discussionBoard, recentDate);
+                                        if (recentForumsQuery != null)
+                                        {
+                                            html += "<div>Recent Discussions: </div>";
+                                            SPQuery query = new SPQuery(view);
+                                            query.Query = recentForumsQuery;
+                                            query.ViewFields = "<FieldRef Name='LinkDiscussionTitle'/><FieldRef Name='DiscussionLastUpdated'/>";//<FieldRef Name='ItemChildCount'/><FieldRef Name='AverageRating'/>";
+                                            query.ViewFieldsOnly = true;
+                                            query.RowLimit = 3;
+                                            string discussionHtml = discussionBoard.RenderAsHtml(query);
+                                            html += discussionHtml;
+                                        }
+
+                                        html += "</td></tr>";
+
+                                    }
+
+
+                                }
+                                //else
+                                //{
+                                //    html += ">--- No Permissions to: " + communityWeb.Title + "<br/>";
+                                //}
+                            }
+
+
+                        }
+
+                        //removed pagination and context menu
+                        // Commented out for console app
+                        //discussionBoardsDiv.InnerHtml = "<table id='tblDiscussions'><tbody>" + html.Replace(@"""ms-bottompaging""", @"""ms-bottompaging"" style='display:none;'").Replace("OnItem(this)", "") + "</tbody></table>";
+                        if (discussionExist == false)
+                            ShowNoRecords();
+
+                    }
+                });
+
+            }
+            catch (Exception ex)
+            {
+                ConsoleOut(ex.ToString());
+                // Commented out for console app
+                //Controls.Add(new LiteralControl(ex.Message));
+            }
+        }
+
+        private static void ShowNoRecords()
+        {
+            // Commented out for console app
+            //Controls.Add(new LiteralControl("Join a <a href=\"/communities/Pages/communities.aspx\">Community</a> or participate in an open forum."));
+        }
+
+        private static List<SPList> GetDiscussionBoards(SPWeb communityWeb)
+        {
+            SPListCollection lists = communityWeb.Lists;
+            List<SPList> discussionBoards = new List<SPList>();
+            foreach (SPList list in lists)
+            {
+                if (list.BaseTemplate == SPListTemplateType.DiscussionBoard)
+                {
+                    discussionBoards.Add(list);
+                }
+            }
+            return discussionBoards;
         }
     }
 }

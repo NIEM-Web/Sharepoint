@@ -38,7 +38,7 @@ namespace Niem.MyNiem.Webparts.ResourcesWebpart
         [WebBrowsable(true),
        Category("Resources Properties"),
        Personalizable(PersonalizationScope.Shared),
-       WebDisplayName("Established Communities Listname:")]
+       WebDisplayName("Communities Listname:")]
         public string EstablishedCommunitiesList
         {
             get

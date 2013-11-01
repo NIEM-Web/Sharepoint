@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BB1F664B-9266-4fd6-B973-E1E44974B511};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <SandboxedSolution>False</SandboxedSolution>
+    <AssemblyDeploymentTarget>WebApplication</AssemblyDeploymentTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,11 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TermsEventHandler\SharePointProjectItem.spdata">
-      <SharePointProjectItemId>{9534e966-44db-458d-a2ef-bde12879e1b2}</SharePointProjectItemId>
-    </None>
-    <None Include="TermsEventHandler\Elements.xml" />
-    <Compile Include="TermsEventHandler\TermsEventHandlerEventReceiver.cs">
+    <Compile Include="EventHandlers\TermsEventHandlerEventReceiver.cs">
     </Compile>
   </ItemGroup>
   <ItemGroup>

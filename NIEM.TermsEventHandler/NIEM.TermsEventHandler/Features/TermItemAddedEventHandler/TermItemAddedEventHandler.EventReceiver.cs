@@ -29,7 +29,7 @@ namespace NIEM.TermsEventHandler.Features.TermItemAddedEventHandler
             SPWeb web = (SPWeb)properties.Feature.Parent;
 
             string assemblyName = "NIEM.TermsEventHandler, Version=1.0.0.0, Culture=neutral, PublicKeyToken=90d8401002fad21d";
-            string className = "NIEM.TermsEventHandler.TermsEventHandlerEventReceiver.TermsEventHandlerEventReceiver";
+            string className = "NIEM.TermsEventHandler.EventHandlers.TermsEventHandlerEventReceiver";
 
             try
             {

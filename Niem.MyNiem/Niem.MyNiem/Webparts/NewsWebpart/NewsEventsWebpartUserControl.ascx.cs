@@ -224,7 +224,6 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
             try
             {
 
-
                 if (!Page.IsPostBack)
                 {
                     //databind to drop down lists
@@ -234,14 +233,16 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
                     ddlCommunities.DataBind();
 
                     //grabs categories
-                    SPContentType ctResources = SPContext.Current.Site.RootWeb.ContentTypes[NewsContentType];
+//                    SPContentType ctResources = SPContext.Current.Site.RootWeb.ContentTypes[NewsContentType];
                 }
                 DataView dvResults = GetData();
                 lvResources.DataSource = dvResults;
                 lvResources.DataBind();
 
                 if (lvResources.Items.Count == 0)
+                {
                     ShowNoRecords();
+                }
             }
             catch (Exception ex)
             {
@@ -283,7 +284,6 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
             DataTable dtResults = null;
             DataView dvResults = null;
            
-           
             using (SPWeb Web = SPContext.Current.Site.OpenWeb("/news"))
             {
                 SPQuery Query = new SPQuery();
@@ -291,9 +291,17 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
                
                 Query.Query = BuildQuery();
                dtResults = Web.Lists["Pages"].GetItems(Query).GetDataTable();
+
+               if (dtResults == null)
+               {
+                   //If nothing is found get an empty datatable for use with liked news.
+                   dtResults = Web.Lists["Pages"].Items.GetDataTable();
+                   dtResults.Rows.Clear();
+               }
             }
 
             dvResults = dtResults.DefaultView;
+            
             
             //GetLiked items
             dvResults = GetLikedNews(new DataView(dvResults.ToTable()));
@@ -333,25 +341,75 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
         {
 
             Criteria contentTypeCriteria = Criteria.Eq("Content Type", "Computed", NewsContentType);
-            Criteria dateCriteria = Criteria.Geq("Modified", "DateTime", "<Today Offset='-7'/>");
-            List<Expression> criteria = new List<Expression>();
+            Criteria dateCriteria = Criteria.Geq("Modified", "DateTime", "<Today OffsetDays='-7'/>");
+            List<Expression> domainCriteria = new List<Expression>();
+            List<Expression> audienceCriteria = new List<Expression>();
+
+            bool joinWithAnd = false;
 
             if (ddlCommunities.SelectedItem.Text != "All")
             {
-                criteria.Add(Criteria.Eq(CategoryDomains, "LookupMulti", ddlCommunities.SelectedItem.Text));
+                domainCriteria.Add(Criteria.Eq(CategoryDomains, "LookupMulti", ddlCommunities.SelectedItem.Text));
+                joinWithAnd = true;
             }
             else
             {
-                CreateCriteria(EstablishedCommunities, CategoryDomains, ref criteria);
+                CreateCriteria(EstablishedCommunities, CategoryDomains, ref domainCriteria);
+                
             }
             
             if (ddlAudience.SelectedItem.Text != "All")
             {
-                criteria.Add(Criteria.Eq(CategoryAudience, "LookupMulti", ddlAudience.SelectedItem.Text));
+                audienceCriteria.Add(Criteria.Eq(CategoryAudience, "LookupMulti", ddlAudience.SelectedItem.Text));
+                joinWithAnd = true;
             }
             else
             {
-                CreateCriteria(EstablilshedAudiences, CategoryAudience, ref criteria);
+                CreateCriteria(EstablilshedAudiences, CategoryAudience, ref audienceCriteria);
+                
+            }
+
+            Expression expression = null;
+            Expression domainExpression = null;
+            Expression audienceExpression = null;
+
+            switch (domainCriteria.Count)
+            {
+                default:
+                    Operator domainOperator = new Or();
+                    domainOperator.AddRange((IEnumerable<Expression>)domainCriteria);
+                    domainExpression = domainOperator;
+                    break;
+                case 0:
+                    domainExpression = contentTypeCriteria;
+                    break;
+                case 1:
+                    domainExpression = domainCriteria[0];
+                    break;
+            }
+
+            switch (audienceCriteria.Count)
+            {
+                default:
+                    Operator audienceOperator = new Or();
+                    audienceOperator.AddRange((IEnumerable<Expression>)audienceCriteria);
+                    audienceExpression = audienceOperator;
+                    break;
+                case 0:
+                    audienceExpression = contentTypeCriteria;
+                    break;
+                case 1:
+                    audienceExpression = audienceCriteria[0];
+                    break;
+            }
+
+            if (joinWithAnd == true)
+            {
+                expression = domainExpression * audienceExpression;
+            }
+            else
+            {
+                expression = domainExpression + audienceExpression;
             }
 
             Or freeTextCriteria = null;
@@ -364,22 +422,6 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
                     );
             }
 
-            Expression expression = null;
-
-            switch (criteria.Count)
-            {
-                default:
-                    Operator criteriaJoin = new Or();
-                    criteriaJoin.AddRange((IEnumerable<Expression>)criteria);
-                    expression = criteriaJoin;
-                    break;
-                case 0:
-                    expression = contentTypeCriteria;
-                    break;
-                case 1 :
-                    expression = criteria[0];
-                    break;
-            }
 
             if (freeTextCriteria != null)
             {
@@ -388,12 +430,14 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
 
             if ((ddlCommunities.SelectedItem.Text == "All") && (ddlAudience.SelectedItem.Text == "All") && freeTextCriteria == null)
             {
-                expression = expression * dateCriteria;
+                expression = dateCriteria * expression;
             }
 
-            string result = String.Format("<Where>{0}</Where>", expression.GetCAML());
+            string result =  String.Format("<Where>{0}</Where>", expression.GetCAML());
             return(result);
         }
+
+       
 
         //Create criteria based on the current user's audience or communities of interest.
         private void CreateCriteria(string userFilter, string fieldName, ref List<Expression> criteria)
@@ -402,7 +446,6 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
 
             if (!string.IsNullOrEmpty(userFilter))
             {
-
                 SPFieldLookupValue lookup = new SPFieldLookupValue(CurrentUser[userFilter].ToString());
                 string lookupValue = lookup.LookupValue;
                 if (string.IsNullOrEmpty(lookupValue))
@@ -772,20 +815,6 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
             }
             catch (Exception) { }
 
-
-
-            //ListItemCollection ListItems = new ListItemCollection();
-            //SPList List = Web.Lists[Listname];
-            //SPQuery Query = new SPQuery();
-            //Query.Query = "<OrderBy><FieldRef Name='Title' /></OrderBy>";
-            //SPListItemCollection Items = List.GetItems(Query);
-            //ListItem AllItem = new ListItem("All");
-            //ListItems.Add(AllItem);
-            //foreach (SPListItem Item in Items)
-            //{
-            //    ListItem cbItem = new ListItem(Item["Title"].ToString(), Item["Title"].ToString());
-            //    ListItems.Add(cbItem);
-            //}
             return ListItems;
         }
         #endregion

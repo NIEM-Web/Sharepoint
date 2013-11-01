@@ -38,7 +38,7 @@ namespace Niem.MyNiem.Webparts.EventsWebpart
         [WebBrowsable(true),
        Category("Events Properties"),
        Personalizable(PersonalizationScope.Shared),
-       WebDisplayName("Established Communities Listname:")]
+       WebDisplayName("Communities Listname:")]
         public string EstablishedCommunitiesList
         {
             get

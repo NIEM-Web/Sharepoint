@@ -250,16 +250,12 @@
     <Content Include="UserInterestListLD\UserInterestListLI\Elements.xml" />
     <Content Include="UserInterestListLD\Schema.xml" />
     <Content Include="Webparts\CrossSiteListWebpart\Elements.xml" />
-    <Content Include="Webparts\DiscussionWebpart\DiscussionWebpartUserControl.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="Webparts\DiscussionWebpart\DiscussionWebpartUserControl.ascx" />
     <Content Include="Webparts\DiscussionWebpart\Elements.xml" />
     <Content Include="Webparts\EventsWebpart\Elements.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Webparts\EventsWebpart\EventsWebpartUserControl.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
+    <Content Include="Webparts\EventsWebpart\EventsWebpartUserControl.ascx" />
     <Content Include="Webparts\NewsWebpart\Elements.xml" />
     <Content Include="Webparts\NewsWebpart\NewsEventsWebpartUserControl.ascx" />
     <Content Include="Webparts\ProfileWebpart\Elements.xml" />

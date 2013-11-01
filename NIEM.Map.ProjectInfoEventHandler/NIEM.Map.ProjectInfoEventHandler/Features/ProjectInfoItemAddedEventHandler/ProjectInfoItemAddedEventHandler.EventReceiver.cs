@@ -1,0 +1,123 @@
+using System;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
+
+using Microsoft.SharePoint;
+using Microsoft.SharePoint.Administration;
+using Microsoft.SharePoint.Security;
+using Microsoft.SharePoint.Navigation;
+using Microsoft.SharePoint.Utilities;
+using Microsoft.SharePoint.WebPartPages;
+
+namespace NIEM.Map.ProjectInfoEventHandler.Features.ProjectInfoItemAddedEventHandler
+{
+    /// <summary>
+    /// This class handles events raised during feature activation, deactivation, installation, uninstallation, and upgrade.
+    /// </summary>
+    /// <remarks>
+    /// The GUID attached to this class may be used during packaging and should not be modified.
+    /// </remarks>
+
+    [Guid("0e50b7c2-a5d1-4777-9f97-fb4ccb53ed13")]
+    public class ProjectInfoItemAddedEventHandlerEventReceiver : SPFeatureReceiver
+    {
+        // Uncomment the method below to handle the event raised after a feature has been activated.
+
+        public override void FeatureActivated(SPFeatureReceiverProperties properties)
+        {
+
+            SPWeb web = (SPWeb)properties.Feature.Parent;
+
+            string assemblyName = "NIEM.Map.ProjectInfoEventHandler, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7460263f56c0f50c";
+            string className = "NIEM.Map.ProjectInfoEventHandler.EventHandlers.NIEMProjectInfoEventHandler";
+
+            try
+            {
+
+                // add the event handler to specific lists
+                SPList spListCustom = web.Lists["NIEM Project Info"];
+
+                if (spListCustom != null)
+                {
+                    SPEventReceiverDefinition erAdding = spListCustom.EventReceivers.Add();
+                    erAdding.Assembly = assemblyName;
+                    erAdding.Class = className;
+                    erAdding.Type = SPEventReceiverType.ItemAdded;
+                    erAdding.Name = "NiemProjectInfoEventHandlerEventReceiverItemAdded";
+                    erAdding.Update();
+
+                    spListCustom.Update();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Common.LogError("TermItemAddedEventHandlerEventReceiver.FeatureActivated", ex, web.Site.ID);
+            }
+
+        }
+
+
+        // Uncomment the method below to handle the event raised before a feature is deactivated.
+
+        public override void FeatureDeactivating(SPFeatureReceiverProperties properties)
+        {
+
+            SPWeb web = (SPWeb)properties.Feature.Parent;
+
+            try
+            {
+
+                // add the event handler to specific lists
+                SPList spListCustom = web.Lists["NIEM Project Info"];
+
+                if (spListCustom != null)
+                {
+
+                    int eventReceiverId = -1;
+
+                    for (int i = 0; i < spListCustom.EventReceivers.Count; i++)
+                    {
+                        if (spListCustom.EventReceivers[i].Name == "NiemProjectInfoEventHandlerEventReceiverItemAdded")
+                        {
+                            eventReceiverId = i;
+                            break;
+                        }
+                    }
+
+                    if (eventReceiverId != -1)
+                    {
+                        spListCustom.EventReceivers[eventReceiverId].Delete();
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Common.LogError("TermItemAddedEventHandlerEventReceiver.FeatureActivated", ex, web.Site.ID);
+            }
+
+        }
+
+
+        // Uncomment the method below to handle the event raised after a feature has been installed.
+
+        //public override void FeatureInstalled(SPFeatureReceiverProperties properties)
+        //{
+        //}
+
+
+        // Uncomment the method below to handle the event raised before a feature is uninstalled.
+
+        //public override void FeatureUninstalling(SPFeatureReceiverProperties properties)
+        //{
+        //}
+
+        // Uncomment the method below to handle the event raised when a feature is upgrading.
+
+        //public override void FeatureUpgrading(SPFeatureReceiverProperties properties, string upgradeActionName, System.Collections.Generic.IDictionary<string, string> parameters)
+        //{
+        //}
+    }
+}
