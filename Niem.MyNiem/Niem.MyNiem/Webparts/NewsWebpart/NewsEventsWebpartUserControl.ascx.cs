@@ -124,6 +124,11 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
                                                "</And></Where>";
 
 
+                                if (!dTable.Table.Columns.Contains("FileRef"))
+                                {
+                                    dTable.Table.Columns.Add("FileRef");
+                                }
+
                                 SPListItemCollection items = list.GetItems(query);
                                 foreach (SPListItem item in items)
                                 {
@@ -134,12 +139,17 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
                                             SPList itemList = itemWeb.Lists[new Guid(item["ListID"].ToString())];
                                             SPItem resourceItem = itemList.GetItemById(int.Parse(item["ItemID"].ToString()));
 
-                                            DataRow[] foundRows;
+                                            DataRow[] foundRows = null;
 
-
-                                            foundRows = dTable.Table.Select("FileRef = '" + resourceItem["FileRef"].ToString() + "'");
+                                            if (resourceItem["FileRef"] != null)
+                                            {
+                                                if (dTable.Count > 0)
+                                                {
+                                                    foundRows = dTable.Table.Select("FileRef = '" + resourceItem["FileRef"].ToString() + "'");
+                                                }
+                                            }
                                            
-                                            if (foundRows.Length == 0)
+                                            if (foundRows == null || foundRows.Length == 0)
                                             {
 
                                                 DataRow dRow = dTable.Table.NewRow();
@@ -149,11 +159,9 @@ namespace Niem.MyNiem.Webparts.NewsEventsWebpart
                                                 catch (Exception) { }
                                                 try { dRow["ArticleStartDate"] = resourceItem["ArticleStartDate"].ToString(); }
                                                 catch (Exception) { }
-                                                try { dRow["ArticleStartDate"] = resourceItem["ArticleStartDate"].ToString(); }
+                                                try { dRow["ArticleByLine"] = resourceItem["ArticleByLine"].ToString(); }
                                                 catch (Exception) { }
-                                                try { dRow["Category_x0020_Committee"] = resourceItem["Category_x0020_Committee"].ToString(); }
-                                                catch (Exception) { }
-                                                try { dRow["PublishingPageContent"] = dRow["PublishingPageContent"].ToString().Substring(0, 150); }
+                                                try { dRow["PublishingPageContent"] = resourceItem["PublishingPageContent"].ToString().Substring(0, 150)/* dRow["PublishingPageContent"].ToString().Substring(0, 150)*/; }
                                                 catch (Exception) { }
                                                 try { dRow["FileRef"] = resourceItem["FileRef"].ToString(); }
                                                 catch (Exception) { }
